@@ -139,12 +139,21 @@ img.emoji {
 
 .section-tnc {
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .tnc-details {
-    height: calc(100vh - 150px);
     overflow: auto;
+    flex-grow: 0;
 }
+.section-tnc a{
+    align-self: flex-end;
+    flex-grow: 1;
+    margin-bottom: 70px;
+}
+
 
 .countdown,
 .timeup {
@@ -187,7 +196,21 @@ img.emoji {
     align-items: center;
     justify-content: center;
 }
+.hearts-holder{
+    pointer-events: none;
+}
+.hearts-holder img{
+    position: fixed;
+}
 
+input[type=number]{
+    border: solid 1px white;
+    color: var(--primary-color);
+    font-size: 10px;
+}
+small{
+    font-size: 10px;
+}
 /*
 @media (prefers-color-scheme: dark) {
   html {
