@@ -2,9 +2,8 @@
 <html lang="en">
   <head>
     <title>2021 Love Big</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
     <meta charset="utf-8" />
-
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@twitter_sg" />
     <meta name="twitter:creator" content="@twitter_sg" />
@@ -70,10 +69,11 @@
       </h3>
       <p>Sound on for timer notification 🔊 </p>
       <img src="img/phone-shake.png" width="200" height="253" />
-      <a class="btn" href="javascript:show('game');">Start</a>
+      <a class="btn btn-start" href="javascript:show('game');">Start</a>
       
-      <small class="text-white">Difficulty (30-160):</small>
-      <input class="threshold mt" type="number" min="30" max="200" value="80"/>
+      <input onchange="document.querySelector('.difficulty').innerHTML='Difficulty '+event.target.value" class="threshold" style="margin:20px 0 0 0" type="range" min="10" max="120" value="50"/>
+      <br/>
+      <small class="text-white difficulty"">Difficulty 50</small>
       
     </div>
     <div class="hearts-holder"> </div>
@@ -117,7 +117,7 @@
       <h2 class="text-primary">Oh man, you did not get 30 shakes in 8 seconds.</h3>
       <h3 class="text-secondary mt">We're gonna need more love from you! </h2>
       <img src="img/hug.gif" width="200" />
-      <a class="btn" href="javascript:show('instruction');">Tray again</a>
+      <a class="btn" href="javascript:show('instruction');">Try again</a>
     </div>
 
     <script type="text/javascript" src="js/main.js"></script>

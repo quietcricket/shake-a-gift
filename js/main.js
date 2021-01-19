@@ -9,8 +9,12 @@ let remainingTime;
 let shakeTime;
 let shakeCount = 0;
 let prevMotion;
-let tickSound = new Audio("img/tik.ogg");
-let timeupSound = new Audio("img/timeup.ogg");
+let totalMotion;
+let tikSound = new Audio("img/tik.mp3");
+let timeupSound = new Audio("img/timeup.mp3");
+tikSound.preload="auto";
+timeupSound.preload="auto";
+let permissionGranted = false;
 
 function countdownTick() {
   let t = GAME_DURATION - (new Date().getTime() - startTime) / 1000;
@@ -20,8 +24,8 @@ function countdownTick() {
   if (Math.random() < 0.01) addHeart();
   if (t != remainingTime) {
     if (t < GAME_DURATION && t > 0) {
-      tickSound.currentTime = 0;
-      tickSound.play();
+      tikSound.currentTime = 0;
+      tikSound.play();
     }
     //TODO: Play sound effect
     document.querySelector(".countdown .timer").innerHTML = t;
@@ -47,9 +51,6 @@ function countdownTick() {
 }
 
 function monitorShake(e) {
-  let t = new Date().getTime();
-  if (t - shakeTime < SHAKE_INTERVAL) return;
-  shakeTime = t;
   let currMotion = {
     x: e.accelerationIncludingGravity.x,
     y: e.accelerationIncludingGravity.y,
@@ -57,19 +58,41 @@ function monitorShake(e) {
   };
   if (!prevMotion) {
     prevMotion = { x: currMotion.x, y: currMotion.y, z: currMotion.z };
+    totalMotion = { x: 0, y: 0, z: 0 };
     return;
   }
-  let dx = Math.abs(currMotion.x - prevMotion.x);
-  let dy = Math.abs(currMotion.x - prevMotion.x);
-  let dz = Math.abs(currMotion.x - prevMotion.x);
-  if (dx + dy + dz > SHAKE_THRESHOLD * 3) {
-    shakeCount++;
-    addHeart();
-  }
+  totalMotion.x += Math.abs(currMotion.x - prevMotion.x);
+  totalMotion.y += Math.abs(currMotion.y - prevMotion.y);
+  totalMotion.z += Math.abs(currMotion.z - prevMotion.z);
   prevMotion = { x: currMotion.x, y: currMotion.y, z: currMotion.z };
+  let t = new Date().getTime();
+  if (t - shakeTime >= SHAKE_INTERVAL) {
+    shakeTime = t;
+    if (totalMotion.x + totalMotion.y + totalMotion.z > SHAKE_THRESHOLD * 3) {
+      shakeCount++;
+      addHeart();
+    }
+    totalMotion = { x: 0, y: 0, z: 0 };
+  }
 }
 
 function show(section) {
+  if (section == "instruction" && permissionGranted==false) {
+    if (
+      typeof DeviceMotionEvent != undefined &&
+      typeof DeviceMotionEvent.requestPermission === "function"
+    ) {
+      DeviceMotionEvent.requestPermission()
+        .then((permissionState) => {
+          if (permissionState === "granted") {
+            permissionGranted=true;
+            show("instruction");
+          }
+        })
+        .catch(console.error);
+      return;
+    }
+  }
   document.querySelectorAll(".section").forEach((ele) => {
     if (ele.classList.contains("section-" + section)) {
       ele.classList.remove("hidden");
@@ -77,7 +100,6 @@ function show(section) {
       ele.classList.add("hidden");
     }
   });
-
   if (section == "game") {
     SHAKE_THRESHOLD = parseInt(document.querySelector(".threshold").value);
     document.querySelector(".countdown").classList.remove("hidden");
@@ -87,7 +109,8 @@ function show(section) {
 
     shakeTime = startTime;
     shakeCount = 0;
-    prevMotion = {};
+    prevMotion = undefined;
+    tikSound.play();
     requestAnimationFrame(countdownTick);
     window.addEventListener("devicemotion", monitorShake);
   } else if (section == "result") {
@@ -125,6 +148,9 @@ function reward() {
   alert("Level " + level + " award");
 }
 
+document.querySelector('.btn-start').addEventListener('touchend',e=>{
+  tikSound.play();
+});
 show("landing");
 // show("instruction");
 // show("game");
