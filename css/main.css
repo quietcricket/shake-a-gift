@@ -209,7 +209,12 @@ input[type=number] {
 small {
     font-size: 10px;
 }
-
+img.gif{
+    width: 200px;
+    height: 200px;
+    user-select: none;
+    transform: scale(1.2,1.2);
+}
 /*
 @media (prefers-color-scheme: dark) {
   html {
