@@ -15,15 +15,15 @@
 
   <body>
     <div class="section section-landing">
-      <div class="logo"></div>
+      <img src="img/logo.png" class="logo">
       <h2 class="text-primary">This Valentine's Day</h3>
       <h3 class="text-secondary">
         Shake things up with us in a fun way to welcome bigger ways to love!
       </h2>
-      <img src="img/hug.gif" width="200" height="284" />
+      <img src="img/idle.gif" width="200"> 
       <a class="btn" href="javascript:show('tnc');">Let's go!</a>
     </div>
-    <div class="section section-tnc">
+    <div class="section section-tnc text-primary">
       <h3>Terms and conditions</h3>
       <div class="tnc-details">
         <p>
@@ -61,24 +61,24 @@
         Agree and continue
       </a>
     </div>
-    <div class="bg-secondary section section-instruction">
-      <div class="logo"></div>
+    <div class="section section-instruction">
       <h2 class="text-primary">How much love can you shake up in 8 seconds?</h2>
-      <h3 class="text-white">
+      <h3 class="text-secondary">
         Get at least 30 shakes in 8 seconds to win something!
       </h3>
-      <p>Sound on for timer notification 🔊 </p>
+      <p class="text-primary">Sound on for timer notification 🔊 </p>
       <img src="img/phone-shake.png" width="200" height="253" />
       <a class="btn btn-start" href="javascript:show('game');">Start</a>
-      
-      <input onchange="document.querySelector('.difficulty').innerHTML='Difficulty '+event.target.value" class="threshold" style="margin:20px 0 0 0" type="range" min="10" max="120" value="50"/>
+      <div style="display: none;">
+      <input onchange="document.querySelector('.difficulty').innerHTML='Difficulty '+event.target.value" class="threshold" style="margin:20px 0 0 0" type="range" min="10" max="120" value="45"/>
       <br/>
-      <small class="text-white difficulty"">Difficulty 50</small>
+      <small class="text-white difficulty"">Difficulty 45</small>
+      </div>
       
     </div>
     <div class="hearts-holder"> </div>
     <div class="section section-game">
-      <div class="logo"></div>
+      <img src="img/logo.png" class="logo">
       <div class="countdown">
         <svg class="circle-grey" width="200" height="200">
           <linearGradient id="g1" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -89,8 +89,9 @@
         </svg>
         <svg class="circle" width="200" height="200">
           <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="rgb(249, 175, 64)" />
-            <stop offset="100%" stop-color="rgb(241, 91, 42)" />
+            <stop offset="0%" stop-color="rgb(55,115,255)" />
+            <stop offset="100%" stop-color="rgb(197, 77,218)" />
+            
           </linearGradient>
           <circle cx="100" cy="100" r="80" stroke="url(#g2)" />
         </svg>
@@ -102,21 +103,21 @@
           <a class="btn" href="javascript:show('result');">Reveal result</a>
         </div>
       </div>
-      <img src="img/hug.gif" width="150" />
+      <img src="img/shake.gif" width="200" />
     </div>
     <div class="section section-result-pass">
-      <div class="logo"></div>
+      <img src="img/logo.png" class="logo">
       <h2 class="text-primary">You got <span class="shake-count">32</span> shakes!</h3>
       <h3 class="text-secondary mt"> That's a whole lotta love you have! </h2>
-      <img src="img/hug.gif" width="200" />
+      <img src="img/happy.gif" width="200" >
       <a class="btn" href="javascript:reward();">Reveal reward</a>
       <a class="btn btn-outline" href="javascript:show('instruction');">Play again</a>
     </div>
   <div class="section section-result-fail">
-      <div class="logo"></div>
+      <img src="img/logo.png" class="logo">
       <h2 class="text-primary">Oh man, you did not get 30 shakes in 8 seconds.</h3>
       <h3 class="text-secondary mt">We're gonna need more love from you! </h2>
-      <img src="img/hug.gif" width="200" />
+      <img src="img/cry.gif" width="200" >
       <a class="btn" href="javascript:show('instruction');">Try again</a>
     </div>
 

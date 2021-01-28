@@ -1,6 +1,8 @@
 :root {
-    --primary-color: rgb(241, 91, 42);
-    --secondary-color: rgb(249, 175, 64);
+    --primary-color: white;
+    --secondary-color: white;
+    --bg-color: #6258DE;
+    --btn-color: rgb(197, 77, 218);
 }
 
 * {
@@ -66,12 +68,12 @@ html {
 body {
     max-width: 420px;
     margin: 0 auto;
-    background-color: white;
+    background-color: var(--bg-color);
 }
 
 h2 {
     line-height: 1.2;
-    font-size: 1.7em;
+    font-size: 2.2em;
     margin: 0;
 }
 
@@ -96,8 +98,8 @@ img.emoji {
     margin: 20px auto 0 auto;
     padding: 0.3em 0.5em;
     color: white;
-    border: solid 2px var(--primary-color);
-    background-color: var(--primary-color);
+    border: solid 2px var(--btn-color);
+    background-color: var(--btn-color);
     text-align: center;
     text-decoration: none;
     font-size: 0.9em;
@@ -105,23 +107,14 @@ img.emoji {
 }
 
 .btn-outline {
-    color: var(--primary-color);
-    background-color: white;
-    border: solid 2px var(--primary-color);
+    color: white;
+    background-color: transparent;
+    border: solid 2px var(--btn-color);
 }
 
 .logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 100px;
-    background-color: var(--primary-color);
+    width: 200px;
     margin: 0 auto 20px auto;
-    color: white;
-    font-size: 0.9em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
 }
 
 .logo::after {
@@ -148,7 +141,8 @@ img.emoji {
     overflow: auto;
     flex-grow: 0;
 }
-.section-tnc a{
+
+.section-tnc a {
     align-self: flex-end;
     flex-grow: 1;
     margin-bottom: 70px;
@@ -189,6 +183,7 @@ img.emoji {
     font-weight: bold;
     line-height: 200px;
     color: var(--secondary-color);
+    pointer-events: none;
 }
 
 .timeup {
@@ -196,21 +191,25 @@ img.emoji {
     align-items: center;
     justify-content: center;
 }
-.hearts-holder{
+
+.hearts-holder {
     pointer-events: none;
 }
-.hearts-holder img{
+
+.hearts-holder img {
     position: fixed;
 }
 
-input[type=number]{
+input[type=number] {
     border: solid 1px white;
     color: var(--primary-color);
     font-size: 10px;
 }
-small{
+
+small {
     font-size: 10px;
 }
+
 /*
 @media (prefers-color-scheme: dark) {
   html {

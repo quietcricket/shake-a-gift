@@ -1,5 +1,5 @@
 let GAME_DURATION = 8;
-let PRIZE_UNLOCKS = [30, 40, 50];
+let PRIZE_UNLOCKS = [30, 50, 70];
 let SHAKE_THRESHOLD = 80;
 let SHAKE_INTERVAL = 50;
 
@@ -12,8 +12,8 @@ let prevMotion;
 let totalMotion;
 let tikSound = new Audio("img/tik.mp3");
 let timeupSound = new Audio("img/timeup.mp3");
-tikSound.preload="auto";
-timeupSound.preload="auto";
+tikSound.preload = "auto";
+timeupSound.preload = "auto";
 let permissionGranted = false;
 
 function countdownTick() {
@@ -77,7 +77,7 @@ function monitorShake(e) {
 }
 
 function show(section) {
-  if (section == "instruction" && permissionGranted==false) {
+  if (section == "instruction" && permissionGranted == false) {
     if (
       typeof DeviceMotionEvent != undefined &&
       typeof DeviceMotionEvent.requestPermission === "function"
@@ -85,7 +85,7 @@ function show(section) {
       DeviceMotionEvent.requestPermission()
         .then((permissionState) => {
           if (permissionState === "granted") {
-            permissionGranted=true;
+            permissionGranted = true;
             show("instruction");
           }
         })
@@ -148,7 +148,7 @@ function reward() {
   alert("Level " + level + " award");
 }
 
-document.querySelector('.btn-start').addEventListener('touchend',e=>{
+document.querySelector(".btn-start").addEventListener("touchend", (e) => {
   tikSound.play();
 });
 show("landing");
