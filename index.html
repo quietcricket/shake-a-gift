@@ -20,8 +20,8 @@
       <h3 class="text-secondary">
         Shake things up with us in a fun way to welcome bigger ways to love!
       </h2>
-      <img src="img/idle.gif" class="gif"> 
       <a class="btn" href="javascript:show('tnc');">Let's go!</a>
+      <img src="img/idle.gif" class="gif"> 
     </div>
     <div class="section section-tnc text-primary">
       <h3>Terms and conditions</h3>
@@ -62,19 +62,14 @@
       </a>
     </div>
     <div class="section section-instruction">
+      <img src="img/logo.png" class="logo">
       <h2 class="text-primary">How much love can you shake up in 8 seconds?</h2>
       <h3 class="text-secondary">
         Get at least 30 shakes in 8 seconds to win something!
       </h3>
       <p class="text-primary">Sound on for timer notification 🔊 </p>
-      <img src="img/phone-shake.png" width="200" height="253" />
+      <img src="img/phone-shake.png" width="150" />
       <a class="btn btn-start" href="javascript:show('game');">Start</a>
-      <div style="display: none;">
-      <input onchange="document.querySelector('.difficulty').innerHTML='Difficulty '+event.target.value" class="threshold" style="margin:20px 0 0 0" type="range" min="10" max="120" value="45"/>
-      <br/>
-      <small class="text-white difficulty"">Difficulty 45</small>
-      </div>
-      
     </div>
     <div class="hearts-holder"> </div>
     <div class="section section-game">
@@ -109,16 +104,16 @@
       <img src="img/logo.png" class="logo">
       <h2 class="text-primary">You got <span class="shake-count">32</span> shakes!</h3>
       <h3 class="text-secondary mt"> That's a whole lotta love you have! </h2>
-      <img src="img/happy.gif" class="gif" >
       <a class="btn" href="javascript:reward();">Reveal reward</a>
       <a class="btn btn-outline" href="javascript:show('instruction');">Play again</a>
+      <img src="img/happy.gif" class="gif" >
     </div>
   <div class="section section-result-fail">
       <img src="img/logo.png" class="logo">
       <h2 class="text-primary">Oh man, you did not get 30 shakes in 8 seconds.</h3>
       <h3 class="text-secondary mt">We're gonna need more love from you! </h2>
-      <img src="img/cry.gif" class="gif" >
       <a class="btn" href="javascript:show('instruction');">Try again</a>
+      <img src="img/cry.gif" class="gif" >
     </div>
 
     <script type="text/javascript" src="js/main.js"></script>

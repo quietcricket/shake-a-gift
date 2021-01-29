@@ -1,6 +1,6 @@
 let GAME_DURATION = 8;
 let PRIZE_UNLOCKS = [30, 50, 70];
-let SHAKE_THRESHOLD = 80;
+let SHAKE_THRESHOLD = 45;
 let SHAKE_INTERVAL = 50;
 
 let startTime;
@@ -24,6 +24,7 @@ function countdownTick() {
   if (Math.random() < 0.01) addHeart();
   if (t != remainingTime) {
     if (t < GAME_DURATION && t > 0) {
+      tikSound.volume = 1;
       tikSound.currentTime = 0;
       tikSound.play();
     }
@@ -101,7 +102,6 @@ function show(section) {
     }
   });
   if (section == "game") {
-    SHAKE_THRESHOLD = parseInt(document.querySelector(".threshold").value);
     document.querySelector(".countdown").classList.remove("hidden");
     document.querySelector(".timeup").classList.add("hidden");
     startTime = new Date().getTime();
@@ -110,7 +110,6 @@ function show(section) {
     shakeTime = startTime;
     shakeCount = 0;
     prevMotion = undefined;
-    tikSound.play();
     requestAnimationFrame(countdownTick);
     window.addEventListener("devicemotion", monitorShake);
   } else if (section == "result") {
@@ -149,6 +148,7 @@ function reward() {
 }
 
 document.querySelector(".btn-start").addEventListener("touchend", (e) => {
+  tikSound.volume = 0;
   tikSound.play();
 });
 show("landing");

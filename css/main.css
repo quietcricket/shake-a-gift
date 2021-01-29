@@ -68,7 +68,12 @@ html {
 body {
     max-width: 420px;
     margin: 0 auto;
-    background-color: var(--bg-color);
+    background-image: url(../img/bg.jpg);
+    background-size: cover;
+}
+
+h1 {
+    font-size: 3em;
 }
 
 h2 {
@@ -151,11 +156,15 @@ img.emoji {
 
 .countdown,
 .timeup {
-    width: 200px;
     height: 200px;
     margin: 20px auto 0 auto;
     position: relative;
 }
+
+.countdown {
+    width: 200px;
+}
+
 
 .countdown svg {
     position: absolute;
@@ -209,12 +218,15 @@ input[type=number] {
 small {
     font-size: 10px;
 }
-img.gif{
-    width: 200px;
-    height: 200px;
+
+img.gif {
+    width: 300px;
+    height: 300px;
     user-select: none;
-    transform: scale(1.2,1.2);
+    transform: scale(1.2, 1.2);
+    pointer-events: none;
 }
+
 /*
 @media (prefers-color-scheme: dark) {
   html {
