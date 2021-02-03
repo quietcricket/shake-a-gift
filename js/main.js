@@ -3,18 +3,25 @@ let PRIZE_UNLOCKS = [30, 50, 70];
 let SHAKE_THRESHOLD = 35;
 let SHAKE_INTERVAL = 50;
 
+let permissionGranted = false;
 let startTime;
 let remainingTime;
-
 let shakeTime;
 let shakeCount = 0;
 let prevMotion;
 let totalMotion;
+
 let tikSound = new Audio("img/tik.mp3");
 let timeupSound = new Audio("img/timeup.mp3");
+tikSound.volume = 0;
+timeupSound.volume = 0;
 tikSound.preload = "auto";
 timeupSound.preload = "auto";
-let permissionGranted = false;
+
+document.querySelector(".btn-tnc").addEventListener("touchend", (e) => {
+  tikSound.play();
+  timeupSound.play();
+});
 
 function countdownTick() {
   let t = GAME_DURATION - (new Date().getTime() - startTime) / 1000;
@@ -24,7 +31,6 @@ function countdownTick() {
   if (Math.random() < 0.01) addHeart();
   if (t != remainingTime) {
     if (t < GAME_DURATION && t > 0) {
-      tikSound.volume = 1;
       tikSound.currentTime = 0;
       tikSound.play();
     }
@@ -78,6 +84,7 @@ function monitorShake(e) {
 }
 
 function show(section) {
+  if (section == "tnc") tikSound.play();
   if (section == "instruction" && permissionGranted == false) {
     if (
       typeof DeviceMotionEvent != undefined &&
@@ -102,11 +109,12 @@ function show(section) {
     }
   });
   if (section == "game") {
+    tikSound.volume = 1;
+    timeupSound.volume = 1;
     document.querySelector(".countdown").classList.remove("hidden");
     document.querySelector(".timeup").classList.add("hidden");
     startTime = new Date().getTime();
     remainingTime = -1;
-
     shakeTime = startTime;
     shakeCount = 0;
     prevMotion = undefined;
@@ -114,10 +122,12 @@ function show(section) {
     window.addEventListener("devicemotion", monitorShake);
   } else if (section == "result") {
     document.querySelector(".hearts-holder").innerHTML = "";
-    if (shakeCount >= PRIZE_UNLOCKS[0]) {
-      show("result-pass");
-    } else {
+    if (shakeCount < PRIZE_UNLOCKS[0]) {
       show("result-fail");
+    } else if (shakeCount < PRIZE_UNLOCKS[1]) {
+      show("voucher");
+    } else {
+      show("result-pass");
     }
   }
 }
@@ -135,23 +145,55 @@ function addHeart() {
   img.style.opacity = 1;
   img.speed = Math.random() * 0.2 + 0.05;
 }
-function share() {
-  alert("Opens twitter app");
+function share(n) {
+  let messages = [
+    `私は #振ろうもらおう キャンペーンに参加しました！
+  @KyokuyaJP をフォローして #バレンタイン ギフトをゲット！
+  毎日抽選で最大3,000円のAmazonギフト券が当たる⁉️
+  #SHAKE すればするほど報酬が豪華に！
+  
+  今すぐ #極夜大陸 へ出征▼
+  `,
+    `私は30回以上振って「限定特典引換コード」をゲットしました！一緒に #振ろうもらおう !
+  @KyokuyaJP をフォローして #バレンタイン ギフトをゲット！
+  毎日抽選で最大3,000円のAmazonギフト券が当たる⁉
+
+  #SHAKE すればするほど報酬が豪華に！
+  
+  今すぐ #極夜大陸 へ出征▼
+  `,
+  ];
+  let url = "https://kyokuya.onelink.me/rgKq/2fdd7e10";
+  document.location.href =
+    "https://twitter.com/intent/tweet?text=" +
+    encodeURIComponent(messages[n]) +
+    "&url=" +
+    encodeURIComponent(url);
 }
 
-function reward() {
-  let level = 0;
-  for (let i = 0; i < PRIZE_UNLOCKS.length; i++) {
-    if (shakeCount > PRIZE_UNLOCKS[i]) level = i + 1;
-  }
-  alert("Level " + level + " award");
+async function reward() {
+  document.querySelector("body").style.pointerEvents = "none";
+  let server_url = "";
+  let ctype = shakeCount >= PRIZE_UNLOCKS[2] ? "Value-1500" : "Value-3000";
+  try {
+    let resp = await fetch(server_url, {
+      method: "post",
+      body: `{"ctype":"${ctype}"}`,
+      mode: "cors",
+      cache: "no-cache",
+      headers: { "Content-Type": "application/json" },
+    });
+    let data = await resp.json();
+    if (data.url) {
+      document.location.href = data.url;
+    }
+  } catch (err) {}
+  document.querySelector("body").style.pointerEvents = "all";
+  show("voucher");
 }
 
-document.querySelector(".btn-start").addEventListener("touchend", (e) => {
-  tikSound.volume = 0;
-  tikSound.play();
-});
 show("landing");
 // show("instruction");
 // show("game");
-// show("result-pass");
+// show("result");
+// show("voucher");
