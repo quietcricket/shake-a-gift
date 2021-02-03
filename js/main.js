@@ -1,6 +1,6 @@
 let GAME_DURATION = 8;
 let PRIZE_UNLOCKS = [30, 50, 70];
-let SHAKE_THRESHOLD = 45;
+let SHAKE_THRESHOLD = 35;
 let SHAKE_INTERVAL = 50;
 
 let startTime;
