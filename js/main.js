@@ -148,19 +148,17 @@ function addHeart() {
 function share(n) {
   let messages = [
     `私は #振ろうもらおう キャンペーンに参加しました！
-  @KyokuyaJP をフォローして #バレンタイン ギフトをゲット！
-  毎日抽選で最大3,000円のAmazonギフト券が当たる⁉️
-  #SHAKE すればするほど報酬が豪華に！
-  
-  今すぐ #極夜大陸 へ出征▼
+    @KyokuyaJP をフォローして #バレンタイン ギフトをゲット！
+    毎日抽選で最大3,000円のアマギフが当たる⁉️
+    #SHAKE すればするほど報酬が豪華に！
+    
+    今すぐ #極夜大陸 で限定特典をゲット👇
   `,
-    `私は30回以上振って「限定特典引換コード」をゲットしました！一緒に #振ろうもらおう !
-  @KyokuyaJP をフォローして #バレンタイン ギフトをゲット！
-  毎日抽選で最大3,000円のAmazonギフト券が当たる⁉
-
-  #SHAKE すればするほど報酬が豪華に！
-  
-  今すぐ #極夜大陸 へ出征▼
+    `私は31回以上振って「限定特典引換コード」をGETしました！一緒に #振ろうもらおう !
+    #SHAKE すればするほど報酬が豪華に！
+    毎日抽選で最大3,000円のアマギフが当たる⁉️
+    
+    今すぐ #極夜大陸 で限定特典をゲット👇
   `,
   ];
   let url = "https://kyokuya.onelink.me/rgKq/2fdd7e10";
@@ -173,8 +171,9 @@ function share(n) {
 
 async function reward() {
   document.querySelector("body").style.pointerEvents = "none";
-  let server_url = "";
-  let ctype = shakeCount >= PRIZE_UNLOCKS[2] ? "Value-1500" : "Value-3000";
+  let server_url =
+    "https://asia-east2-love-big-2021.cloudfunctions.net/api/v1/coupons/generate";
+  let ctype = shakeCount >= PRIZE_UNLOCKS[2] ? "value-3000" : "value-1500";
   try {
     let resp = await fetch(server_url, {
       method: "post",
@@ -186,6 +185,7 @@ async function reward() {
     let data = await resp.json();
     if (data.url) {
       document.location.href = data.url;
+      return;
     }
   } catch (err) {}
   document.querySelector("body").style.pointerEvents = "all";
@@ -195,5 +195,6 @@ async function reward() {
 show("landing");
 // show("instruction");
 // show("game");
+// shakeCount = 1;
 // show("result");
 // show("voucher");

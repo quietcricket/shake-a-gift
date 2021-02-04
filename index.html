@@ -48,7 +48,9 @@
         今年のバレンタインデーは、いっぱいシェイクして楽しくリワードをもらおう！
       </h3>
       <h2 class="text-secondary">準備はいいかな？</h2>
-      <a class="btn btn-tnc" href="javascript:show('tnc');">はじめよう！</a>
+      <a id="tnc" class="btn btn-tnc" href="javascript:show('tnc');"
+        >はじめよう！</a
+      >
       <img src="img/idle.gif" class="gif" />
     </div>
     <div class="section section-tnc text-primary">
@@ -83,7 +85,7 @@
         </p>
         <h3>賞品のレベルは以下の通りです。</h3>
         <p>
-          レベル1 - シェイク30～50回：ギフトコード<br />
+          レベル1 - シェイク31～50回：ギフトコード<br />
           レベル2 -
           シェイク51～70回：ギフトコード、およびAmazonギフトカード1500円分が当たる抽選への応募<br />
           レベル3 -
@@ -131,7 +133,7 @@
           この応募規約は、本キャンペーンに関する一般的な注意事項として記載されています。本キャンペーンに関する法的関係は、参加している各広告主と応募者との間に作られるものとします。
         </p>
       </div>
-      <a class="btn" href="javascript:show('instruction');">
+      <a id="instruction" class="btn" href="javascript:show('instruction');">
         同意して続行する
       </a>
     </div>
@@ -145,7 +147,9 @@
         タイマー通知が聞こえるように、サウンドの設定をオンにしてね。 🔊 
       </p>
       <img src="img/phone-shake.png" width="150" />
-      <a class="btn btn-start" href="javascript:show('game');">スタート</a>
+      <a id="play-game" class="btn btn-start" href="javascript:show('game');"
+        >スタート</a
+      >
     </div>
     <div class="hearts-holder"></div>
     <div class="section section-game">
@@ -170,7 +174,9 @@
       <div class="timeup hidden">
         <div>
           <h1 class="text-primary">時間切れ！</h1>
-          <a class="btn" href="javascript:show('result');">結果を見る</a>
+          <a id="result" class="btn" href="javascript:show('result');"
+            >結果を見る</a
+          >
         </div>
       </div>
       <img src="img/shake.gif" class="gif" />
@@ -179,27 +185,31 @@
       <img src="img/logo.png" class="logo" />
       <h2 class="text-primary"><span class="shake-count"></span> シェイク！</h2>
       <h3 class="text-secondary mt">たくさんの愛があるね！おめでとう！</h3>
-      <a class="btn" href="javascript:reward();">賞品を見る</a>
+      <a id="prize" class="btn" href="javascript:reward();">賞品を見る</a>
       <img src="img/happy.gif" class="gif" />
     </div>
     <div class="section section-result-fail">
       <img src="img/logo.png" class="logo" />
       <h2 class="text-primary">残念。8秒間に30回シェイクできなかったよ。</h2>
       <h3 class="text-secondary mt">もっと愛が必要だよ！</h3>
-      <a class="btn" href="javascript:show('instruction');">
+      <a id="replay-fail" class="btn" href="javascript:show('instruction');">
         もう1度トライする
       </a>
-      <a class="btn btn-outline" href="javascript:share(0);"> Share this </a>
+      <a id="share-fail" class="btn btn-outline" href="javascript:share(0);">
+        Twitterで共有する
+      </a>
       <img src="img/cry.gif" class="gif" />
     </div>
     <div class="section section-voucher">
       <img src="img/logo.png" class="logo" />
       <h2 class="text-primary">ゲーム内で使えるギフトコード獲得！</h2>
       <h3 class="text-secondary mt">ギフトコード：KISHI0127</h3>
-      <a class="btn" href="javascript:show('instruction');">
+      <a id="replay-voucher" class="btn" href="javascript:show('instruction');">
         もう1度トライする
       </a>
-      <a class="btn btn-outline" href="javascript:share(1);"> Share this </a>
+      <a id="share-voucher" class="btn btn-outline" href="javascript:share(1);">
+        Twitterで共有する
+      </a>
       <img src="img/happy.gif" class="gif" />
     </div>
     <script type="text/javascript" src="js/main.js"></script>
