@@ -44,4 +44,18 @@ def deploy():
 # os.unlink(js_file)
 # os.unlink(html_file)
 # os.unlink(css_file)
-deploy()
+def gen_webp():
+    delay = 33
+    mux = 'webpmux'
+    conversion = ''
+    for n in range(0, 28):
+        conversion += 'convert frame-%04d.png -resize 400x400 -define webp:lossless=true -background none frame-%04d.webp\n' % (n, n)
+        mux += ' -frame frame-%04d.webp +%s+0+0+1+b' % (n, delay)
+    mux += ' -loop 0 -bgcolor 0,0,0,0 -o idle.webp\n'
+    with open('/Users/sliang/Desktop/idle/script.sh', 'w') as f:
+        f.write(conversion)
+        f.write(mux)
+
+
+gen_webp()
+# deploy()

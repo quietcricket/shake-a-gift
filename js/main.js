@@ -195,6 +195,5 @@ async function reward() {
 show("landing");
 // show("instruction");
 // show("game");
-// shakeCount = 1;
-// show("result");
+show("result-pass");
 // show("voucher");

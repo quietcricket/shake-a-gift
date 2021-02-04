@@ -48,10 +48,14 @@
         今年のバレンタインデーは、いっぱいシェイクして楽しくリワードをもらおう！
       </h3>
       <h2 class="text-secondary">準備はいいかな？</h2>
-      <a id="tnc" class="btn btn-tnc" href="javascript:show('tnc');"
-        >はじめよう！</a
-      >
-      <img src="img/idle.gif" class="gif" />
+      <a id="tnc" class="btn btn-tnc" href="javascript:show('tnc');">
+        はじめよう！
+      </a>
+      <picture>
+        <source srcset="img/idle.webp" type="image/webp" />
+        <source srcset="img/idle.gif" type="image/gif" />
+        <img class="gif" src="img/idle.webp" />
+      </picture>
     </div>
     <div class="section section-tnc text-primary">
       <h3>規約と条件</h3>
@@ -179,14 +183,23 @@
           >
         </div>
       </div>
-      <img src="img/shake.gif" class="gif" />
+      <picture>
+        <source srcset="img/shake.webp" type="image/webp" />
+        <source srcset="img/shake.gif" type="image/gif" />
+        <img class="gif" src="img/shake.webp" />
+      </picture>
     </div>
     <div class="section section-result-pass">
       <img src="img/logo.png" class="logo" />
       <h2 class="text-primary"><span class="shake-count"></span> シェイク！</h2>
       <h3 class="text-secondary mt">たくさんの愛があるね！おめでとう！</h3>
       <a id="prize" class="btn" href="javascript:reward();">賞品を見る</a>
-      <img src="img/happy.gif" class="gif" />
+      <div class="mt"></div>
+      <picture>
+        <source srcset="img/happy.webp" type="image/webp" />
+        <source srcset="img/happy.gif" type="image/gif" />
+        <img class="gif" src="img/happy.webp" />
+      </picture>
     </div>
     <div class="section section-result-fail">
       <img src="img/logo.png" class="logo" />
@@ -198,7 +211,11 @@
       <a id="share-fail" class="btn btn-outline" href="javascript:share(0);">
         Twitterで共有する
       </a>
-      <img src="img/cry.gif" class="gif" />
+      <picture>
+        <source srcset="img/cry.webp" type="image/webp" />
+        <source srcset="img/cry.gif" type="image/gif" />
+        <img class="gif" src="img/cry.webp" />
+      </picture>
     </div>
     <div class="section section-voucher">
       <img src="img/logo.png" class="logo" />
@@ -210,7 +227,11 @@
       <a id="share-voucher" class="btn btn-outline" href="javascript:share(1);">
         Twitterで共有する
       </a>
-      <img src="img/happy.gif" class="gif" />
+      <picture>
+        <source srcset="img/happy.webp" type="image/webp" />
+        <source srcset="img/happy.gif" type="image/gif" />
+        <img class="gif" src="img/happy.webp" />
+      </picture>
     </div>
     <script type="text/javascript" src="js/main.js"></script>
   </body>
