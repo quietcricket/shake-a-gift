@@ -164,6 +164,7 @@ img.emoji {
 
 .countdown {
     width: 200px;
+    height: 200px;
 }
 
 
@@ -188,12 +189,48 @@ img.emoji {
     animation: 8s circletimer linear;
 }
 
-.countdown .timer {
-    font-size: 6em;
+@keyframes zoomin {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes zoomin2 {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+
+.timer {
+    font-size: 5em;
     font-weight: bold;
-    line-height: 200px;
     color: var(--secondary-color);
     pointer-events: none;
+    margin-top: -200px;
+    text-align: center;
+    position: relative;
+    line-height: 200px;
+    z-index: 2;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(.94, .1, .86, .46);
+    animation-fill-mode: forwards;
+}
+
+.timer-small {
+    font-size: 2em;
 }
 
 .timeup {
@@ -227,29 +264,3 @@ small {
     transform: scale(1.2, 1.2);
     pointer-events: none;
 }
-
-/*
-@media (prefers-color-scheme: dark) {
-  html {
-    background-color: white;
-  }
-
-  body {
-    background-color: #222;
-    color: white;
-  }
-
-  img.header {
-    border-color: rgb(47, 51, 54);
-  }
-
-  video.header {
-    border-color: rgb(47, 51, 54);
-  }
-
-  .btn {
-    color: rgb(29, 161, 242);
-    border-color: rgb(29, 161, 242);
-  }
-}
-*/

@@ -57,5 +57,5 @@ def gen_webp():
         f.write(mux)
 
 
-gen_webp()
-# deploy()
+# gen_webp()
+deploy()
