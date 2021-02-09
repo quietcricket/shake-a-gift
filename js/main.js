@@ -160,21 +160,23 @@ function show(section) {
 function share(n) {
   let messages = [
     `私は #振ろうもらおう キャンペーンに参加しました！
-    @KyokuyaJP をフォローして #バレンタイン ギフトをゲット！
-    毎日抽選で最大3,000円のアマギフが当たる⁉️
-    #SHAKE すればするほど報酬が豪華に！
+@KyokuyaJP をフォローして #バレンタイン ギフトをゲット！
+毎日抽選で最大3,000円のアマギフが当たる⁉️
+#SHAKE すればするほど報酬が豪華に！
     
-    今すぐ #極夜大陸 で限定特典をゲット👇
-  `,
+今すぐ #極夜大陸 で限定特典をゲット👇
+https://kyokuya.onelink.me/rgKq/2fdd7e10
+https://kyokuya-love-big.web.app`,
     `私は31回以上振って「限定特典引換コード」をGETしました！一緒に #振ろうもらおう !
-    #SHAKE すればするほど報酬が豪華に！
-    毎日抽選で最大3,000円のアマギフが当たる⁉️
-    
-    今すぐ #極夜大陸 で限定特典をゲット👇
-  `,
+@KyokuyaJP をフォロー&シェイク✨
+#SHAKE すればするほど報酬が豪華に！
+毎日抽選で最大3,000円のアマギフが当たる⁉️
+
+今すぐ #極夜大陸 で限定特典をゲット👇
+https://kyokuya.onelink.me/rgKq/2fdd7e10
+https://kyokuya-love-big.web.app`,
   ];
-  let url = "https://kyokuya.onelink.me/rgKq/2fdd7e10";
-  document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]) + "&url=" + encodeURIComponent(url);
+  document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
 }
 
 async function reward() {
