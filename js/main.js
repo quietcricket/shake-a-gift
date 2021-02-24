@@ -181,7 +181,7 @@ https://kyokuya-love-big.web.app`,
 
 async function reward() {
   document.querySelector("body").style.pointerEvents = "none";
-  let server_url = "https://asia-east2-love-big-2021.cloudfunctions.net/api/v1/coupons/generate";
+  let server_url = "https://asia-east2-kyokuya-love-big.cloudfunctions.net/api/v1/coupons/generate";
   let ctype = shakeCount >= PRIZE_UNLOCKS[2] ? "value-3000" : "value-1500";
   try {
     let resp = await fetch(server_url, {
