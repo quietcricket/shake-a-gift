@@ -6,6 +6,7 @@ The script will rename the CSS/JS files and update the HTML to point to the new 
 '''
 
 import os
+from posix import listdir
 import random
 import string
 
@@ -44,18 +45,26 @@ def deploy():
 # os.unlink(js_file)
 # os.unlink(html_file)
 # os.unlink(css_file)
-def gen_webp():
+import os
+def gen_webp(folder):
     delay = 33
     mux = 'webpmux'
     conversion = ''
-    for n in range(0, 28):
-        conversion += 'convert frame-%04d.png -resize 400x400 -define webp:lossless=true -background none frame-%04d.webp\n' % (n, n)
-        mux += ' -frame frame-%04d.webp +%s+0+0+1+b' % (n, delay)
-    mux += ' -loop 0 -bgcolor 0,0,0,0 -o idle.webp\n'
-    with open('/Users/sliang/Desktop/idle/script.sh', 'w') as f:
+    path=os.path.expanduser('~/Desktop/bocanada2/'+folder)
+    files=sorted([f for f in os.listdir(path)])
+    for f in files:
+        input=os.path.join(path,f)
+        output=os.path.join(path,f.replace('.png','.webp'))
+        conversion += 'convert %s -resize 400x400 -define webp:lossless=true -background none %s\n' % (input, output)
+        mux += ' -frame %s +%s+0+0+1+b' % (output, delay)
+    mux += ' -loop 0 -bgcolor 0,0,0,0 -o %s.webp\n' %(folder,)
+    with open('/Users/sliang/Desktop/%s.sh' % (folder,), 'w') as f:
         f.write(conversion)
         f.write(mux)
 
 
-# gen_webp()
+# gen_webp("happy")
+# gen_webp("cry")
+# gen_webp("shake")
+# gen_webp("idle")
 deploy()

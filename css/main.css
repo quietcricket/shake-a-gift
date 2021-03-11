@@ -68,12 +68,14 @@ html {
 body {
     max-width: 420px;
     margin: 0 auto;
-    background-image: url(../img/bg.jpg);
+    /* background-image: url(../img/bg.jpg); */
+    background-color: #A0B7EB;
     background-size: cover;
 }
 
 h1 {
     font-size: 3em;
+    margin: 0;
 }
 
 h2 {
@@ -84,6 +86,7 @@ h2 {
 
 h3 {
     margin: 0;
+    font-size: 1.4em;
 }
 
 /***********************************
@@ -99,9 +102,9 @@ img.emoji {
 .btn {
     display: block;
     border-radius: 18px;
-    width: 170px;
+    width: 200px;
     margin: 20px auto 0 auto;
-    padding: 0.3em 0.5em;
+    padding: 0.3em 1em;
     color: white;
     border: solid 2px var(--btn-color);
     background-color: var(--btn-color);
@@ -118,9 +121,9 @@ img.emoji {
 }
 
 .logo {
-    width: 200px;
-    height: 104px;
+    width: 100px;
     margin: 0 auto 20px auto;
+    transform: translate3d(0, 0, 0);
 }
 
 .logo::after {
@@ -244,7 +247,9 @@ img.emoji {
 }
 
 .hearts-holder img {
-    position: fixed;
+    top: 0;
+    left: 0;
+    position: absolute;
 }
 
 input[type=number] {
@@ -258,9 +263,15 @@ small {
 }
 
 .gif {
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     user-select: none;
-    transform: scale(1.2, 1.2);
     pointer-events: none;
+    transform: translate3d(0, -50px, 0);
+}
+
+.gif-wrapper {
+    margin-left: -30px;
+    display: flex;
+    justify-content: center;
 }

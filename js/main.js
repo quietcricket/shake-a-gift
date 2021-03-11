@@ -37,13 +37,14 @@ function addHeart() {
   img.src = "img/heart-" + Math.floor(Math.random() * 4 + 1) + ".png";
   img.width = Math.random() * 25 + 25;
   document.querySelector(".hearts-holder").appendChild(img);
-  let angle = Math.random() * Math.PI * 2;
-  let r = 50 + 80 * Math.random();
-  img.style.top = 220 + r * Math.sin(angle) + "px";
-  img.style.left = window.innerWidth / 2 + r * Math.cos(angle) - img.width / 2 + "px";
-  img.style.transform = "rotate(" + (Math.random() * 60 - 30) + "deg)";
+  let angle = Math.random() * Math.PI;
+  let r = 20 + 150 * Math.random();
+  img.top = 220 + r * Math.sin(angle);
+  img.left = window.innerWidth / 2 + r * Math.cos(angle) - img.width / 2;
+  img.rotation = Math.random() * 60 - 30;
+  img.style.transform = `translate(${img.left}px,${img.top}px) rotate(${img.rotation}deg)`;
   img.style.opacity = 1;
-  img.speed = Math.random() * 0.2 + 0.05;
+  img.speed = Math.random() * 0.5 + 0.05;
 }
 function countdownTick() {
   let t = GAME_DURATION - (new Date().getTime() - startTime) / 1000;
@@ -65,16 +66,16 @@ function countdownTick() {
       document.querySelector(".countdown").classList.add("hidden");
       document.querySelector(".timeup").classList.remove("hidden");
       window.removeEventListener("devicemotion", monitorShake);
-      document.querySelector(".shake-count").innerHTML = shakeCount;
       timeupSound.currentTime = 0;
       timeupSound.play();
     }
   }
   for (let img of document.querySelectorAll(".hearts-holder img")) {
-    let t = parseInt(img.style.top) - img.speed;
-    img.style.top = t + "px";
-    img.style.opacity -= img.speed * 0.1;
-    if (img.style.opacity <= 0.01) img.parentNode.removeChild(img);
+    img.speed *= 1.02;
+    img.top -= img.speed;
+    img.style.opacity -= 0.005;
+    img.style.transform = `translate3d(${img.left}px,${img.top}px,0) rotate(${img.rotation}deg)`;
+    if (img.top < -100) img.parentNode.removeChild(img);
   }
   if (remainingTime > 0) requestAnimationFrame(countdownTick);
 }
@@ -134,7 +135,8 @@ function show(section) {
     let ele = document.querySelector(".timer");
     ele.classList.add("timer-small");
     ele.style.animationName = "zoomin";
-    ele.innerHTML = "よーい、ドン！";
+    document.querySelector("svg.circle circle").style.strokeDashoffset = 0;
+    ele.innerHTML = "Ready?";
     setTimeout(() => {
       ele.innerHTML = "GO!";
       ele.style.animationName = "";
@@ -146,64 +148,25 @@ function show(section) {
       startGame();
     }, 2000);
   } else if (section == "result") {
+    // shakeCount=80;
+    document.querySelector(".shake-count").innerHTML = shakeCount;
+    document.querySelector(".shake-count-fail").innerHTML = shakeCount;
     document.querySelector(".hearts-holder").innerHTML = "";
-    if (shakeCount < PRIZE_UNLOCKS[0]) {
-      show("result-fail");
-    } else if (shakeCount < PRIZE_UNLOCKS[1]) {
-      show("voucher");
-    } else {
-      show("result-pass");
-    }
+    show(shakeCount < PRIZE_UNLOCKS[0] ? "result-fail" : "result-pass");
   }
 }
 
 function share(n) {
-  let messages = [
-    `私は #振ろうもらおう キャンペーンに参加しました！
-@KyokuyaJP をフォローして #バレンタイン ギフトをゲット！
-毎日抽選で最大3,000円のアマギフが当たる⁉️
-#SHAKE すればするほど報酬が豪華に！
-    
-今すぐ #極夜大陸 で限定特典をゲット👇
-https://kyokuya.onelink.me/rgKq/2fdd7e10
-https://kyokuya-love-big.web.app`,
-    `私は31回以上振って「限定特典引換コード」をGETしました！一緒に #振ろうもらおう !
-@KyokuyaJP をフォロー&シェイク✨
-#SHAKE すればするほど報酬が豪華に！
-毎日抽選で最大3,000円のアマギフが当たる⁉️
-
-今すぐ #極夜大陸 で限定特典をゲット👇
-https://kyokuya.onelink.me/rgKq/2fdd7e10
-https://kyokuya-love-big.web.app`,
-  ];
-  document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
+  alert("Open Twitter app");
 }
 
 async function reward() {
-  document.querySelector("body").style.pointerEvents = "none";
-  let server_url = "https://asia-east2-kyokuya-love-big.cloudfunctions.net/api/v1/coupons/generate";
-  let ctype = shakeCount >= PRIZE_UNLOCKS[2] ? "value-3000" : "value-1500";
-  try {
-    let resp = await fetch(server_url, {
-      method: "post",
-      body: `{"ctype":"${ctype}"}`,
-      mode: "cors",
-      cache: "no-cache",
-      headers: { "Content-Type": "application/json" },
-    });
-    let data = await resp.json();
-    if (data.url) {
-      document.location.href = data.url;
-      return;
-    }
-  } catch (err) {}
-  document.querySelector("body").style.pointerEvents = "all";
-  show("voucher");
+  alert("Link to reward redemption page");
 }
 
 show("landing");
 // show("instruction");
+// show("result");
 // show("game");
-// startGame();
-// show("result-pass");
+// show("result");
 // show("voucher");
