@@ -18,12 +18,15 @@ timeupSound.volume = 0;
 tikSound.preload = "auto";
 timeupSound.preload = "auto";
 
-document.querySelector(".btn-tnc").addEventListener("touchend", e => {
+document.querySelector(".btn-ready").addEventListener("touchend", e => {
   tikSound.play();
   timeupSound.play();
 });
 
 function startGame() {
+  tikSound.volume = 1;
+  timeupSound.volume = 1;
+
   startTime = new Date().getTime();
   remainingTime = GAME_DURATION - 1;
   shakeTime = startTime;
@@ -31,51 +34,52 @@ function startGame() {
   prevMotion = undefined;
   requestAnimationFrame(countdownTick);
   window.addEventListener("devicemotion", monitorShake);
+  document.querySelectorAll(".countdown img").forEach((ele, index) => {
+    ele.style.display = index == remainingTime ? "block" : "none";
+  });
 }
-function addHeart() {
+function addParticle() {
   let img = new Image();
-  img.src = "img/heart-" + Math.floor(Math.random() * 4 + 1) + ".png";
-  img.width = Math.random() * 25 + 25;
-  document.querySelector(".hearts-holder").appendChild(img);
-  let angle = Math.random() * Math.PI;
-  let r = 20 + 150 * Math.random();
-  img.top = 220 + r * Math.sin(angle);
-  img.left = window.innerWidth / 2 + r * Math.cos(angle) - img.width / 2;
-  img.rotation = Math.random() * 60 - 30;
+  img.src = "img/particle-" + Math.floor(Math.random() * 2 + 1) + ".png";
+  img.width = Math.random() * 100 + 50;
+  document.querySelector(".particle-holder").appendChild(img);
+  img.top = window.innerHeight * 0.5 + Math.random() * window.innerHeight * 0.2;
+  img.left = window.innerWidth * 0.3 + Math.random() * window.innerWidth * 0.4 - img.width / 2;
+  img.rotation = Math.random() * 90 - 45;
   img.style.transform = `translate(${img.left}px,${img.top}px) rotate(${img.rotation}deg)`;
   img.style.opacity = 1;
   img.speed = Math.random() * 0.5 + 0.05;
 }
 function countdownTick() {
   let t = GAME_DURATION - (new Date().getTime() - startTime) / 1000;
-  document.querySelector("svg.circle circle").style.strokeDashoffset = (500 * t) / GAME_DURATION;
   t = Math.round(t);
-  if (Math.random() < 0.01) addHeart();
+  if (Math.random() < 0.02) addParticle();
   if (t != remainingTime && t >= 0) {
+    remainingTime = t;
     if (t < GAME_DURATION && t > 0) {
       tikSound.currentTime = 0;
       tikSound.play();
-      let ele = document.querySelector(".timer");
-      ele.innerHTML = t;
-      ele.style.animationName = "";
-      void ele.offsetWidth;
-      ele.style.animationName = "zoomin";
+      document.querySelectorAll(".countdown img").forEach((ele, index) => {
+        ele.style.display = index == remainingTime - 1 ? "block" : "none";
+      });
     }
-    remainingTime = t;
+
     if (t == 0) {
-      document.querySelector(".countdown").classList.add("hidden");
-      document.querySelector(".timeup").classList.remove("hidden");
-      window.removeEventListener("devicemotion", monitorShake);
       timeupSound.currentTime = 0;
       timeupSound.play();
+
+      document.querySelectorAll(".particle-holder img").forEach(ele => ele.parentNode.removeChild(ele));
+      show("result");
     }
   }
-  for (let img of document.querySelectorAll(".hearts-holder img")) {
+  for (let img of document.querySelectorAll(".particle-holder img")) {
     img.speed *= 1.02;
-    img.top -= img.speed;
-    img.style.opacity -= 0.005;
+    // img.rotation *= 0.8;
+    img.top += img.speed * 2 * Math.sin((img.rotation / 180) * Math.PI + Math.PI * 0.25);
+    img.left += img.speed * Math.cos((img.rotation / 180) * Math.PI + Math.PI * 0.25);
+    img.style.opacity -= 0.02;
     img.style.transform = `translate3d(${img.left}px,${img.top}px,0) rotate(${img.rotation}deg)`;
-    if (img.top < -100) img.parentNode.removeChild(img);
+    if (img.style.opacity <= 0) img.parentNode.removeChild(img);
   }
   if (remainingTime > 0) requestAnimationFrame(countdownTick);
 }
@@ -100,7 +104,7 @@ function monitorShake(e) {
     shakeTime = t;
     if (totalMotion.x + totalMotion.y + totalMotion.z > SHAKE_THRESHOLD * 3) {
       shakeCount++;
-      addHeart();
+      addParticle();
     }
     totalMotion = { x: 0, y: 0, z: 0 };
   }
@@ -128,31 +132,12 @@ function show(section) {
     }
   });
   if (section == "game") {
-    tikSound.volume = 1;
-    timeupSound.volume = 1;
-    document.querySelector(".countdown").classList.remove("hidden");
-    document.querySelector(".timeup").classList.add("hidden");
-    let ele = document.querySelector(".timer");
-    ele.classList.add("timer-small");
-    ele.style.animationName = "zoomin";
-    document.querySelector("svg.circle circle").style.strokeDashoffset = 0;
-    ele.innerHTML = "Ready?";
-    setTimeout(() => {
-      ele.innerHTML = "GO!";
-      ele.style.animationName = "";
-      void ele.offsetWidth;
-      ele.style.animationName = "zoomin";
-    }, 1000);
-    setTimeout(() => {
-      ele.classList.remove("timer-small");
-      startGame();
-    }, 2000);
+    startGame();
   } else if (section == "result") {
-    // shakeCount=80;
-    document.querySelector(".shake-count").innerHTML = shakeCount;
-    document.querySelector(".shake-count-fail").innerHTML = shakeCount;
-    document.querySelector(".hearts-holder").innerHTML = "";
-    show(shakeCount < PRIZE_UNLOCKS[0] ? "result-fail" : "result-pass");
+    let score = document.querySelector(".score");
+    score.innerHTML = `あなたは巨人に<span>${shakeCount}</span>のダメージを与え!<br/>
+    TWITTER にシェアし、<br/>
+    仲間たちにも挑戦させてみよう！`;
   }
 }
 
@@ -160,13 +145,34 @@ function share(n) {
   alert("Open Twitter app");
 }
 
-async function reward() {
-  alert("Link to reward redemption page");
-}
+window.addEventListener("resize", evt => {
+  const BG_WIDTH = 540;
+  const BG_HEIGHT = 960;
+  const BTN_WIDTH = 300;
+  const COUNTDOWN_WIDTH = 248;
+  scale = document.body.offsetWidth / BG_WIDTH;
+  document.querySelectorAll(".bg-img").forEach(img => {
+    img.style.width = BG_WIDTH * scale + "px";
+    img.style.height = BG_HEIGHT * scale + "px";
+  });
 
-show("landing");
+  document.querySelectorAll(".btn-img").forEach(btn => {
+    btn.style.width = BTN_WIDTH * scale + "px";
+  });
+  document.querySelectorAll(".section").forEach(ele => {
+    let p = parseFloat(ele.getAttribute("margin-top"));
+    ele.style.paddingTop = BG_HEIGHT * scale * p + "px";
+  });
+  let countdown = document.querySelector(".countdown");
+  countdown.style.width = COUNTDOWN_WIDTH * scale + "px";
+
+  let score = document.querySelector(".score");
+  score.style.top = BG_HEIGHT * scale * 0.25 + "px";
+});
+window.dispatchEvent(new Event("resize"));
+
+// show("landing");
 // show("instruction");
+show("game");
+// shakeCount = 188;
 // show("result");
-// show("game");
-// show("result");
-// show("voucher");

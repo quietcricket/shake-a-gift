@@ -20,41 +20,6 @@
 }
 
 /***********************************
-* Utitlity classes
-***********************************/
-.text-primary {
-    color: var(--primary-color);
-}
-
-.text-secondary {
-    color: var(--secondary-color);
-}
-
-.text-white {
-    color: white;
-}
-
-.bg-primary {
-    background-color: var(--primary-color);
-}
-
-.bg-secondary {
-    background-color: var(--secondary-color);
-}
-
-.hidden {
-    display: none !important;
-}
-
-.mb {
-    margin-bottom: 20px;
-}
-
-.mt {
-    margin-top: 20px;
-}
-
-/***********************************
 * buit-in tags
 ***********************************/
 html {
@@ -92,186 +57,69 @@ h3 {
 /***********************************
 * common elements 
 ***********************************/
-img.emoji {
-    height: 1em;
-    width: 1em;
-    margin: 0 0.05em 0 0.1em;
-    vertical-align: -0.1em;
-}
-
 .btn {
-    display: block;
-    border-radius: 18px;
-    width: 200px;
-    margin: 20px auto 0 auto;
-    padding: 0.3em 1em;
-    color: white;
-    border: solid 2px var(--btn-color);
-    background-color: var(--btn-color);
-    text-align: center;
-    text-decoration: none;
-    font-size: 0.9em;
     user-select: none;
-}
-
-.btn-outline {
-    color: white;
-    background-color: transparent;
-    border: solid 2px var(--btn-color);
-}
-
-.logo {
-    width: 100px;
-    margin: 0 auto 20px auto;
-    transform: translate3d(0, 0, 0);
-}
-
-.logo::after {
-    content: "Your Logo Here";
+    position: relative;
+    z-index: 2;
+    display: block;
+    text-align: center;
 }
 
 /***********************************
 * individual sections
 ***********************************/
 .section {
-    text-align: center;
-    padding: 25px;
-    min-height: 100vh;
-}
-
-.section-tnc {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-.tnc-details {
-    overflow: auto;
-    flex-grow: 0;
-}
-
-.section-tnc a {
-    align-self: flex-end;
-    flex-grow: 1;
-    margin-bottom: 70px;
-}
-
-
-.countdown,
-.timeup {
-    height: 200px;
-    margin: 20px auto 0 auto;
     position: relative;
 }
 
-.countdown {
-    width: 200px;
-    height: 200px;
+.section.hidden {
+    display: none;
+}
+
+.bg-img {
+    position: absolute;
+    top: 0;
 }
 
 
-.countdown svg {
+.countdown {
+    margin: 0 auto;
+    position: relative;
+}
+
+.countdown img {
+    width: 100%;
     position: absolute;
     top: 0;
     left: 0;
-}
-
-.countdown svg {
-    background-color: transparent;
-}
-
-.countdown svg circle {
-    stroke-width: 25;
-    fill: transparent;
-    stroke-linecap: round;
-}
-
-.countdown svg.circle circle {
-    stroke-dasharray: 500;
-    animation: 8s circletimer linear;
-}
-
-@keyframes zoomin {
-    from {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    to {
-        transform: scale(2);
-        opacity: 0;
-    }
-}
-
-@keyframes zoomin2 {
-    from {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    to {
-        transform: scale(2);
-        opacity: 0;
-    }
-}
-
-
-.timer {
-    font-size: 5em;
-    font-weight: bold;
-    color: var(--secondary-color);
-    pointer-events: none;
-    margin-top: -200px;
-    text-align: center;
-    position: relative;
-    line-height: 200px;
-    z-index: 2;
-    animation-duration: 1s;
-    animation-timing-function: cubic-bezier(.94, .1, .86, .46);
-    animation-fill-mode: forwards;
-}
-
-.timer-small {
-    font-size: 2em;
-}
-
-.timeup {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .hearts-holder {
     pointer-events: none;
 }
 
-.hearts-holder img {
+.particle-holder img {
     top: 0;
     left: 0;
     position: absolute;
+    z-index:3;
 }
 
-input[type=number] {
-    border: solid 1px white;
-    color: var(--primary-color);
-    font-size: 10px;
+.score {
+    position: absolute;
+    font-weight: bold;
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 3px 2px rgba(0, 0, 0, 0.6);
+    line-height: 1.5;
 }
 
-small {
-    font-size: 10px;
-}
-
-.gif {
-    width: 350px;
-    height: 350px;
-    user-select: none;
-    pointer-events: none;
-    transform: translate3d(0, -50px, 0);
-}
-
-.gif-wrapper {
-    margin-left: -30px;
-    display: flex;
-    justify-content: center;
+.score span {
+    color: rgb(164, 13, 18);
+    padding: 0 3px;
+    font-size: 40px;
+    line-height: 0;
 }

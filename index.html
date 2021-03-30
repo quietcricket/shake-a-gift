@@ -1,139 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Shake A gift</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
-    <meta charset="utf-8" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@" />
-    <meta name="twitter:creator" content="" />
-    <meta property="twitter:title" content="" />
-    <meta property="twitter:image" content="https:love-big-demo.web.app//img/social.png" />
-    <meta name="description" content="" />
-    <link rel="stylesheet" href="css/main.css" />
-    <!-- Google Tag Manager -->
-    <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "");
-    </script>
-    <!-- End Google Tag Manager -->
-  </head>
 
-  <body>
-    <div class="section section-landing">
-      <img src="img/logo.png" class="logo" />
-      <h2 class="text-primary">Hello</h2>
-      <h4 class="text-primary mb">Are you ready to shake for rewards?</h4>
-      <a id="tnc" class="btn btn-tnc" href="javascript:show('tnc');"> Let's Go!</a>
-      <div class="gif-wrapper">
-        <img class="gif" src="img/idle.webp" />
-      </div>
+<head>
+  <title>Shake A gift</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+  <meta charset="utf-8" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="" />
+  <meta property="twitter:title" content="" />
+  <meta property="twitter:image" content="https:love-big-demo.web.app//img/social.png" />
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="css/main.css" />
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-M6C4LB4");
+  </script>
+  <!-- End Google Tag Manager -->
+</head>
+
+<body>
+  <div class="section section-landing" margin-top="0.8">
+    <img src="img/page-1.webp" class="bg-img" />
+    <a id="Button-Ready" class="btn btn-ready" href="javascript:show('instruction');">
+      <img src="img/btn-ready.webp" class="btn-img">
+    </a>
+  </div>
+  <div class="section section-instruction" margin-top="0.8">
+    <img src="img/page-2.webp" class="bg-img" />
+    <a id="play-game" class="btn btn-start" href="javascript:show('game');">
+      <img src="img/btn-start.png" class="btn-img">
+    </a>
+  </div>
+  <div class="particle-holder"></div>
+  <div class="section section-game" margin-top="0.12">
+    <img src="img/page-3.webp" class="bg-img" />
+    <div class="countdown">
+      <img src="img/countdown-1.webp">
+      <img src="img/countdown-2.webp">
+      <img src="img/countdown-3.webp">
+      <img src="img/countdown-4.webp">
+      <img src="img/countdown-5.webp">
+      <img src="img/countdown-6.webp">
+      <img src="img/countdown-7.webp">
+      <img src="img/countdown-8.webp">
     </div>
-    <div class="section section-tnc text-primary">
-      <h3>Terms and conditions</h3>
-      <div class="tnc-details">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Arcu vitae elementum curabitur vitae nunc. Magna sit amet purus gravida quis blandit turpis cursus in. Egestas congue quisque egestas diam in arcu. Ut morbi tincidunt augue interdum. Tortor dignissim convallis aenean et tortor at risus viverra. Etiam non quam lacus
-          suspendisse faucibus. Est velit egestas dui id ornare. Dignissim enim sit amet venenatis urna cursus eget nunc. Etiam dignissim diam quis enim lobortis scelerisque fermentum dui. Eu volutpat odio facilisis mauris sit amet. Vehicula ipsum a arcu cursus vitae congue. Ac turpis egestas maecenas pharetra convallis posuere morbi. Egestas purus viverra accumsan in nisl nisi scelerisque eu.
-          Purus in massa tempor nec feugiat. Cras adipiscing enim eu turpis egestas. Lorem sed risus ultricies tristique. Diam vel quam elementum pulvinar etiam non quam lacus suspendisse. Magna ac placerat vestibulum lectus mauris ultrices. Quam id leo in vitae turpis massa sed.
-        </p>
+  </div>
+  <div class="section section-result" margin-top="0.7">
+    <div class="score">88</div>
+    <img src="img/page-4.webp" class="bg-img">
+    <a id="Button-Prize" class="btn" href="javascript:share();"><img src="img/btn-share.png" class="btn-img"></a>
+    <a id="Button-Replay" class="btn" href="javascript:show('instruction');"><img src="img/btn-replay.png" class="btn-img"></a>
+  </div>
+  <script type="text/javascript" src="js/main.js"></script>
+</body>
 
-        <p>
-          Risus nullam eget felis eget nunc. Felis eget nunc lobortis mattis aliquam faucibus purus. Consequat nisl vel pretium lectus quam id leo in vitae. Lacus vel facilisis volutpat est. Erat nam at lectus urna duis convallis convallis tellus. Facilisi morbi tempus iaculis urna id volutpat lacus. Tincidunt augue interdum velit euismod in pellentesque massa placerat. Bibendum ut tristique et
-          egestas quis ipsum. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Elit eget gravida cum sociis natoque penatibus et magnis. Eget nulla facilisi etiam dignissim. Sed turpis tincidunt id aliquet risus feugiat in ante metus. Non diam phasellus vestibulum lorem. Commodo viverra maecenas accumsan lacus. Et molestie ac feugiat sed lectus vestibulum. Mauris pellentesque
-          pulvinar pellentesque habitant morbi tristique. Faucibus nisl tincidunt eget nullam. Rutrum tellus pellentesque eu tincidunt tortor aliquam nulla facilisi cras. Vulputate dignissim suspendisse in est ante in nibh mauris.
-        </p>
-
-        <p>
-          Mattis enim ut tellus elementum sagittis vitae. Orci a scelerisque purus semper. Condimentum vitae sapien pellentesque habitant morbi. Lectus urna duis convallis convallis tellus id. Mauris ultrices eros in cursus. Bibendum est ultricies integer quis auctor elit sed vulputate mi. Eu sem integer vitae justo eget. Netus et malesuada fames ac turpis egestas sed tempus. Augue mauris augue
-          neque gravida in fermentum et sollicitudin ac. Mattis aliquam faucibus purus in massa tempor nec feugiat nisl. Gravida neque convallis a cras semper. Enim nec dui nunc mattis enim ut tellus. Feugiat scelerisque varius morbi enim nunc. Blandit cursus risus at ultrices mi. Sem viverra aliquet eget sit amet tellus cras adipiscing. Tristique senectus et netus et malesuada fames. Leo urna
-          molestie at elementum eu facilisis sed odio morbi.
-        </p>
-
-        <p>
-          Nisl suscipit adipiscing bibendum est ultricies integer. Odio pellentesque diam volutpat commodo. Eu augue ut lectus arcu bibendum at. Rhoncus aenean vel elit scelerisque mauris. Ultrices neque ornare aenean euismod. Malesuada proin libero nunc consequat interdum varius sit amet. Morbi tristique senectus et netus et malesuada fames ac turpis. Amet luctus venenatis lectus magna fringilla.
-          Faucibus scelerisque eleifend donec pretium vulputate sapien nec. Eget velit aliquet sagittis id consectetur. Non curabitur gravida arcu ac tortor dignissim. Adipiscing elit pellentesque habitant morbi tristique senectus et. Facilisis mauris sit amet massa vitae tortor. Eu sem integer vitae justo eget magna fermentum. Aenean pharetra magna ac placerat vestibulum.
-        </p>
-
-        <p>
-          Consectetur purus ut faucibus pulvinar elementum integer enim. Mauris in aliquam sem fringilla ut morbi tincidunt augue interdum. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Id diam maecenas ultricies mi. Placerat in egestas erat imperdiet sed euismod nisi. Ultrices mi tempus imperdiet nulla malesuada.
-          Sodales ut eu sem integer vitae justo eget magna. Dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in. Arcu dui vivamus arcu felis bibendum ut tristique et. Id neque aliquam vestibulum morbi blandit cursus risus at. Quam quisque id diam vel. Cras fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Vivamus at augue eget arcu. Eleifend donec pretium vulputate
-          sapien nec sagittis aliquam. Ultricies leo integer malesuada nunc vel risus commodo. Faucibus turpis in eu mi bibendum. Lacinia at quis risus sed vulputate odio ut enim blandit. Accumsan tortor posuere ac ut consequat semper.
-        </p>
-      </div>
-
-      <a id="instruction" class="btn" href="javascript:show('instruction');"> Agree and Continue </a>
-    </div>
-    <div class="section section-instruction">
-      <img src="img/logo.png" class="logo" />
-      <h2 class="text-primary">How many shakes can you get in 8 seconds?</h2>
-      <h3 class="text-secondary">Get at least 60 shakes to earn something from us!</h3>
-      <p class="text-primary">Sound on for timer notification 🔊  </p>
-      <img src="img/phone-shake.png" width="150" />
-      <a id="play-game" class="btn btn-start" href="javascript:show('game');">Start</a>
-    </div>
-    <div class="hearts-holder"></div>
-    <div class="section section-game">
-      <img src="img/logo.png" class="logo" />
-      <div class="countdown">
-        <svg class="circle-grey" width="200" height="200">
-          <linearGradient id="g1" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#eee" />
-            <stop offset="100%" stop-color="#ccc" />
-          </linearGradient>
-          <circle cx="100" cy="100" r="80" stroke="url(#g1)" />
-        </svg>
-        <svg class="circle" width="200" height="200">
-          <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="rgb(55,115,255)" />
-            <stop offset="100%" stop-color="rgb(197, 77,218)" />
-          </linearGradient>
-          <circle cx="100" cy="100" r="80" stroke="url(#g2)" />
-        </svg>
-      </div>
-      <div class="timer"></div>
-      <div class="timeup hidden">
-        <div>
-          <h1 class="text-primary">TIME IS UP!</h1>
-          <a id="result" class="btn" href="javascript:show('result');">Reveal Result</a>
-        </div>
-      </div>
-
-      <div class="gif-wrapper">
-        <img class="gif" src="img/shake.webp" />
-      </div>
-    </div>
-    <div class="section section-result-pass">
-      <img src="img/logo.png" class="logo" />
-      <h1 class="text-primary"><span class="shake-count"></span> shakes!</h1>
-      <h3 class="text-secondary">You did it!!! Well played.</h3>
-      <a id="prize" class="btn" href="javascript:reward();">Tweet to get your reward</a>
-      <a id="replay-fail" class="btn" href="javascript:show('instruction');"> Try again</a>
-
-      <div class="gif-wrapper">
-        <img class="gif" src="img/happy.webp" />
-      </div>
-    </div>
-    <div class="section section-result-fail">
-      <img src="img/logo.png" class="logo" />
-
-      <h2 class="text-primary"><span class="shake-count-fail"></span> shakes...</h2>
-      <h3 class="text-secondary mt">We're gonna need more love from you!</h3>
-      <a id="replay-fail" class="btn" href="javascript:show('instruction');"> Try again</a>
-      <a id="share-fail" class="btn btn-outline" href="javascript:share(0);"> Share on Twitter</a>
-
-      <div class="gif-wrapper">
-        <img class="gif" src="img/cry.webp" />
-      </div>
-    </div>
-    <script type="text/javascript" src="js/main.js"></script>
-  </body>
 </html>
