@@ -53,7 +53,7 @@ function addParticle() {
 function countdownTick() {
   let t = GAME_DURATION - (new Date().getTime() - startTime) / 1000;
   t = Math.round(t);
-  if (Math.random() < 0.02) addParticle();
+  // if (Math.random() < 0.02) addParticle();
   if (t != remainingTime && t >= 0) {
     remainingTime = t;
     if (t < GAME_DURATION && t > 0) {
@@ -141,8 +141,20 @@ function show(section) {
   }
 }
 
-function share(n) {
-  alert("Open Twitter app");
+function share() {
+  let message = `私が鎧の巨人に${shakeCount}のダメージを与えた！ あなたもスマホを振って、私と共に巨人の駆逐に参加しよう！
+  https://lifeafter-kyojin.web.app/
+
+  巨人を駆逐してやろ: https://go.onelink.me/4QkF/b7c30c5f
+   
+  #ライアフx進撃
+  #生きて奴らを駆逐
+  #ライフアフター
+  #進撃の巨人
+  
+  @lifeafter_game`;
+  // https://lifeafter-kyojin.web.app/`;
+  document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(message);
 }
 
 window.addEventListener("resize", evt => {
@@ -168,11 +180,29 @@ window.addEventListener("resize", evt => {
 
   let score = document.querySelector(".score");
   score.style.top = BG_HEIGHT * scale * 0.25 + "px";
+  let footer = document.querySelector(".footer");
+  footer.style.top = BG_HEIGHT * scale - 30 + "px";
+  footer.style.width = BG_WIDTH * scale + "px";
 });
-window.dispatchEvent(new Event("resize"));
 
-// show("landing");
+function webp_polyfill() {
+  var elem = document.createElement("canvas");
+  if (elem.getContext && elem.getContext("2d") && elem.toDataURL("image/webp").indexOf("data:image/webp") == 0) {
+    return;
+  }
+  document.querySelectorAll("img").forEach(img => {
+    let src = img.src;
+    if (src.indexOf("page-") > -1) {
+      img.src = src.replace(".webp", ".jpg");
+    } else {
+      img.src = src.replace(".webp", ".png");
+    }
+  });
+}
+webp_polyfill();
+window.dispatchEvent(new Event("resize"));
+show("landing");
 // show("instruction");
-show("game");
+// show("game");
 // shakeCount = 188;
 // show("result");
