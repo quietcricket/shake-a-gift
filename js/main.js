@@ -53,7 +53,7 @@ function addParticle() {
 function countdownTick() {
   let t = GAME_DURATION - (new Date().getTime() - startTime) / 1000;
   t = Math.round(t);
-  // if (Math.random() < 0.02) addParticle();
+  // if (Math.random() < 0.2) addParticle();
   if (t != remainingTime && t >= 0) {
     remainingTime = t;
     if (t < GAME_DURATION && t > 0) {
@@ -65,11 +65,9 @@ function countdownTick() {
     }
 
     if (t == 0) {
-      timeupSound.currentTime = 0;
-      timeupSound.play();
-
-      document.querySelectorAll(".particle-holder img").forEach(ele => ele.parentNode.removeChild(ele));
+      document.title = "Shakes: " + shakeCount;
       show("result");
+      return;
     }
   }
   for (let img of document.querySelectorAll(".particle-holder img")) {
@@ -81,7 +79,7 @@ function countdownTick() {
     img.style.transform = `translate3d(${img.left}px,${img.top}px,0) rotate(${img.rotation}deg)`;
     if (img.style.opacity <= 0) img.parentNode.removeChild(img);
   }
-  if (remainingTime > 0) requestAnimationFrame(countdownTick);
+  requestAnimationFrame(countdownTick);
 }
 
 function monitorShake(e) {
@@ -134,6 +132,10 @@ function show(section) {
   if (section == "game") {
     startGame();
   } else if (section == "result") {
+    timeupSound.currentTime = 0;
+    timeupSound.play();
+    window.removeEventListener("devicemotion", monitorShake);
+    document.querySelector(".particle-holder").innerHTML = "";
     let score = document.querySelector(".score");
     score.innerHTML = `あなたは巨人に<span>${shakeCount}</span>のダメージを与え!<br/>
     TWITTER にシェアし、<br/>
@@ -143,7 +145,7 @@ function show(section) {
 
 function share() {
   let message = `私が鎧の巨人に${shakeCount}のダメージを与えた！ あなたもスマホを振って、私と共に巨人の駆逐に参加しよう！
-  https://lifeafter-kyojin.web.app/
+  https://lifeafter-kyojin.toscreen.net/
 
   巨人を駆逐してやろ: https://go.onelink.me/4QkF/b7c30c5f
    

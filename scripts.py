@@ -21,8 +21,8 @@ def deploy():
 
     if not os.path.exists(DEPLOY_FOLDER):
         os.mkdir(DEPLOY_FOLDER)
-        os.mkdir(DEPLOY_FOLDER+'/css')
-        os.mkdir(DEPLOY_FOLDER+'/js')
+        os.mkdir(DEPLOY_FOLDER + '/css')
+        os.mkdir(DEPLOY_FOLDER + '/js')
 
     os.system('rsync -a img {}/'.format(DEPLOY_FOLDER))
     postfix = random_string(4)
@@ -39,25 +39,27 @@ def deploy():
     with open('{}/index.html'.format(DEPLOY_FOLDER), 'w') as f:
         f.write(html)
     os.system('firebase deploy')
-    print('https://love-big-demo.web.app/index-{}.html'.format(postfix))
+    print('http://lifeafter-kyojin.toscreen.net/index-{}.html'.format(postfix))
 
 
 # os.unlink(js_file)
 # os.unlink(html_file)
 # os.unlink(css_file)
 import os
+
+
 def gen_webp(folder):
     delay = 33
     mux = 'webpmux'
     conversion = ''
-    path=os.path.expanduser('~/Desktop/bocanada2/'+folder)
-    files=sorted([f for f in os.listdir(path)])
+    path = os.path.expanduser('~/Desktop/bocanada2/' + folder)
+    files = sorted([f for f in os.listdir(path)])
     for f in files:
-        input=os.path.join(path,f)
-        output=os.path.join(path,f.replace('.png','.webp'))
+        input = os.path.join(path, f)
+        output = os.path.join(path, f.replace('.png', '.webp'))
         conversion += 'convert %s -resize 400x400 -define webp:lossless=true -background none %s\n' % (input, output)
         mux += ' -frame %s +%s+0+0+1+b' % (output, delay)
-    mux += ' -loop 0 -bgcolor 0,0,0,0 -o %s.webp\n' %(folder,)
+    mux += ' -loop 0 -bgcolor 0,0,0,0 -o %s.webp\n' % (folder,)
     with open('/Users/sliang/Desktop/%s.sh' % (folder,), 'w') as f:
         f.write(conversion)
         f.write(mux)
