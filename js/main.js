@@ -11,9 +11,8 @@ let shakeCount = 0;
 let prevMotion;
 let totalMotion;
 
-let tikSound = new Audio("img/tik.mp3");
+let tikSound = new Audio("img/countdown.mp3");
 let timeupSound = new Audio("img/timeup.mp3");
-tikSound.volume = 0;
 timeupSound.volume = 0;
 tikSound.preload = "auto";
 timeupSound.preload = "auto";
@@ -21,12 +20,17 @@ timeupSound.preload = "auto";
 document.querySelector(".btn-ready").addEventListener("touchend", e => {
   tikSound.play();
   timeupSound.play();
+  setTimeout(() => {
+    tikSound.pause();
+    timeupSound.pause();
+  }, 20);
 });
 
 function startGame() {
+  countdownTick.currentTime = 0;
   tikSound.volume = 1;
+  tikSound.play();
   timeupSound.volume = 1;
-
   startTime = new Date().getTime();
   remainingTime = GAME_DURATION - 1;
   shakeTime = startTime;
@@ -57,8 +61,8 @@ function countdownTick() {
   if (t != remainingTime && t >= 0) {
     remainingTime = t;
     if (t < GAME_DURATION && t > 0) {
-      tikSound.currentTime = 0;
-      tikSound.play();
+      // tikSound.currentTime = 0;
+      // tikSound.play();
       document.querySelectorAll(".countdown img").forEach((ele, index) => {
         ele.style.display = index == remainingTime - 1 ? "block" : "none";
       });
@@ -132,6 +136,7 @@ function show(section) {
   if (section == "game") {
     startGame();
   } else if (section == "result") {
+    tikSound.pause();
     timeupSound.currentTime = 0;
     timeupSound.play();
     window.removeEventListener("devicemotion", monitorShake);
@@ -145,7 +150,7 @@ function show(section) {
 
 function share() {
   let message = `私が鎧の巨人に${shakeCount}のダメージを与えた！ あなたもスマホを振って、私と共に巨人の駆逐に参加しよう！
-  https://lifeafter-kyojin.toscreen.net/
+  https://lifeafter-kyojin.toscreen.net
 
   巨人を駆逐してやろ: https://go.onelink.me/4QkF/b7c30c5f
    
