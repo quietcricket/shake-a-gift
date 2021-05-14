@@ -1,5 +1,5 @@
 let GAME_DURATION = 8;
-let PRIZE_UNLOCKS = [30, 50, 70];
+let PRIZE_UNLOCKS = [60];
 let SHAKE_THRESHOLD = 35;
 let SHAKE_INTERVAL = 50;
 
@@ -25,7 +25,7 @@ document.querySelector(".btn-tnc").addEventListener("touchend", e => {
 
 function startGame() {
   startTime = new Date().getTime();
-  remainingTime = GAME_DURATION - 1;
+  remainingTime = GAME_DURATION;
   shakeTime = startTime;
   shakeCount = 0;
   prevMotion = undefined;
@@ -49,12 +49,16 @@ function addHeart() {
 function countdownTick() {
   let t = GAME_DURATION - (new Date().getTime() - startTime) / 1000;
   document.querySelector("svg.circle circle").style.strokeDashoffset = (500 * t) / GAME_DURATION;
-  t = Math.round(t);
-  if (Math.random() < 0.01) addHeart();
+  if (Math.abs(Math.floor(t) - t) < 0.05) {
+    t = Math.floor(t);
+  } else {
+    t = remainingTime;
+  }
+  // if (Math.random() < 0.01) addHeart();
   if (t != remainingTime && t >= 0) {
     if (t < GAME_DURATION && t > 0) {
-      tikSound.currentTime = 0;
       tikSound.play();
+      tikSound.currentTime = 0;
       let ele = document.querySelector(".timer");
       ele.innerHTML = t;
       ele.style.animationName = "";
@@ -64,10 +68,11 @@ function countdownTick() {
     remainingTime = t;
     if (t == 0) {
       document.querySelector(".countdown").classList.add("hidden");
-      document.querySelector(".timeup").classList.remove("hidden");
+      // document.querySelector(".timeup").classList.remove("hidden");
       window.removeEventListener("devicemotion", monitorShake);
       timeupSound.currentTime = 0;
       timeupSound.play();
+      show("result");
     }
   }
   for (let img of document.querySelectorAll(".hearts-holder img")) {
@@ -100,7 +105,7 @@ function monitorShake(e) {
     shakeTime = t;
     if (totalMotion.x + totalMotion.y + totalMotion.z > SHAKE_THRESHOLD * 3) {
       shakeCount++;
-      addHeart();
+      // addHeart();
     }
     totalMotion = { x: 0, y: 0, z: 0 };
   }
@@ -131,42 +136,58 @@ function show(section) {
     tikSound.volume = 1;
     timeupSound.volume = 1;
     document.querySelector(".countdown").classList.remove("hidden");
-    document.querySelector(".timeup").classList.add("hidden");
+    // document.querySelector(".timeup").classList.add("hidden");
     let ele = document.querySelector(".timer");
     ele.classList.add("timer-small");
     ele.style.animationName = "zoomin";
     document.querySelector("svg.circle circle").style.strokeDashoffset = 0;
-    ele.innerHTML = "Ready?";
+    ele.innerHTML = "よーい、ドン！";
+    tikSound.play();
     setTimeout(() => {
       ele.innerHTML = "GO!";
+      tikSound.play();
       ele.style.animationName = "";
       void ele.offsetWidth;
       ele.style.animationName = "zoomin";
     }, 1000);
     setTimeout(() => {
       ele.classList.remove("timer-small");
+      ele.innerHTML = "8";
+      ele.style.animationName = "";
+      void ele.offsetWidth;
+      ele.style.animationName = "zoomin";
+      tikSound.play();
       startGame();
     }, 2000);
   } else if (section == "result") {
-    // shakeCount=80;
     document.querySelector(".shake-count").innerHTML = shakeCount;
-    document.querySelector(".shake-count-fail").innerHTML = shakeCount;
+    console.log(document.querySelector(".shake-count"));
     document.querySelector(".hearts-holder").innerHTML = "";
     show(shakeCount < PRIZE_UNLOCKS[0] ? "result-fail" : "result-pass");
   }
 }
 
 function share(n) {
-  alert("Open Twitter app");
+  let messages = ["シェイクしたが生き残れなかった... 一緒にシェイクして世界の為に戦ってみよう！\n{{url}}}", shakeCount + "回シェイクを達成して無事生き残れました。\n {{url}}"];
+  document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
 }
 
-async function reward() {
-  alert("Link to reward redemption page");
+function webp_polyfill() {
+  var elem = document.createElement("canvas");
+  let ext = "jpg";
+  if (elem.getContext && elem.getContext("2d") && elem.toDataURL("image/webp").indexOf("data:image/webp") == 0) {
+    ext = "webp";
+  }
+  document.querySelectorAll(".section").forEach(ele => {
+    ele.style.backgroundImage = `url(img/bg-${ele.getAttribute("bg")}.${ext})`;
+  });
 }
+webp_polyfill();
 
 show("landing");
 // show("instruction");
 // show("result");
 // show("game");
+// shakeCount = 99;
 // show("result");
 // show("voucher");
