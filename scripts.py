@@ -45,18 +45,22 @@ def deploy():
 
     with open('{}/index.html'.format(DEPLOY_FOLDER, postfix), 'w') as f:
         f.write(html)
-    # os.system('firebase deploy')
     print('{}index-{}.html'.format(url, postfix))
+    upload_file('deploy', '/img')
 
 
-
-def upload_folder(d=DEPLOY_FOLDER):
-    for f in os.listdir(d):
-        p = os.path.join(d, f)
-        if os.path.isdir(p):
-            upload_folder(p)
-        else:
-            aws_upload(p)
+def upload_file(path=None, excludes=None):
+    if path is None:
+        path = sys.argv[2]
+    if excludes and path.find(excludes) > -1:
+        return
+    if os.path.isfile(path):
+        print(path)
+        aws_upload(path)
+    else:
+        for f in os.listdir(path):
+            p = os.path.join(path, f)
+            upload_file(p, excludes)
 
 
 def gen_webp(folder):

@@ -17,6 +17,7 @@ tikSound.volume = 0;
 timeupSound.volume = 0;
 tikSound.preload = "auto";
 timeupSound.preload = "auto";
+let preloadImages = [];
 
 document.querySelector(".btn-tnc").addEventListener("touchend", e => {
   tikSound.play();
@@ -112,6 +113,9 @@ function monitorShake(e) {
 }
 
 function show(section) {
+  let tag = section == "result" ? "result - " + shakeCount : section;
+  document.title = "コード：ドラゴンブラッド（ドラブラ）- " + tag;
+  if (section == "replay") section = "instruction";
   if (section == "instruction" && permissionGranted == false) {
     if (typeof DeviceMotionEvent != undefined && typeof DeviceMotionEvent.requestPermission === "function") {
       DeviceMotionEvent.requestPermission()
@@ -172,6 +176,14 @@ function share(n) {
   document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
 }
 
+function preload() {
+  let url = preloadImages.shift();
+  if (!url) return;
+  let img = new Image();
+  img.src = url;
+  img.onload = preload;
+}
+
 function webp_polyfill() {
   var elem = document.createElement("canvas");
   let ext = "jpg";
@@ -179,11 +191,16 @@ function webp_polyfill() {
     ext = "webp";
   }
   document.querySelectorAll(".section").forEach(ele => {
-    ele.style.backgroundImage = `url(img/bg-${ele.getAttribute("bg")}.${ext})`;
+    if (ele.getAttribute("bg")) {
+      let url = `img/bg-${ele.getAttribute("bg")}.${ext}`;
+      preloadImages.push(url);
+      ele.style.backgroundImage = `url(${url})`;
+    }
   });
 }
-webp_polyfill();
 
+webp_polyfill();
+preload();
 show("landing");
 // show("instruction");
 // show("result");
