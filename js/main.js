@@ -113,7 +113,7 @@ function monitorShake(e) {
 }
 
 function show(section) {
-  let tag = section == "result" ? "result - " + shakeCount : section;
+  let tag = section.indexOf("result") == 0 ? "result - " + shakeCount : section;
   document.title = "コード：ドラゴンブラッド（ドラブラ）- " + tag;
   if (section == "replay") section = "instruction";
   if (section == "instruction" && permissionGranted == false) {
@@ -197,10 +197,10 @@ function webp_polyfill() {
       ele.style.backgroundImage = `url(${url})`;
     }
   });
+  preload();
 }
 
 webp_polyfill();
-preload();
 show("landing");
 // show("instruction");
 // show("result");
