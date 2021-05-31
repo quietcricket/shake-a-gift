@@ -106,6 +106,7 @@ function monitorShake(e) {
     shakeTime = t;
     if (totalMotion.x + totalMotion.y + totalMotion.z > SHAKE_THRESHOLD * 3) {
       shakeCount++;
+      document.querySelector(".section-game .shake-count").innerHTML = shakeCount;
       // addHeart();
     }
     totalMotion = { x: 0, y: 0, z: 0 };
@@ -141,6 +142,7 @@ function show(section) {
     timeupSound.volume = 1;
     document.querySelector(".countdown").classList.remove("hidden");
     // document.querySelector(".timeup").classList.add("hidden");
+    document.querySelector(".section-game .shake-count").innerHTML = 0;
     let ele = document.querySelector(".timer");
     ele.classList.add("timer-small");
     ele.style.animationName = "zoomin";
@@ -164,15 +166,17 @@ function show(section) {
       startGame();
     }, 2000);
   } else if (section == "result") {
-    document.querySelector(".shake-count").innerHTML = shakeCount;
-    console.log(document.querySelector(".shake-count"));
+    document.querySelectorAll(".shake-count").forEach(ele => (ele.innerHTML = shakeCount));
     document.querySelector(".hearts-holder").innerHTML = "";
     show(shakeCount < PRIZE_UNLOCKS[0] ? "result-fail" : "result-pass");
   }
 }
 
 function share(n) {
-  let messages = ["シェイクしたが生き残れなかった... 一緒にシェイクして世界の為に戦ってみよう！\n{{url}}}", shakeCount + "回シェイクを達成して無事生き残れました。\n {{url}}"];
+  let messages = [
+    `${shakeCount}回シェイクした...生き残れなかった... 一绪にシェイクして世界の為に戦ってみよう！#ドラブラ世界頂戦  #ドラブラ @CodeDragonBlood\n ‪{{url}}`,
+    `${shakeCount}回シェイクを達成して無事生き残れました！\nエヴァコラボ限定のペンペンアイコンフレームもゲットしたぞ！\n ぜひ、SHAKE TO FIGHTに参加してみてください。\nAmazonギフト券5,000円分が当たるチャンスも！\n#ドラブラ世界頂戦  #ドラブラ @CodeDragonBlood {{url}}`,
+  ];
   document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
 }
 
@@ -205,6 +209,6 @@ show("landing");
 // show("instruction");
 // show("result");
 // show("game");
-// shakeCount = 99;
+// shakeCount = 20;
 // show("result");
 // show("voucher");
