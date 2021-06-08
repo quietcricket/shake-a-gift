@@ -63,21 +63,27 @@ def upload_file(path=None, excludes=None):
             upload_file(p, excludes)
 
 
-def gen_webp(folder):
-    delay = 33
+def gen_webp():
+    folder = sys.argv[2]
+    delay = 120
     mux = 'webpmux'
     conversion = ''
-    path = os.path.expanduser('~/Desktop/bocanada2/' + folder)
-    files = sorted([f for f in os.listdir(path)])
-    for f in files:
+    path = os.path.expanduser('~/Downloads/' + folder)
+    files = sorted([f for f in os.listdir(path) if f.endswith('png')])
+    for n, f in enumerate(files):
+        n += 1
+        if n % 8 != 1:
+            continue
         input = os.path.join(path, f)
         output = os.path.join(path, f.replace('.png', '.webp'))
-        conversion += 'convert %s -resize 400x400 -define webp:lossless=true -background none %s\n' % (input, output)
+        # conversion += 'convert %s -resize 538x400 -define webp:lossless=true -background none %s\n' % (input, output)
+        # conversion += 'convert %s -resize 400x400 -define webp:lossless=true -background none %s\n' % (input, output)
         mux += ' -frame %s +%s+0+0+1+b' % (output, delay)
     mux += ' -loop 0 -bgcolor 0,0,0,0 -o %s.webp\n' % (folder,)
     with open('/Users/sliang/Desktop/%s.sh' % (folder,), 'w') as f:
         f.write(conversion)
         f.write(mux)
+    os.system('cd ~/Desktop && sh %s.sh' % (folder,))
 
 
 def aws_upload(path=None):
