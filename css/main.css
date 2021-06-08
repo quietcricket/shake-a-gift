@@ -1,46 +1,25 @@
 :root {
-    --primary-color: white;
-    --secondary-color: white;
-    --bg-color: #6258DE;
-    --btn-color: rgb(197, 77, 218);
+    --btn-color: #f33;
 }
 
 * {
     box-sizing: border-box;
+    color: rgb(235, 235, 235);
 }
 
 ::-moz-selection {
-    background: #b3d4fc;
+    background: #000;
     text-shadow: none;
 }
 
 ::selection {
-    background: #b3d4fc;
+    background: #000;
     text-shadow: none;
 }
 
 /***********************************
 * Utitlity classes
 ***********************************/
-.text-primary {
-    color: var(--primary-color);
-}
-
-.text-secondary {
-    color: var(--secondary-color);
-}
-
-.text-white {
-    color: white;
-}
-
-.bg-primary {
-    background-color: var(--primary-color);
-}
-
-.bg-secondary {
-    background-color: var(--secondary-color);
-}
 
 .hidden {
     display: none !important;
@@ -58,32 +37,38 @@
 * buit-in tags
 ***********************************/
 html {
-    color: #222;
     font-size: 1em;
     line-height: 1.4;
     font-family: "HelveticaNeue", sans-serif;
-    background-color: #222;
 }
 
 body {
     max-width: 420px;
     margin: 0 auto;
-    background-image: url(../img/bg.jpg);
+    background-color: black;
     background-size: cover;
 }
 
 h1 {
     font-size: 3em;
+    margin: 0;
 }
 
 h2 {
     line-height: 1.2;
-    font-size: 2.2em;
+    font-size: 2.4em;
     margin: 0;
 }
 
 h3 {
     margin: 0;
+    font-size: 1.4em;
+}
+
+h1,
+h2,
+h3 {
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);
 }
 
 /***********************************
@@ -99,27 +84,27 @@ img.emoji {
 .btn {
     display: block;
     border-radius: 18px;
-    width: 170px;
+    width: 200px;
     margin: 20px auto 0 auto;
-    padding: 0.3em 0.5em;
+    padding: 0.3em 1em;
     color: white;
     border: solid 2px var(--btn-color);
     background-color: var(--btn-color);
     text-align: center;
     text-decoration: none;
-    font-size: 0.9em;
+    font-size: 1em;
     user-select: none;
+    font-weight: bold;
 }
 
 .btn-outline {
     color: white;
-    background-color: transparent;
-    border: solid 2px var(--btn-color);
+    background-color: #222;
+    border: solid 2px #222;
 }
 
 .logo {
-    width: 200px;
-    height: 104px;
+    width: 230px;
     margin: 0 auto 20px auto;
 }
 
@@ -134,6 +119,8 @@ img.emoji {
     text-align: center;
     padding: 25px;
     min-height: 100vh;
+    background-size: cover;
+    background-position: 50% 100%;
 }
 
 .section-tnc {
@@ -187,6 +174,14 @@ img.emoji {
 .countdown svg.circle circle {
     stroke-dasharray: 500;
     animation: 8s circletimer linear;
+}
+
+.shake-count {
+    font-size: 1.6em;
+    color: #f33;
+    transform: translate(0,5px);
+    margin-right: 3px;
+    display: inline-block;
 }
 
 @keyframes zoomin {
@@ -244,7 +239,9 @@ img.emoji {
 }
 
 .hearts-holder img {
-    position: fixed;
+    top: 0;
+    left: 0;
+    position: absolute;
 }
 
 input[type=number] {
@@ -258,9 +255,15 @@ small {
 }
 
 .gif {
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     user-select: none;
-    transform: scale(1.2, 1.2);
     pointer-events: none;
+    transform: translate3d(0, -50px, 0);
+}
+
+.gif-wrapper {
+    margin-left: -30px;
+    display: flex;
+    justify-content: center;
 }

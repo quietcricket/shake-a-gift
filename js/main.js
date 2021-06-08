@@ -1,5 +1,5 @@
 let GAME_DURATION = 8;
-let PRIZE_UNLOCKS = [30, 50, 70];
+let PRIZE_UNLOCKS = [60];
 let SHAKE_THRESHOLD = 35;
 let SHAKE_INTERVAL = 50;
 
@@ -17,6 +17,7 @@ tikSound.volume = 0;
 timeupSound.volume = 0;
 tikSound.preload = "auto";
 timeupSound.preload = "auto";
+let preloadImages = [];
 
 document.querySelector(".btn-tnc").addEventListener("touchend", e => {
   tikSound.play();
@@ -25,7 +26,7 @@ document.querySelector(".btn-tnc").addEventListener("touchend", e => {
 
 function startGame() {
   startTime = new Date().getTime();
-  remainingTime = GAME_DURATION - 1;
+  remainingTime = GAME_DURATION;
   shakeTime = startTime;
   shakeCount = 0;
   prevMotion = undefined;
@@ -37,23 +38,28 @@ function addHeart() {
   img.src = "img/heart-" + Math.floor(Math.random() * 4 + 1) + ".png";
   img.width = Math.random() * 25 + 25;
   document.querySelector(".hearts-holder").appendChild(img);
-  let angle = Math.random() * Math.PI * 2;
-  let r = 50 + 80 * Math.random();
-  img.style.top = 220 + r * Math.sin(angle) + "px";
-  img.style.left = window.innerWidth / 2 + r * Math.cos(angle) - img.width / 2 + "px";
-  img.style.transform = "rotate(" + (Math.random() * 60 - 30) + "deg)";
+  let angle = Math.random() * Math.PI;
+  let r = 20 + 150 * Math.random();
+  img.top = 220 + r * Math.sin(angle);
+  img.left = window.innerWidth / 2 + r * Math.cos(angle) - img.width / 2;
+  img.rotation = Math.random() * 60 - 30;
+  img.style.transform = `translate(${img.left}px,${img.top}px) rotate(${img.rotation}deg)`;
   img.style.opacity = 1;
-  img.speed = Math.random() * 0.2 + 0.05;
+  img.speed = Math.random() * 0.5 + 0.05;
 }
 function countdownTick() {
   let t = GAME_DURATION - (new Date().getTime() - startTime) / 1000;
   document.querySelector("svg.circle circle").style.strokeDashoffset = (500 * t) / GAME_DURATION;
-  t = Math.round(t);
-  if (Math.random() < 0.01) addHeart();
+  if (Math.abs(Math.floor(t) - t) < 0.05) {
+    t = Math.floor(t);
+  } else {
+    t = remainingTime;
+  }
+  // if (Math.random() < 0.01) addHeart();
   if (t != remainingTime && t >= 0) {
     if (t < GAME_DURATION && t > 0) {
-      tikSound.currentTime = 0;
       tikSound.play();
+      tikSound.currentTime = 0;
       let ele = document.querySelector(".timer");
       ele.innerHTML = t;
       ele.style.animationName = "";
@@ -63,18 +69,19 @@ function countdownTick() {
     remainingTime = t;
     if (t == 0) {
       document.querySelector(".countdown").classList.add("hidden");
-      document.querySelector(".timeup").classList.remove("hidden");
+      // document.querySelector(".timeup").classList.remove("hidden");
       window.removeEventListener("devicemotion", monitorShake);
-      document.querySelector(".shake-count").innerHTML = shakeCount;
       timeupSound.currentTime = 0;
       timeupSound.play();
+      show("result");
     }
   }
   for (let img of document.querySelectorAll(".hearts-holder img")) {
-    let t = parseInt(img.style.top) - img.speed;
-    img.style.top = t + "px";
-    img.style.opacity -= img.speed * 0.1;
-    if (img.style.opacity <= 0.01) img.parentNode.removeChild(img);
+    img.speed *= 1.02;
+    img.top -= img.speed;
+    img.style.opacity -= 0.005;
+    img.style.transform = `translate3d(${img.left}px,${img.top}px,0) rotate(${img.rotation}deg)`;
+    if (img.top < -100) img.parentNode.removeChild(img);
   }
   if (remainingTime > 0) requestAnimationFrame(countdownTick);
 }
@@ -99,13 +106,17 @@ function monitorShake(e) {
     shakeTime = t;
     if (totalMotion.x + totalMotion.y + totalMotion.z > SHAKE_THRESHOLD * 3) {
       shakeCount++;
-      addHeart();
+      document.querySelector(".section-game .shake-count").innerHTML = shakeCount;
+      // addHeart();
     }
     totalMotion = { x: 0, y: 0, z: 0 };
   }
 }
 
 function show(section) {
+  let tag = section.indexOf("result") == 0 ? "result - " + shakeCount : section;
+  document.title = "コード：ドラゴンブラッド（ドラブラ）- " + tag;
+  if (section == "replay") section = "instruction";
   if (section == "instruction" && permissionGranted == false) {
     if (typeof DeviceMotionEvent != undefined && typeof DeviceMotionEvent.requestPermission === "function") {
       DeviceMotionEvent.requestPermission()
@@ -130,80 +141,74 @@ function show(section) {
     tikSound.volume = 1;
     timeupSound.volume = 1;
     document.querySelector(".countdown").classList.remove("hidden");
-    document.querySelector(".timeup").classList.add("hidden");
+    // document.querySelector(".timeup").classList.add("hidden");
+    document.querySelector(".section-game .shake-count").innerHTML = 0;
     let ele = document.querySelector(".timer");
     ele.classList.add("timer-small");
     ele.style.animationName = "zoomin";
+    document.querySelector("svg.circle circle").style.strokeDashoffset = 0;
     ele.innerHTML = "よーい、ドン！";
+    tikSound.play();
     setTimeout(() => {
       ele.innerHTML = "GO!";
+      tikSound.play();
       ele.style.animationName = "";
       void ele.offsetWidth;
       ele.style.animationName = "zoomin";
     }, 1000);
     setTimeout(() => {
       ele.classList.remove("timer-small");
+      ele.innerHTML = "8";
+      ele.style.animationName = "";
+      void ele.offsetWidth;
+      ele.style.animationName = "zoomin";
+      tikSound.play();
       startGame();
     }, 2000);
   } else if (section == "result") {
+    document.querySelectorAll(".shake-count").forEach(ele => (ele.innerHTML = shakeCount));
     document.querySelector(".hearts-holder").innerHTML = "";
-    if (shakeCount < PRIZE_UNLOCKS[0]) {
-      show("result-fail");
-    } else if (shakeCount < PRIZE_UNLOCKS[1]) {
-      show("voucher");
-    } else {
-      show("result-pass");
-    }
+    show(shakeCount < PRIZE_UNLOCKS[0] ? "result-fail" : "result-pass");
   }
 }
 
 function share(n) {
   let messages = [
-    `私は #振ろうもらおう キャンペーンに参加しました！
-@KyokuyaJP をフォローして #バレンタイン ギフトをゲット！
-毎日抽選で最大3,000円のアマギフが当たる⁉️
-#SHAKE すればするほど報酬が豪華に！
-    
-今すぐ #極夜大陸 で限定特典をゲット👇
-https://kyokuya.onelink.me/rgKq/2fdd7e10
-https://kyokuya-love-big.web.app`,
-    `私は31回以上振って「限定特典引換コード」をGETしました！一緒に #振ろうもらおう !
-@KyokuyaJP をフォロー&シェイク✨
-#SHAKE すればするほど報酬が豪華に！
-毎日抽選で最大3,000円のアマギフが当たる⁉️
-
-今すぐ #極夜大陸 で限定特典をゲット👇
-https://kyokuya.onelink.me/rgKq/2fdd7e10
-https://kyokuya-love-big.web.app`,
+    `${shakeCount}回シェイクした...生き残れなかった... 一绪にシェイクして世界の為に戦ってみよう！#ドラブラ世界頂戦  #ドラブラ @CodeDragonBlood\n ‪{{url}}`,
+    `${shakeCount}回シェイクを達成して無事生き残れました！\nエヴァコラボ限定のペンペンアイコンフレームもゲットしたぞ！\n ぜひ、SHAKE TO FIGHTに参加してみてください。\nAmazonギフト券5,000円分が当たるチャンスも！\n#ドラブラ世界頂戦  #ドラブラ @CodeDragonBlood {{url}}`,
   ];
   document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
 }
 
-async function reward() {
-  document.querySelector("body").style.pointerEvents = "none";
-  let server_url = "https://asia-east2-kyokuya-love-big.cloudfunctions.net/api/v1/coupons/generate";
-  let ctype = shakeCount >= PRIZE_UNLOCKS[2] ? "value-3000" : "value-1500";
-  try {
-    let resp = await fetch(server_url, {
-      method: "post",
-      body: `{"ctype":"${ctype}"}`,
-      mode: "cors",
-      cache: "no-cache",
-      headers: { "Content-Type": "application/json" },
-    });
-    let data = await resp.json();
-    if (data.url) {
-      document.location.href = data.url;
-      return;
-    }
-  } catch (err) {}
-  document.querySelector("body").style.pointerEvents = "all";
-  show("voucher");
+function preload() {
+  let url = preloadImages.shift();
+  if (!url) return;
+  let img = new Image();
+  img.src = url;
+  img.onload = preload;
 }
 
+function webp_polyfill() {
+  var elem = document.createElement("canvas");
+  let ext = "jpg";
+  if (elem.getContext && elem.getContext("2d") && elem.toDataURL("image/webp").indexOf("data:image/webp") == 0) {
+    ext = "webp";
+  }
+  document.querySelectorAll(".section").forEach(ele => {
+    if (ele.getAttribute("bg")) {
+      let url = `img/bg-${ele.getAttribute("bg")}.${ext}`;
+      preloadImages.push(url);
+      ele.style.backgroundImage = `url(${url})`;
+    }
+  });
+  preload();
+}
+
+webp_polyfill();
 show("landing");
 // show("instruction");
+// show("result");
 // show("game");
-// startGame();
-// show("result-pass");
+// shakeCount = 20;
+// show("result");
 // show("voucher");
