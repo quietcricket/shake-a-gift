@@ -56,7 +56,7 @@ h1 {
 
 h2 {
     line-height: 1.2;
-    font-size: 2.4em;
+    font-size: 1.8em;
     margin: 0;
 }
 
@@ -68,7 +68,7 @@ h3 {
 h1,
 h2,
 h3 {
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 /***********************************
@@ -85,14 +85,14 @@ img.emoji {
     display: block;
     border-radius: 18px;
     width: 200px;
-    margin: 20px auto 0 auto;
+    margin: 10px auto 0 auto;
     padding: 0.3em 1em;
     color: white;
     border: solid 2px var(--btn-color);
     background-color: var(--btn-color);
     text-align: center;
     text-decoration: none;
-    font-size: 1em;
+    font-size: 0.9em;
     user-select: none;
     font-weight: bold;
 }
@@ -104,7 +104,7 @@ img.emoji {
 }
 
 .logo {
-    width: 230px;
+    width: 160px;
     margin: 0 auto 20px auto;
 }
 
@@ -116,11 +116,12 @@ img.emoji {
 * individual sections
 ***********************************/
 .section {
+    position: relative;
     text-align: center;
     padding: 25px;
     min-height: 100vh;
     background-size: cover;
-    background-position: 50% 100%;
+    background-position: 50% 50%;
 }
 
 .section-tnc {
@@ -179,7 +180,7 @@ img.emoji {
 .shake-count {
     font-size: 1.6em;
     color: #f33;
-    transform: translate(0,5px);
+    transform: translate(0, 5px);
     margin-right: 3px;
     display: inline-block;
 }
@@ -207,7 +208,6 @@ img.emoji {
         opacity: 0;
     }
 }
-
 
 .timer {
     font-size: 5em;
@@ -244,26 +244,19 @@ img.emoji {
     position: absolute;
 }
 
-input[type=number] {
-    border: solid 1px white;
-    color: var(--primary-color);
-    font-size: 10px;
-}
-
 small {
     font-size: 10px;
 }
 
 .gif {
-    width: 350px;
-    height: 350px;
     user-select: none;
     pointer-events: none;
-    transform: translate3d(0, -50px, 0);
+    position: absolute;
+    left: 0;
+    top:200px;
 }
 
 .gif-wrapper {
-    margin-left: -30px;
     display: flex;
     justify-content: center;
 }

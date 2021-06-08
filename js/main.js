@@ -174,8 +174,8 @@ function show(section) {
 
 function share(n) {
   let messages = [
-    `${shakeCount}回シェイクした...生き残れなかった... 一绪にシェイクして世界の為に戦ってみよう！#ドラブラ世界頂戦  #ドラブラ @CodeDragonBlood\n ‪{{url}}`,
-    `${shakeCount}回シェイクを達成して無事生き残れました！\nエヴァコラボ限定のペンペンアイコンフレームもゲットしたぞ！\n ぜひ、SHAKE TO FIGHTに参加してみてください。\nAmazonギフト券5,000円分が当たるチャンスも！\n#ドラブラ世界頂戦  #ドラブラ @CodeDragonBlood {{url}}`,
+    `${shakeCount}回 #深淵覚醒チャレンジ 実施中！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう！　#ブラサジCP {{url}}`,
+    `${shakeCount}回 #深淵覚醒チャレンジ に成功！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう！　#ブラサジCP {{url}}`,
   ];
   document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
 }
@@ -201,14 +201,18 @@ function webp_polyfill() {
       ele.style.backgroundImage = `url(${url})`;
     }
   });
+  document.querySelectorAll(".gif").forEach(ele => {
+    if (ext == "jpg") ele.src = ele.src.replace("webp", "png");
+    ele.style.left = (document.querySelector(".section").offsetWidth - parseInt(ele.getAttribute("data-width"))) / 2 + "px";
+  });
   preload();
 }
 
 webp_polyfill();
 show("landing");
 // show("instruction");
-// show("result");
 // show("game");
-// shakeCount = 20;
+// shakeCount = 90;
 // show("result");
 // show("voucher");
+// show("tnc");

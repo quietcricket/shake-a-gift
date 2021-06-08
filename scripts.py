@@ -19,7 +19,7 @@ def random_string(n):
 
 
 def deploy():
-    url = 'https://cdb.toscreen.net/'
+    url = 'https://media.toscreen.net/bsn/'
     if not os.path.exists(DEPLOY_FOLDER):
         os.mkdir(DEPLOY_FOLDER)
         os.mkdir(DEPLOY_FOLDER + '/css')
@@ -89,8 +89,8 @@ def gen_webp():
 def aws_upload(path=None):
     if path is None:
         path = sys.argv[2]
-    bucket = 'cdb.toscreen.net'
-    key = path.replace('deploy/', '')
+    bucket = 'media.toscreen.net'
+    key = path.replace('deploy/', 'bsn/')
     cmd = f'aws s3api put-object --acl public-read --content-type {mimetypes.guess_type(key)[0]} --bucket {bucket} --key {key} --body {path}'
     print(os.system(cmd))
 
