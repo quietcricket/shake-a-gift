@@ -9,7 +9,7 @@
   <meta name="twitter:site" content="@blacksurgenight" />
   <meta name="twitter:creator" content="ブラック・サージナイト" />
   <meta property="twitter:title" content="ブラック・サージナイト" />
-  <meta property="twitter:image" content="{{url}}img/social.jpg" />
+  <meta property="twitter:image" content="{{url}}img/social2.jpg" />
   <meta name="description" content="" />
   <link rel="stylesheet" href="css/main.css" />
   <!-- Google Tag Manager -->
@@ -26,12 +26,12 @@
 
 <body>
   <div class="section section-landing" bg="1">
-    <img class="gif" src="img/before.webp" width="363" />
+    <img class="gif" src="img/before.webp" data-width="363" />
     <div style="position: relative;">
       <img src="img/logo.png" class="logo" />
-      <h2>スマホをシェイクして「深淵覚醒」を目指そう！</h2>
+      <h2>スマホをシェイクして<br />「深淵覚醒」を目指そう！</h2>
       <div style="margin-top:300px">
-        <a id="tnc" class="btn btn-tnc" href="javascript:show('tnc');">「深淵覚醒」チャレンジに挑戦！</a>
+        <a id="tnc" class="btn btn-tnc" href="javascript:show('tnc');">「深淵覚醒」に挑戦！</a>
       </div>
     </div>
   </div>
@@ -43,13 +43,14 @@
       <p>本キャンペーンは、株式会社ビリビリが実施し、本キャンペーンに関する法的関係は株式会社ビリビリと応募者の間のものとなります。 </p>
       <h4 id="-">本規約について</h4>
       <p>本規約は、当社の判断で予告なく変更される場合があります。ご注意ください。</p>
-      <h4 id="-">当選資格</h4>
+      <h4 id="-">キャンペーン内容について </h4>
       <p>本キャンペーンの参加資格を有するのは、日本国内に在住し、Twitterアカウントをお持ちの個人のみとします。 </p>
       <p>賞品を獲得するためには、携帯電話・スマートフォンを8秒間に連続して60回以上振る必要があります。</p>
       <p>サイトのアプリ内機能が、ユーザーが時間内に振った回数を検知します。
         ユーザーのその他のデータをTwitterが収集することはありません。</p>
       <p>賞品は株式会社ビリビリによって決定され、当社の判断で予告なく変更される場合があります。</p>
       <h4 id="-">#深淵覚醒チャレンジ 賞品について</h4>
+      <p>募集契約書</p>
       <p>ゲーム内で利用できるアイテム「募集契約書」を、チャレンジ成功者のシェア数1000件ごとにプレイヤー全員にプレゼントいたします。
         5000件達成で最大10枚をプレゼントいたします。</p>
       <h4 id="-">【報酬内容】</h4>
@@ -93,16 +94,16 @@
   </div>
   <div class="section section-instruction" bg="1">
     <img src="img/logo.png" class="logo" />
-    <h2>8秒間で60回以上スマホをシェイクして、ドールを深淵覚醒させよう！
+    <h2>8秒間で60回以上スマホをシェイクして、ドールを深淵覚醒させよう！<br />
       成功したら、結果をTwitterにシェア！ </h2>
-    <div style="margin-top:10x">
+    <div style="margin-top:10px">
       <img src="img/phone-shake.png" width="150" style="margin-top:30px;filter: drop-shadow(0 0px 2px rgba(0,0,0,0.9));" />
       <h4>制限時間お知らせサウンド</h4>
       <a id="play-game" class="btn btn-start" href="javascript:show('game');">スタート！</a>
     </div>
   </div>
   <div class="hearts-holder"></div>
-  <div class="section section-game" bg="2">
+  <div class="section section-game" bg="1">
     <img src="img/logo.png" class="logo" />
     <div class="countdown">
       <svg class="circle-grey" width="200" height="200">
@@ -131,22 +132,21 @@
       <h4>
         「深淵覚醒」に成功！結果をシェアしよう！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！</h4>
       <div style="margin-top:200px">
-        <a id="share-pass" class="btn btn-outline" href="javascript:share(1);">結果をシェア！</a>
-        <a id="replay-pass" class="btn" href="javascript:show('replay');">もう一度試す</a>
+        <a id="share-pass" class="btn" href="javascript:share(1);">結果をシェア！</a>
+        <a id="replay-pass" class="btn btn-outline" href="javascript:show('replay');">もう一度試す</a>
       </div>
     </div>
   </div>
   <div class="section section-result-fail" bg="1">
-
-    <img class="gif" src="img/before.webp" width="363" />
+    <img class="gif" src="img/before.webp" data-width="363" />
     <div style="position: relative;">
       <img src="img/logo.png" class="logo" style="margin-bottom: 0;" />
 
       <h2 style="margin-bottom:10px;"><span class="shake-count"></span>回</h2>
-      <h3>残念！もう少し！次こそ「深淵覚醒」を目指そう！</h3>
+      <h3>残念！もう少し！次こそ<br />「深淵覚醒」を目指そう！</h3>
       <div style="margin-top:200px">
-        <a id="share-fail" class="btn btn-outline" href="javascript:share(0);">結果をシェア！</a>
-        <a id="replay-fail" class="btn" href="javascript:show('replay');">もう一度試す</a>
+        <a id="share-fail" class="btn" href="javascript:share(0);">結果をシェア！</a>
+        <a id="replay-fail" class="btn btn-outline" href="javascript:show('replay');">もう一度試す</a>
       </div>
     </div>
   </div>

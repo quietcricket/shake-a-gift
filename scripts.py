@@ -6,6 +6,7 @@ The script will rename the CSS/JS files and update the HTML to point to the new 
 '''
 
 import os
+from posixpath import join
 import random
 import string
 import sys
@@ -54,8 +55,9 @@ def upload_file(path=None, excludes=None):
         path = sys.argv[2]
     if excludes and path.find(excludes) > -1:
         return
+    if path.find('.DS_Store') >= 0:
+        return
     if os.path.isfile(path):
-        print(path)
         aws_upload(path)
     else:
         for f in os.listdir(path):
@@ -86,19 +88,41 @@ def gen_webp():
     os.system('cd ~/Desktop && sh %s.sh' % (folder,))
 
 
+def gen_gif():
+    folder = sys.argv[2]
+    delay = 120
+    path = os.path.expanduser('~/Downloads/' + folder)
+    files = sorted([f for f in os.listdir(path) if f.endswith('png')])
+    cmd = ''
+    # os.mkdir(os.path.expanduser('~/Desktop/' + folder))
+    for n, f in enumerate(files):
+        if n % 8 > 0:
+            continue
+        output = os.path.expanduser('~/Desktop/%s/%04i.png' % (folder, (n // 8)))
+        os.system('cp %s %s' % (os.path.join(path, f), output))
+        # os.system('convert %s -resize 538x400 %s' % (os.path.join(path, f), output))
+        # os.system('convert %s -resize 538x400 %s' % (os.path.join(path, f), output))
+
+
 def aws_upload(path=None):
-    if path is None:
-        path = sys.argv[2]
+    path = path or sys.argv[2]
     bucket = 'media.toscreen.net'
     key = path.replace('deploy/', 'bsn/')
     cmd = f'aws s3api put-object --acl public-read --content-type {mimetypes.guess_type(key)[0]} --bucket {bucket} --key {key} --body {path}'
     print(os.system(cmd))
 
 
+def aws_invalidate(path=None):
+    path = path or sys.argv[2]
+    distribution='E31CEYG1KV9HMQ'
+    cmd =f'aws cloudfront create-invalidation --distribution-id {distribution} --paths "{path}"'
+    print(os.system(cmd))
+
 # gen_webp("happy")
 # gen_webp("cry")
 # gen_webp("shake")
 # gen_webp("idle"
+
 
 if __name__ == '__main__':
     locals()[sys.argv[1]]()

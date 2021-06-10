@@ -202,7 +202,7 @@ function webp_polyfill() {
     }
   });
   document.querySelectorAll(".gif").forEach(ele => {
-    if (ext == "jpg") ele.src = ele.src.replace("webp", "png");
+    if (ext == "jpg") ele.src = ele.src.replace("webp", "gif");
     ele.style.left = (document.querySelector(".section").offsetWidth - parseInt(ele.getAttribute("data-width"))) / 2 + "px";
   });
   preload();
@@ -212,7 +212,7 @@ webp_polyfill();
 show("landing");
 // show("instruction");
 // show("game");
-// shakeCount = 90;
+// shakeCount = 70;
 // show("result");
 // show("voucher");
 // show("tnc");
