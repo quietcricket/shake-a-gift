@@ -174,8 +174,8 @@ function show(section) {
 
 function share(n) {
   let messages = [
-    `${shakeCount}回 #深淵覚醒チャレンジ 実施中！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう！　#ブラサジCP {{url}}`,
-    `${shakeCount}回 #深淵覚醒チャレンジ に成功！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう！　#ブラサジCP {{url}}`,
+    `${shakeCount}回 #深淵覚醒チャレンジ 実施中！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう！　#ブラサジCP\n\n{{url}}`,
+    `${shakeCount}回 #深淵覚醒チャレンジ に成功！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう！　#ブラサジCP\n\n{{url}}`,
   ];
   document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
 }
