@@ -34,7 +34,7 @@ def deploy():
     os.system("mkdir {}/js".format(DEPLOY_FOLDER))
     os.system('cp css/main.css {}/css/main-{}.css'.format(DEPLOY_FOLDER, postfix))
     js = open('js/main.js').read()
-    js = js.replace('{{url}}', url)
+    js = js.replace('{{share_url}}', '{}index-{}.html'.format(url, postfix))
     with open('{}/js/main-{}.js'.format(DEPLOY_FOLDER, postfix), 'w') as f:
         f.write(js)
     html = open('index.html').read()
@@ -114,8 +114,8 @@ def aws_upload(path=None):
 
 def aws_invalidate(path=None):
     path = path or sys.argv[2]
-    distribution='E31CEYG1KV9HMQ'
-    cmd =f'aws cloudfront create-invalidation --distribution-id {distribution} --paths "{path}"'
+    distribution = 'E31CEYG1KV9HMQ'
+    cmd = f'aws cloudfront create-invalidation --distribution-id {distribution} --paths "{path}"'
     print(os.system(cmd))
 
 # gen_webp("happy")
