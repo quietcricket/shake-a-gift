@@ -1,18 +1,18 @@
 '''
-This script is meant to work around caching issues when deploying new changes
-HTML caching is not so bad but CSS and JS caching is very strong
-The script will rename the CSS/JS files and update the HTML to point to the new files
+This script used to create local dev server and deploy to server
+It monitors changes in the src folder
 
 '''
 
 import os
-from posixpath import join
 import random
 import string
 import sys
 import mimetypes
+import json
+import csv
 
-DEPLOY_FOLDER = 'deploy'
+config = json.load(open('config.json'))
 
 
 def random_string(n):
@@ -21,33 +21,8 @@ def random_string(n):
 
 def deploy():
     url = 'https://media.toscreen.net/bsn/'
-    if not os.path.exists(DEPLOY_FOLDER):
-        os.mkdir(DEPLOY_FOLDER)
-        os.mkdir(DEPLOY_FOLDER + '/css')
-        os.mkdir(DEPLOY_FOLDER + '/js')
-
-    os.system('rsync -a img {}/'.format(DEPLOY_FOLDER))
-    os.system("rm -rf {}/js {}/css".format(DEPLOY_FOLDER, DEPLOY_FOLDER))
-    os.system("rm {}/*.html ".format(DEPLOY_FOLDER))
-    postfix = random_string(4)
-    os.system("mkdir {}/css".format(DEPLOY_FOLDER))
-    os.system("mkdir {}/js".format(DEPLOY_FOLDER))
-    os.system('cp css/main.css {}/css/main-{}.css'.format(DEPLOY_FOLDER, postfix))
-    js = open('js/main.js').read()
-    js = js.replace('{{share_url}}', '{}index-{}.html'.format(url, postfix))
-    with open('{}/js/main-{}.js'.format(DEPLOY_FOLDER, postfix), 'w') as f:
-        f.write(js)
-    html = open('index.html').read()
-    html = html.replace('{{url}}', url)
-    html = html.replace('js/main.js', 'js/main-{}.js'.format(postfix))
-    html = html.replace('css/main.css', 'css/main-{}.css'.format(postfix))
-    with open('{}/index-{}.html'.format(DEPLOY_FOLDER, postfix), 'w') as f:
-        f.write(html)
-
-    with open('{}/index.html'.format(DEPLOY_FOLDER, postfix), 'w') as f:
-        f.write(html)
-    print('{}index-{}.html'.format(url, postfix))
-    upload_file('deploy', '/img')
+    if not os.path.exists('deploy'):
+        os.mkdir('deploy/img')
 
 
 def upload_file(path=None, excludes=None):
@@ -118,10 +93,43 @@ def aws_invalidate(path=None):
     cmd = f'aws cloudfront create-invalidation --distribution-id {distribution} --paths "{path}"'
     print(os.system(cmd))
 
-# gen_webp("happy")
-# gen_webp("cry")
-# gen_webp("shake")
-# gen_webp("idle"
+
+def gen_report():
+    path = sys.argv[2]
+    reader = csv.reader(open(path))
+    rows = list(reader)
+    title = 'ブラック・サージナイト'
+    games60 = [0, 0]
+    games100 = [0, 0]
+    games = [0, 0]
+    report = {}
+    for r in rows:
+        if len(r)<3:
+            continue
+        if r[0].find(title) == -1 or r[0].find('-') == -1:
+            continue
+        parts = [s.strip() for s in r[0].split('-')]
+        section = parts[1]
+        n1 = int(r[1])
+        n2 = int(r[2])
+        if section == 'result':
+            shakes = int(parts[2])
+            games[0] += n1
+            games[1] += n2
+            if shakes >= 60:
+                games60[0] += n1
+                games60[1] += n2
+            if shakes >= 100:
+                games100[0] += n1
+                games100[1] += n2
+        else:
+            report[section] = [n1, n2]
+    report['completed games'] = games
+    report['60 shakes and above'] = games60
+    report['100 shakes and above'] = games100
+
+    for k, v in report.items():
+        print('{}, {}, {}'.format(k, v[0], v[1]))
 
 
 if __name__ == '__main__':

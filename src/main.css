@@ -124,6 +124,10 @@ img.emoji {
     background-position: 50% 50%;
 }
 
+.section .inner {
+    position: relative;
+}
+
 .section-tnc {
     text-align: left;
     display: flex;
@@ -185,28 +189,12 @@ img.emoji {
     display: inline-block;
 }
 
-@keyframes zoomin {
-    from {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    to {
-        transform: scale(2);
-        opacity: 0;
-    }
+#timer-color1 {
+    stop-color: rgb(55, 115, 255);
 }
 
-@keyframes zoomin2 {
-    from {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    to {
-        transform: scale(2);
-        opacity: 0;
-    }
+#timer-color2 {
+    stop-color: rgb(197, 77, 218);
 }
 
 .timer {
@@ -234,16 +222,6 @@ img.emoji {
     justify-content: center;
 }
 
-.hearts-holder {
-    pointer-events: none;
-}
-
-.hearts-holder img {
-    top: 0;
-    left: 0;
-    position: absolute;
-}
-
 small {
     font-size: 10px;
 }
@@ -253,10 +231,29 @@ small {
     pointer-events: none;
     position: absolute;
     left: 0;
-    top:200px;
+    top: 200px;
 }
 
-.gif-wrapper {
-    display: flex;
-    justify-content: center;
+@keyframes zoomin {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes zoomin2 {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
 }
