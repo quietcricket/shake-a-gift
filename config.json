@@ -3,14 +3,11 @@
 	"PAGE_TITLE": "ブラック・サージナイト",
 	"SUCCESS_TWEET": "[[SHAKE_COUNT]]回 深淵覚醒チャレンジ に成功！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう！#ブラサジCP",
 	"FAILURE_TWEET": "[[SHAKE_COUNT]]回 #深淵覚醒チャレンジ 実施中！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう #ブラサジCP",
-	"SOUND_EFFECTS": [
-		"tik",
-		"timeup"
-	],
+	"GTAG": "G-S5LVD6PD7R",
 	"HOST": "https://postclicks.app/",
 	"CLOUDFRONT_DISTRIBUTION": "",
 	"S3_BUCKET": "",
-	"S3_FOLDER": "",
+	"S3_FOLDER": "bsn",
 	"PRIZE_UNLOCK": 60,
 	"GAME_DURATION": 8,
 	"SHAKE_THRESHOLD": 35,

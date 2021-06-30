@@ -1,36 +1,18 @@
-const CONFIG = {
-  "TWITTER_HANDLE": "@blacksurgenight",
-  "PAGE_TITLE": "ブラック・サージナイト",
-  "SUCCESS_TWEET": "[[SHAKE_COUNT]]回 深淵覚醒チャレンジ に成功！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう！#ブラサジCP",
-  "FAILURE_TWEET": "[[SHAKE_COUNT]]回 #深淵覚醒チャレンジ 実施中！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！今すぐ挑戦してみよう #ブラサジCP",
-  "SOUND_EFFECTS": [
-    "tik",
-    "timeup"
-  ],
-  "HOST": "https://postclicks.app/",
-  "CLOUDFRONT_DISTRIBUTION": "",
-  "S3_BUCKET": "",
-  "S3_FOLDER": "",
-  "PRIZE_UNLOCK": 60,
-  "GAME_DURATION": 8,
-  "SHAKE_THRESHOLD": 35,
-  "SHAKE_INTERVAL": 50
-}
-
 class ShakeAGift {
+
   constructor() {
     let utils = new Utils();
     utils.webpPolyfill();
     utils.preloadBackground();
-    utils.initSound(CONFIG.SOUND_EFFECTS);
+    utils.initSound(['tik', 'timeup']);
     this.utils = utils;
   }
 
   show(section, section_title) {
     // Google Analytics Tracking
-    if (!section_title) {
-      section_title = section;
-      document.title = CONFIG.PAGE_TITLE + ' - ' + section_title;
+    if (section != 'landing') {
+      section_title = section_title ? section_title : section;
+      gtag('config', 'G-S5LVD6PD7R', { page_path: '/' + section_title, page_title: document.location.pathname + section_title });
     }
     // Show and hide corresponding section
     document.querySelectorAll(".section").forEach(ele => {
@@ -106,7 +88,7 @@ class ShakeAGift {
    */
   share() {
     let message = this.shakeCount >= CONFIG[''] ? CONFIG.SUCCESS_TWEET : CONFIG.FAILURE_TWEET;
-    message = message.replace('[[SHAKE_COUNT]]', this.shakeCount);
+    message = message.replace('[[SHAKE_COUNT]]', this.shakeCount) + '\n' + document.location.href;
     document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
   }
   /**
