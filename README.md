@@ -2,11 +2,12 @@
 
 Accessing the browser's accelerometer requires HTTPS connections unless it is under localhost environment. If you can't proceed beyond the Terms and Conditions page, try with localhost or an https connections.
 
-## Starting up the project
+## Getting started
 
+- Make sure your node version is 13 or above. If not, you will get a `Cannot find module 'fs/promises'` error
 - Run `npm install`
-- Run `npm run dev` to start local server at https://localhost:8080
-- Run `npm run export` to export the project for deploying onto the server. To avoid caching, the `index.html` file will be renamed into a random file name.
+- Run `node scripts.js dev` to start local server at https://localhost:8080
+- Run `node scripts.js export` to export the project for deploying onto the server. To avoid caching, the `index.html` file will be renamed into a random file name.
 - The live URL would be something like https://postclicks.app/PROJECT_NAME/XXXXX.html. This is fine because when Twitter renders the page, it only shows the domain name as "postclicks.app"
 
 ## Architecture

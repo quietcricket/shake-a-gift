@@ -2,7 +2,7 @@
 <html lang="utf-8">
 
 <head>
-  <title>ブラック・サージナイト</title>
+  <title>[[PAGE_TITLE]]</title>
   <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
   <meta charset="utf-8" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -15,7 +15,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=[[GTAG]]"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function track(section) { gtag('config', '[[GTAG]]', { page_path: '/' + section, page_title: document.location.pathname + section}); }
+    function gaTrack(section) { gtag('config', '[[GTAG]]', { page_path: '/' + section, page_title: document.location.pathname + section}); }
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', '[[GTAG]]', { 'cookie_expires': 0 });

@@ -12,7 +12,7 @@ class ShakeAGift {
     // Google Analytics Tracking
     if (section != 'landing') {
       section_title = section_title ? section_title : section;
-      gtag('config', 'G-S5LVD6PD7R', { page_path: '/' + section_title, page_title: document.location.pathname + section_title });
+      gaTrack(section_title);
     }
     // Show and hide corresponding section
     document.querySelectorAll(".section").forEach(ele => {
@@ -70,6 +70,7 @@ class ShakeAGift {
       } else if (seconds == 1) {
         ele.innerHTML = "GO";
       } else if (seconds == 2) {
+        //TODO: swapping the background here
         ele.classList.remove("timer-small");
         game.prevMotion = undefined;
         window.addEventListener("devicemotion", game._monitorShake);
@@ -113,7 +114,6 @@ class ShakeAGift {
       this.show("instruction");
     }
   }
-
 
   _monitorShake(e) {
     let currMotion = {

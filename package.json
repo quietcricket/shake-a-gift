@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/quietcricket/shake-a-gift#readme",
   "dependencies": {
+    "ffmpeg-static": "^4.4.0",
     "live-server": "^1.2.1",
     "minify": "^7.0.2",
     "showdown": "^1.9.1",
-    "sync-directory": "^2.2.22"
+    "sync-directory": "^2.2.22",
+    "webp-converter": "^2.3.3"
   }
 }
