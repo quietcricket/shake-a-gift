@@ -10,6 +10,11 @@ Accessing the browser's accelerometer requires HTTPS connections unless it is un
 - Run `node scripts.js export` to export the project for deploying onto the server. To avoid caching, the `index.html` file will be renamed into a random file name.
 - The live URL would be something like https://postclicks.app/PROJECT_NAME/XXXXX.html. This is fine because when Twitter renders the page, it only shows the domain name as "postclicks.app"
 
+## GIF/WEBP generation
+- Run `node scripts.js gif PATH_TO_PNG_FOLDER` to trigger the script
+- The animation file will be placed in the `deploy/img` folder
+- This script is not tested in Windows, hopefully it works
+
 ## Architecture
 
 The project uses a script to stitch multiple parts together. Here are the reasons:

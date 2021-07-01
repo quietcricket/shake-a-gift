@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const minify = require('minify');
 const showdown = require('showdown');
+const { count } = require('console');
 const DEPLOY_FOLDER = "deploy"
 
 async function genHTML() {
@@ -59,45 +60,44 @@ async function deploy() {
 }
 
 async function genAnimation() {
+	//Resizing the image
+	const WIDTH = 400; //target width, 0 means scale based on height
+	const HEIGHT = 0; //target height, 0 means scale based on width
+	const GIF_SCALING = WIDTH > 0 ? WIDTH + ':-1' : '-1:' + HEIGHT;
+	const FRAMERATE = 5;
+
 	if (!fs.existsSync(DEPLOY_FOLDER)) {
 		fs.mkdirSync(DEPLOY_FOLDER);
 	}
 	let dir = path.resolve(process.argv[3])
 	let output = path.resolve(path.join(DEPLOY_FOLDER, 'img', dir.split('/').pop() + '.gif'));
 	let temp = require('os').tmpdir();
-	let ffmpeg = require('ffmpeg-static');
-	let paletteCmd = ffmpeg;
-	let gifCmd = ffmpeg;
+	const ffmpeg = require('ffmpeg-static');
+	const webp = require('webp-converter');
+	const shell = require('child_process');
+	webp.grant_permission();
 	let counter = 0;
+	let frames = [];
 	for (let f of fs.readdirSync(dir).sort()) {
 		if (f.toLocaleLowerCase().endsWith('png')) {
-			paletteCmd += ' -i ' + path.join(dir, f);
-			gifCmd += ' -i ' + path.join(dir, f);
+			let pathOriginal = path.join(dir, f);
+			let pathPng = path.join(dir, (counter < 10 ? '0' : '') + counter + '.png');
+			let pathWebp = pathPng.replace('.png', '.webp');
+			if (pathOriginal != pathPng) {
+				fs.renameSync(pathOriginal, pathPng);
+			}
+			await webp.cwebp(pathPng, pathWebp, `-q 80 -resize ${WIDTH} ${HEIGHT}`);
+			frames.push({ path: pathWebp, offset: `+${1000 / FRAMERATE}+0+0+1+b` });
 			counter++;
 		}
 	}
-	paletteCmd += ' -vf palettegen ' + path.join(temp, 'palette.png')
-	gifCmd += ` -i ${path.join(temp, 'palette.png')} -filter_complex "fps=6,scale=400:-1:flags=lanczos[x];[x][${counter}:v]paletteuse" ${output} -y`;
-	console.log(gifCmd);
-	const cp = require('child_process');
-	cp.exec(paletteCmd, err => {
-		if (err) {
-			console.error(err)
-			process.exit(1);
-		} else {
-			console.log("Palette genrated successfully");
-			cp.exec(gifCmd, err => {
-				if (err) {
-					console.error(err)
-					process.exit(1);
-				} else {
-					console.log("Gif generated successfully: " + output);
-				}
-			});
-		}
-	});
-
-
+	webp.webpmux_animate(frames, output.replace('.gif', '.webp'), 0, '0,0,0,0', "");
+	let paletteCmd = `${ffmpeg} -i ${path.join(dir, '%02d.png')} -vf palettegen  ${path.join(temp, 'palette.png')} -y`;
+	let gifCmd = `${ffmpeg} -framerate ${FRAMERATE} -i ${path.join(dir, '%02d.png')} -i ${path.join(temp, 'palette.png')} -filter_complex "scalconst =${GIF_SCALING}:flags=lanczos[x];[x][1:v]paletteuse" "${output}" -y`;
+	shell.execSync(paletteCmd);
+	shell.execSync(gifCmd);
+	console.log("GIF created at: " + output);
+	console.log("WEBP created at: " + output.replace('.gif', '.webp'));
 }
 
 switch (process.argv[2]) {
