@@ -40,9 +40,14 @@ class ShakeAGift {
     window.removeEventListener("devicemotion", this._monitorShake);
     document.querySelectorAll(".shake-count").forEach(ele => (ele.innerHTML = this.shakeCount));
     if (this.shakeCount >= CONFIG.PRIZE_UNLOCK) {
-      this.show('result-pass', 'result ' + this.shakeCount)
+      this.show('result-pass', 'result ' + this.shakeCount);
+      fetch('https://23q299v3y2.execute-api.ap-northeast-1.amazonaws.com/live').then(resp => resp.json().then(data => {
+        console.log(data);
+        // Place the CD Key inside the HTML
+        // document.querySelector('.cdkey').innerHTML = data.c;
+      }));
     } else {
-      this.show('result-fail', 'result ' + this.shakeCount)
+      this.show('result-fail', 'result ' + this.shakeCount);
     }
   }
 
@@ -150,14 +155,14 @@ class Utils {
   constructor() {
     this.webpPolyfill();
     this.preloadBackground();
+    let elem = document.createElement("canvas");
+    this.supportsWebp = elem.getContext && elem.getContext("2d") && elem.toDataURL("image/webp").indexOf("data:image/webp") == 0
   }
 
   webpPolyfill() {
-    let elem = document.createElement("canvas");
-    let supportsWebp = elem.getContext && elem.getContext("2d") && elem.toDataURL("image/webp").indexOf("data:image/webp") == 0
     document.querySelectorAll(".section[bg]").forEach(ele => {
       let url = ele.getAttribute('bg');
-      if (!supportsWebp) {
+      if (!this.supportsWebp) {
         url = url.replace('.webp', '.jpg');
         ele.setAttribute('bg', url);
       }
@@ -166,8 +171,7 @@ class Utils {
     });
     //Centralize the gif character
     document.querySelectorAll(".gif").forEach(ele => {
-      console.log(supportsWebp);
-      if (supportsWebp) {
+      if (this.supportsWebp) {
         ele.src = ele.src.replace("gif", "webp");
       }
       ele.style.left = (document.querySelector(".section").offsetWidth - parseInt(ele.getAttribute("img-width"))) / 2 + "px";
