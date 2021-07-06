@@ -34,7 +34,7 @@ class ShakeAGift {
     document.querySelector("svg.circle circle").style.strokeDashoffset = 1;
     this.startTime = new Date().getTime();
     this.currentTime = -1;
-    this.shakeCount = 10;
+    this.shakeCount = 0;
     this.show("game");
     this._updateGame();
   }
