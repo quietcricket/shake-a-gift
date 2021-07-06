@@ -4,11 +4,11 @@
 	"SUCCESS_TWEET": "【あなたの打ち上げた花火の数：[[SHAKE_COUNT]]発】見事美しい花火が打ちあがりました！限定浴衣コーデが獲得できるイベント開催中！今すぐマーベル大陸で夏をエンジョイしよう♪ #シャイニングニキ #花火チャレンジ",
 	"FAILURE_TWEET": "【あなたの打ち上げた花火の数：[[SHAKE_COUNT]]発】残念……もう一度チャレンジして、マーベル大陸に美しい花火を打ち上げよう♪ #シャイニングニキ #花火チャレンジ",
 	"GTAG": "G-S5LVD6PD7R",
-	"HOST": "3.0.177.144/",
+	"HOST": " ",
 	"CLOUDFRONT_DISTRIBUTION": "",
 	"S3_BUCKET": "",
 	"S3_FOLDER": "hello-world/game",
-	"PRIZE_UNLOCK": 40,
+	"PRIZE_UNLOCK": 50,
 	"GAME_DURATION": 8,
 	"SHAKE_THRESHOLD": 35,
 	"SHAKE_INTERVAL": 50

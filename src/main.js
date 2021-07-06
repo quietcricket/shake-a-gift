@@ -126,7 +126,7 @@ class ShakeAGift {
     } else {
 
       this.permissionGranted = true;
-      alert(this.permissionGranted);
+      //alert(this.permissionGranted);
       this.show("instruction");
     }
   }
