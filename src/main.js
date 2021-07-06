@@ -41,11 +41,6 @@ class ShakeAGift {
     document.querySelectorAll(".shake-count").forEach(ele => (ele.innerHTML = this.shakeCount));
     if (this.shakeCount >= CONFIG.PRIZE_UNLOCK) {
       this.show('result-pass', 'result ' + this.shakeCount);
-      fetch('https://23q299v3y2.execute-api.ap-northeast-1.amazonaws.com/live').then(resp => resp.json().then(data => {
-        console.log(data);
-        // Place the CD Key inside the HTML
-        // document.querySelector('.cdkey').innerHTML = data.c;
-      }));
     } else {
       this.show('result-fail', 'result ' + this.shakeCount);
     }
@@ -78,6 +73,7 @@ class ShakeAGift {
         //TODO: swapping the background here
         ele.classList.remove("timer-small");
         game.prevMotion = undefined;
+        game.shakeTime=new Date().getTime();
         window.addEventListener("devicemotion", game._monitorShake);
         ele.innerHTML = CONFIG.GAME_DURATION + 2 - seconds;
       } else {
