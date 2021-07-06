@@ -104,8 +104,10 @@ img.emoji {
 }
 
 .logo {
-    width: 160px;
-    margin: 0 auto 20px auto;
+    /*width: 160px;*/
+    margin: 0 auto;
+    width: 100%;
+    max-width: 300px;
 }
 
 .logo::after {
@@ -122,6 +124,7 @@ img.emoji {
     min-height: 100vh;
     background-size: cover;
     background-position: 50% 50%;
+    overflow: hidden;
 }
 
 .section .inner {
@@ -231,7 +234,8 @@ small {
     pointer-events: none;
     position: absolute;
     left: 0;
-    top: 200px;
+    /* top: 200px; */
+    bottom: 0;
 }
 
 @keyframes zoomin {

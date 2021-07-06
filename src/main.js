@@ -1,3 +1,7 @@
+let gameImg2 = "background-image: url('img/bg-img-2.jpg')";
+let gameImg3 = "background-image: url('img/bg-img-3.jpg')";
+
+
 class ShakeAGift {
 
   constructor() {
@@ -30,7 +34,7 @@ class ShakeAGift {
     document.querySelector("svg.circle circle").style.strokeDashoffset = 1;
     this.startTime = new Date().getTime();
     this.currentTime = -1;
-    this.shakeCount = 0;
+    this.shakeCount = 10;
     this.show("game");
     this._updateGame();
   }
@@ -42,9 +46,9 @@ class ShakeAGift {
     if (this.shakeCount >= CONFIG.PRIZE_UNLOCK) {
       this.show('result-pass', 'result ' + this.shakeCount);
       fetch('https://23q299v3y2.execute-api.ap-northeast-1.amazonaws.com/live').then(resp => resp.json().then(data => {
-        console.log(data);
+        //console.log(data.c);
         // Place the CD Key inside the HTML
-        // document.querySelector('.cdkey').innerHTML = data.c;
+        document.querySelector('.cdkey').innerHTML = data.c;
       }));
     } else {
       this.show('result-fail', 'result ' + this.shakeCount);
@@ -69,13 +73,17 @@ class ShakeAGift {
     if (seconds != game.currentTime) {
       game.utils.playSound('tik');
       let ele = document.querySelector(".timer");
+      let gameBG = document.querySelector(".section-game");
       if (seconds == 0) {
         ele.innerHTML = "よーい、ドン！";
         ele.classList.add("timer-small");
+        //TODO: reset image when player choose to retry
+        gameBG.setAttribute("style", gameImg2);
       } else if (seconds == 1) {
         ele.innerHTML = "GO";
       } else if (seconds == 2) {
         //TODO: swapping the background here
+        gameBG.setAttribute("style", gameImg3);
         ele.classList.remove("timer-small");
         game.prevMotion = undefined;
         window.addEventListener("devicemotion", game._monitorShake);
@@ -115,7 +123,9 @@ class ShakeAGift {
           }
         }).catch(console.error);
     } else {
+      
       this.permissionGranted = true;
+      alert(this.permissionGranted);
       this.show("instruction");
     }
   }

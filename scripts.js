@@ -18,7 +18,7 @@ async function genHTML() {
 	config['TNC'] = (new showdown.Converter()).makeHtml(tnc);
 
 	for (let key in config) {
-		html = html.replaceAll(`[[${key}]]`, config[key]);
+		html = html.replace(`[[${key}]]`, config[key]);
 	}
 	return html;
 }
