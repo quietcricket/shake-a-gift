@@ -86,6 +86,7 @@ class ShakeAGift {
         gameBG.setAttribute("style", gameImg3);
         ele.classList.remove("timer-small");
         game.prevMotion = undefined;
+        game.shakeTime = new Date().getTime();
         window.addEventListener("devicemotion", game._monitorShake);
         ele.innerHTML = CONFIG.GAME_DURATION + 2 - seconds;
       } else {
@@ -123,7 +124,7 @@ class ShakeAGift {
           }
         }).catch(console.error);
     } else {
-      
+
       this.permissionGranted = true;
       alert(this.permissionGranted);
       this.show("instruction");
