@@ -104,7 +104,8 @@ class ShakeAGift {
   share() {
     let message = this.shakeCount >= CONFIG[''] ? CONFIG.SUCCESS_TWEET : CONFIG.FAILURE_TWEET;
     message = message.replace('[[SHAKE_COUNT]]', this.shakeCount) + '\n' + document.location.href;
-    document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
+    document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(message);
+    //console.log(message);
   }
   /**
    * On iOS motion sensor requires permission from the user
@@ -226,6 +227,10 @@ class Utils {
 }
 window.game = new ShakeAGift();
 // game.startGame();
+<<<<<<< Updated upstream
 // game.show("result-pass");
 // game.show("result-fail");
+=======
+//game.show("result-pass");
+>>>>>>> Stashed changes
 game.show("landing");
