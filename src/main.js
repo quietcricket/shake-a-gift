@@ -227,10 +227,5 @@ class Utils {
 }
 window.game = new ShakeAGift();
 // game.startGame();
-<<<<<<< Updated upstream
-// game.show("result-pass");
-// game.show("result-fail");
-=======
 //game.show("result-pass");
->>>>>>> Stashed changes
 game.show("landing");
