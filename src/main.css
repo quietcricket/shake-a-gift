@@ -112,6 +112,7 @@ img.emoji {
 
 .logo::after {
     content: "Your Logo Here";
+    
 }
 
 /***********************************
@@ -125,10 +126,14 @@ img.emoji {
     background-size: cover;
     background-position: 50% 50%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
 }
 
-.section .inner {
+.section{
     position: relative;
+    z-index: 1;
 }
 
 .section-tnc {
@@ -146,7 +151,7 @@ img.emoji {
 .section-tnc a {
     align-self: flex-end;
     flex-grow: 1;
-    margin-bottom: 70px;
+    margin-bottom: 50px;
 }
 
 
@@ -188,8 +193,8 @@ img.emoji {
     font-size: 1.6em;
     color: #f33;
     transform: translate(0, 5px);
-    margin-right: 3px;
-    display: inline-block;
+    margin: -1px 2px 5px;
+    /* display: inline-block; */
 }
 
 #timer-color1 {
@@ -234,8 +239,8 @@ small {
     pointer-events: none;
     position: absolute;
     left: 0;
-    /* top: 200px; */
-    bottom: 0;
+    top: 10%;
+    z-index: -1;
 }
 
 @keyframes zoomin {
@@ -260,4 +265,35 @@ small {
         transform: scale(2);
         opacity: 0;
     }
+}
+
+/****** CSS Overide    *************/
+.btn-bottom{
+    margin-top: auto;
+    display: flex;
+    margin-bottom: 15%;
+}
+
+.section-instruction h4{
+    margin: 0;
+    margin-top: 10%;
+}
+
+.section-instruction .img-phone{
+    width: 150px;
+    margin: 10% auto 0;
+}
+
+.btn-grp{
+    flex-direction: column;
+}
+
+.cdkey{
+    color: #f33;
+    font-size: 18px;
+}
+
+.logo-overlay{
+    background: rgb(0,0,0);
+    background: radial-gradient(circle, rgba(0,0,0,0.24693627450980393) 32%, rgba(255,255,255,0) 93%);
 }

@@ -9,7 +9,7 @@
   <meta name="twitter:site" content="[[TWITTER_HANDLE]]" />
   <meta name="twitter:creator" content="[[TWITTER_HANDLE]]" />
   <meta property="twitter:title" content="[[PAGE_TITLE]]" />
-  <meta property="twitter:image" content="[[HOST]][[S3_FOLDER]]/img/social-shining.jpg" />
+  <meta property="twitter:image" content="[[HOST]]/[[S3_FOLDER]]/img/social-shining.jpg" />
   [[CSS]]
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=[[GTAG]]"></script>
@@ -26,13 +26,13 @@
 <body>
   <div class="section section-landing" bg="img/bg-img-2.webp">
     <img class="gif" src="img/before.webp" img-width="363" alt="animation" />
-    <div class="inner">
+    <!-- <div class="inner"> -->
       <img src="img/logo-300x90.png" class="logo" alt="logo" />
-      <h2 style="margin-top: 100px;">シェイクして花火に火をつけよう！ </h2>
-      <div style="margin-top:300px">
+      <h2 style="margin-top: 10%;">シェイクして花火に火をつけよう！ </h2>
+      <div class="btn-bottom">
         <a class="btn btn-tnc" href="javascript:game.show('tnc');">チャレンジする</a>
       </div>
-    </div>
+    <!-- </div> -->
   </div>
   <div class="section section-tnc text-primary">
     <h3>規約と条件</h3>
@@ -43,10 +43,10 @@
   </div>
   <div class="section section-instruction" bg="img/bg-img-2.webp">
     <img src="img/logo-300x90.png" class="logo" alt="logo" />
-    <h4 style="margin-top: 50px;">スマートフォンを持って8秒間シェイクしてください。</br></br> 50回シェイクすると花火が打ちあがり、アイテムがもらえる交換コードをGETできます！</h4>
-    <div style="margin-top:10px">
-      <img src="img/phone-shake.png" width="150" style="margin-top:30px;filter: drop-shadow(0 0px 2px rgba(0,0,0,0.9));" alt="shake" />
-      <h4>音声ONでお楽しみください</h4>
+    <h4 style="margin-top: 10%;">スマートフォンを持って8秒間シェイクしてください。</br></br> 50回シェイクすると花火が打ちあがり、アイテムがもらえる交換コードをGETできます！</h4>
+    <img class="img-phone" src="img/phone-shake.png" style="filter: drop-shadow(0 0px 2px rgba(0,0,0,0.9));" alt="shake" />
+    <h4>音声ONでお楽しみください</h4>
+    <div class="btn-bottom">
       <a class="btn btn-start" href="javascript:game.startGame();">スタート</a>
     </div>
   </div>
@@ -73,34 +73,31 @@
   </div>
   <div class="section section-result-pass" bg="img/bg-img-4.webp">
     <img class="gif" src="img/after.webp" img-width="363" alt="animation" />
-    <div class="inner">
-      <img src="img/logo-300x90.png" class="logo" alt="logo" />
-      <h2 style="margin-bottom: 10px;">達成おめでとう！</h2>
-      <!--<h2 style="margin-bottom: 10px;"><span class="shake-count"></span>回<br /></h2>-->
-      <!--<h4>
-        「深淵覚醒」に成功！結果をシェアしよう！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！</h4>-->
-        <h4 style="text-shadow: 0 2px 4px rgba(0, 0, 0, 100%);">あなたは<span class="shake-count"></span>回シェイクし、美しい花火が打ち上がりました。報酬として「シャイニングニキ」のアイテム交換コードGETしました！今すぐゲームにログインして、豪華アイテムを手に入れよう♪
-        </br>交換コード：<span class="cdkey"></span>
-        </br>引換方法：【my info】→【設定】→【交換コードを入力】</h43>
-        <!-- Put here the CD Key -->
-      <div style="margin-top:250px">
-        <!--<a class="btn btn-outline" href="javascript:game.show('instruction', 'replay');">もう一度試す</a>-->
-        <a class="btn btn-outline" href="https://shiningnikkijpua.onelink.me/q6al/de1a18b0;">ゲームをダウンロード</a>
-        <a class="btn" href="javascript:game.share();">Twitterでシェア</a>
-      </div>
+    <div class="logo-overlay">
+      <img src="img/logo-white.png" class="logo logo-pass" alt="logo" />
     </div>
+    <h2 style="margin-top: 10px;">達成おめでとう！</h2>
+      <h5 style="text-shadow: 0 2px 4px rgba(0, 0, 0, 100%);">あなたは <span class="shake-count"></span>回 シェイクし、美しい花火が打ち上がりました。報酬として「シャイニングニキ」のアイテム交換コードGETしました！今すぐゲームにログインして、豪華アイテムを手に入れよう♪
+      </br></br>交換コード：<span class="cdkey"></span>
+      </br></br>引換方法：【my info】→【設定】→【交換コードを入力】</h5>
+      <!-- Put here the CD Key -->
+    <div class="btn-bottom btn-grp">
+      <!--<a class="btn btn-outline" href="javascript:game.show('instruction', 'replay');">もう一度試す</a>-->
+      <a class="btn btn-outline" href="https://shiningnikkijpua.onelink.me/q6al/de1a18b0;">ゲームをダウンロード</a>
+      <a class="btn" href="javascript:game.share();">Twitterでシェア</a>
+    </div>
+    
   </div>
   <div class="section section-result-fail" bg="img/bg-img-1.webp">
     <img class="gif" src="img/before.webp" img-width="363" alt="animation" />
-    <div class="inner">
-      <img src="img/logo-300x90.png" class="logo" alt="logo" />
-      <h2 style="margin-bottom:30px;"><span class="shake-count"></span>回</h2>
-      <h3>残念……<br />50回シェイクすると花火が上がります。</br> もう一度チャレンジしてみよう！</h3>
-      <div style="margin-top:300px">
-        <a class="btn btn-outline" href="javascript:game.show('instruction','replay');">もう一度試す</a>
-        <a class="btn" href="javascript:game.share();">Twitterでシェア</a>
-      </div>
+    <img src="img/logo-300x90.png" class="logo" alt="logo" />
+    <h2 style="margin-bottom:30px;"><span class="shake-count"></span>回</h2>
+    <h3>残念……<br />50回シェイクすると花火が上がります。</br> もう一度チャレンジしてみよう！</h3>
+    <div class="btn-bottom btn-grp">
+      <a class="btn btn-outline" href="javascript:game.show('instruction','replay');">もう一度試す</a>
+      <a class="btn" href="javascript:game.share();">Twitterでシェア</a>
     </div>
+
   </div>
   [[JAVASCRIPT]]
 </body>

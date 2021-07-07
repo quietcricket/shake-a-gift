@@ -226,4 +226,5 @@ class Utils {
 }
 window.game = new ShakeAGift();
 // game.startGame();
+// game.show("result-pass");
 game.show("landing");
