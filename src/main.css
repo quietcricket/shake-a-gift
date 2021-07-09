@@ -122,7 +122,7 @@ img.emoji {
     position: relative;
     text-align: center;
     padding: 25px;
-    min-height: 90vh;
+    min-height:100vh;
     background-size: cover;
     background-position: 50% 50%;
     overflow: hidden;
@@ -271,7 +271,7 @@ small {
 .btn-bottom{
     margin-top: auto;
     display: flex;
-    margin-bottom: 20%;
+    margin-bottom: 25%;
 }
 
 .section-instruction h4{
@@ -297,4 +297,10 @@ small {
 .logo-overlay{
     background: rgb(0,0,0);
     background: radial-gradient(circle, rgba(0,0,0,0.24693627450980393) 32%, rgba(255,255,255,0) 93%);
+}
+
+.gradient{
+    padding: 0 10px;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,0.2413340336134454) 0%, rgba(0,0,0,0.30575980392156865) 24%);  
 }
