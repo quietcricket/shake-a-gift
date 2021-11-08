@@ -15,86 +15,58 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=[[GTAG]]"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gaTrack(section) { gtag('config', '[[GTAG]]', { page_path: '/' + section, page_title: document.location.pathname + section}); }
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', '[[GTAG]]', { 'cookie_expires': 0 });
+    gtag('config', '[[GTAG]]', { 'cookie_expires': 0, 'send_page_view': false });
+    function gaEvent(name, category, label = null, value = null) { gtag('event', name, { 'category': category, 'label': label, 'value': value }); };
+
+
   </script>
   <!-- End Google Tag Manager -->
 </head>
 
 <body>
-  <div class="section section-landing" bg="img/bg-1.webp">
-    <img class="gif" src="img/before.webp" img-width="363" alt="animation" />
-    <div class="inner">
-      <img src="img/logo.png" class="logo" alt="logo" />
-      <h2>スマホをシェイクして<br />「深淵覚醒」を目指そう！</h2>
-      <div style="margin-top:300px">
-        <a class="btn btn-tnc" href="javascript:game.show('tnc');">「深淵覚醒」に挑戦！</a>
+  <div class="section section-landing" bg="img/bg-1.jpg">
+    <div class="inner" data-pos="55">
+      <h3>Siap melepaskan panah ke sasaran untuk melihat apakah mata kamu setajam Clint dan Kate?</h3>
+      <a class="btn btn-tnc" href="javascript:game.requestPermission()">Siap! </a>
+      <img src="img/btn-circle-bg.png" width="150" class="btn-bg" style="margin-top: -92px;" />
+    </div>
+  </div>
+  <div class="section section-instruction" bg="img/bg-2.jpg">
+    <div class="inner" data-pos="40">
+      <h2>Ambil panahmu dan lepaskan ke<br /> sasaran secepat mungkin.<br />Sudah siap?</h2>
+      <div style="margin-top:10px">
+        <img src="img/phone-shake.png" width="70" alt="shake" style="margin:10px 0;transform: translate(-10px,0);opacity: 0.7;" />
+        <a class="btn btn-start" href="javascript:game.startGame();">Mulai</a>
+        <img src="img/btn-circle-bg.png" class="btn-bg" width="150" style="margin-top: -92px" />
       </div>
     </div>
   </div>
-  <div class="section section-tnc text-primary">
-    <h3>規約と条件</h3>
-    <div class="tnc-details">
-      [[TNC]]
-    </div>
-    <a class="btn" href="javascript:game.requestPermission()">同意して続行する</a>
-  </div>
-  <div class="section section-instruction" bg="img/bg-1.webp">
-    <img src="img/logo.png" class="logo" alt="logo" />
-    <h2>8秒間で60回以上スマホをシェイクして、ドールを深淵覚醒させよう！<br />
-      成功したら、結果をTwitterにシェア！ </h2>
-    <div style="margin-top:10px">
-      <img src="img/phone-shake.png" width="150" style="margin-top:30px;filter: drop-shadow(0 0px 2px rgba(0,0,0,0.9));" alt="shake" />
-      <h4>制限時間お知らせサウンド</h4>
-      <a class="btn btn-start" href="javascript:game.startGame();">スタート！</a>
-    </div>
-  </div>
-  <div class="section section-game" bg="img/bg-1.webp">
-    <img src="img/logo.png" class="logo" alt="logo" />
-    <div class="countdown">
-      <svg class="circle-grey" width="200" height="200">
-        <linearGradient id="g1" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#eee" />
-          <stop offset="100%" stop-color="#ccc" />
-        </linearGradient>
-        <circle cx="100" cy="100" r="80" stroke="url(#g1)" />
-      </svg>
-      <svg class="circle" width="200" height="200">
-        <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop id="timer-color1" offset="0%" />
-          <stop id="timer-color2" offset="100%" />
-        </linearGradient>
-        <circle cx="100" cy="100" r="80" stroke="url(#g2)" />
-      </svg>
+  <div class="section section-game" bg="img/bg-3.jpg">
+    <div bg="img/arrow.png"></div>
+    <div bg="img/target.png"></div>
+    <div bg="img/snowflake.png"></div>
+    <div bg="img/light.png"></div>
+    <div bg="img/confetti.png"></div>
+    <div class="game-area">
+      <img src="img/target.png" width="100" class="target" bg="img/snowflake.png" />
+      <img src="img/arrow.png" width="80" class="arrow" />
     </div>
     <div class="timer"></div>
-    <h2 style="margin-top: 0px;"><span class="shake-count"></span>回</h2>
   </div>
-  <div class="section section-result-pass" bg="img/bg-2.webp">
-    <img class="gif" src="img/after.webp" img-width="638" alt="animation" />
-    <div class="inner">
-      <img src="img/logo.png" class="logo" style="margin-bottom: 0;" alt="logo" />
-      <h2 style="margin-bottom: 10px;"><span class="shake-count"></span>回<br /></h2>
-      <h4>
-        「深淵覚醒」に成功！結果をシェアしよう！チャレンジ成功者のシェア数が多いほど、ゲーム内アイテム「募集契約書」を最大10枚プレゼント！</h4>
-      <div style="margin-top:200px">
-        <a class="btn" href="javascript:game.share();">結果をシェア！</a>
-        <a class="btn btn-outline" href="javascript:game.show('instruction', 'replay');">もう一度試す</a>
+  <div class="section section-success" bg="img/bg-4.jpg">
+    <div class="inner" data-pos="30">
+      <h2>
+        Keren! Kamu berhasil dengan waktu (duration) detik.
+      </h2>
+      <p>Tweet hasilmu buat kasih liat kejelian mata kamu</p>
+      <div style="margin: 15px 0">
+        <a class="btn" href="javascript:game.share();">Tweet hasilmu</a>
+        <a class="btn btn-outline" href="javascript:game.show('instruction', 'replay');">Coba lagi</a>
       </div>
-    </div>
-  </div>
-  <div class="section section-result-fail" bg="img/bg-1.webp">
-    <img class="gif" src="img/before.webp" img-width="363" alt="animation" />
-    <div class="inner">
-      <img src="img/logo.png" class="logo" style="margin-bottom: 0;" alt="animation" />
-      <h2 style="margin-bottom:10px;"><span class="shake-count"></span>回</h2>
-      <h3>残念！もう少し！次こそ<br />「深淵覚醒」を目指そう！</h3>
-      <div style="margin-top:200px">
-        <a class="btn" href="javascript:game.share();">結果をシェア！</a>
-        <a class="btn btn-outline" href="javascript:game.show('instruction','replay');">もう一度試す</a>
-      </div>
+      <iframe width="320" height="180" src="https://www.youtube.com/embed/_MUXSNqVCzE?controls=0" title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
   [[JAVASCRIPT]]

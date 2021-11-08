@@ -1,10 +1,10 @@
 :root {
-    --btn-color: #f33;
+    --btn-color: #7d3d8f;
 }
 
 * {
     box-sizing: border-box;
-    color: rgb(235, 235, 235);
+    color: #2f2a8b;
 }
 
 ::-moz-selection {
@@ -15,6 +15,10 @@
 ::selection {
     background: #000;
     text-shadow: none;
+}
+
+html {
+    background-image: url(img/bg-3.jpg);
 }
 
 /***********************************
@@ -56,19 +60,19 @@ h1 {
 
 h2 {
     line-height: 1.2;
-    font-size: 1.8em;
+    font-size: 1.4em;
     margin: 0;
 }
 
 h3 {
     margin: 0;
-    font-size: 1.4em;
+    font-size: 1.2em;
 }
 
 h1,
 h2,
 h3 {
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 /***********************************
@@ -103,13 +107,10 @@ img.emoji {
     border: solid 2px #222;
 }
 
-.logo {
-    width: 160px;
-    margin: 0 auto 20px auto;
-}
-
-.logo::after {
-    content: "Your Logo Here";
+.inner h3,
+.inner a {
+    position: relative;
+    z-index: 1;
 }
 
 /***********************************
@@ -119,9 +120,8 @@ img.emoji {
     position: relative;
     text-align: center;
     padding: 25px;
-    min-height: 100vh;
-    background-size: cover;
-    background-position: 50% 50%;
+    background-size: contain;
+    background-position: 50% 100%;
 }
 
 .section .inner {
@@ -166,21 +166,6 @@ img.emoji {
     left: 0;
 }
 
-.countdown svg {
-    background-color: transparent;
-}
-
-.countdown svg circle {
-    stroke-width: 25;
-    fill: transparent;
-    stroke-linecap: round;
-}
-
-.countdown svg.circle circle {
-    stroke-dasharray: 500;
-    animation: 8s circletimer linear;
-}
-
 .shake-count {
     font-size: 1.6em;
     color: #f33;
@@ -189,27 +174,12 @@ img.emoji {
     display: inline-block;
 }
 
-#timer-color1 {
-    stop-color: rgb(55, 115, 255);
-}
-
-#timer-color2 {
-    stop-color: rgb(197, 77, 218);
-}
-
 .timer {
-    font-size: 5em;
+    font-size: 2em;
     font-weight: bold;
     color: var(--secondary-color);
     pointer-events: none;
-    margin-top: -200px;
     text-align: center;
-    position: relative;
-    line-height: 200px;
-    z-index: 2;
-    animation-duration: 1s;
-    animation-timing-function: cubic-bezier(.94, .1, .86, .46);
-    animation-fill-mode: forwards;
 }
 
 .timer-small {
@@ -226,34 +196,42 @@ small {
     font-size: 10px;
 }
 
-.gif {
-    user-select: none;
-    pointer-events: none;
-    position: absolute;
-    left: 0;
-    top: 200px;
-}
+
 
 @keyframes zoomin {
     from {
-        transform: scale(1);
-        opacity: 1;
+        transform: scale(0.9);
+        opacity: 0;
     }
 
     to {
-        transform: scale(2);
-        opacity: 0;
+        transform: scale(1.1);
+        opacity: 1;
     }
 }
 
-@keyframes zoomin2 {
-    from {
-        transform: scale(1);
-        opacity: 1;
-    }
+.btn-bg {
+    animation-duration: 1s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-name: zoomin;
+    transform-origin: center center;
+}
 
-    to {
-        transform: scale(2);
-        opacity: 0;
-    }
+.section-game {
+    padding: 0;
+}
+
+.section-game {
+    padding-top: 20px;
+    ;
+    overflow: hidden;
+    user-select: none;
+}
+
+.arrow {
+    transform-origin: 50% 0;
+    position: absolute;
+    left: 0;
+    top: 0;
 }

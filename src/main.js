@@ -1,19 +1,83 @@
-class ShakeAGift {
+class Blocks {
+  constructor(container) {
+    this.img = new Image();
+    this.img.src = Math.random() < 0.5 ? 'img/snowflake.png' : 'img/light.png';
+    this.img.classList.append('block');
+  }
+}
+class ArrowTransform {
 
-  constructor() {
-    let utils = new Utils();
-    utils.webpPolyfill();
-    utils.preloadBackground();
-    utils.initSound(['tik', 'timeup']);
-    this.utils = utils;
+  constructor(ele, container) {
+    this.ele = ele;
+    this.container = container;
+    this.xmin = -ele.offsetHeight / 2;
+    this.xmax = container.offsetWidth - ele.offsetHeight / 2;
+    this.ymin = 0;
+    this.ymax = container.offsetHeight;
+
+    this.x = this.xmax / 2;
+    this.y = this.ymax - ele.offsetHeight;
+    this.sx = 0;
+    this.sy = 0;
+    this.ax = 0;
+    this.ay = 0;
   }
 
-  show(section, section_title) {
+  _clamp(v, min, max) {
+    if (v < min) return min;
+    if (v > max) return max;
+    return v;
+  }
+
+  _bounce(v, min, max) {
+    if (v < min) return min;
+    if (v > max) return max;
+    return v;
+  }
+
+  update() {
+    const MAX_SPEED = 5;
+    const ACC_SCALING = 0.1;
+    this.sx = this._clamp(this.sx + this.ax * ACC_SCALING, -MAX_SPEED, MAX_SPEED);
+    this.sy = this._clamp(this.sy + this.ay * ACC_SCALING, -MAX_SPEED, MAX_SPEED);
+
+    // if (this.x == this.xmin && this.sx < 0 || this.x == this.xmax && this.sx > 0) this.sx *= -1;
+    // if (this.y == this.ymin && this.sy < 0 || this.y == this.ymax && this.sy > 0) this.sy *= -1;
+
+    this.x = this._clamp(this.x + this.sx, this.xmin, this.xmax);
+    this.y = this._clamp(this.y + this.sy, this.ymin, this.ymax);
+    this.sx *= 0.95;
+    this.sy *= 0.95;
+
+    return `translate(${this.x}px,${this.y}px) rotate(${Math.atan2(this.sy, this.sx) + Math.PI / 2}rad`;
+  }
+
+
+}
+class ShakeAGift {
+  constructor() {
+    new Utils().preloadBackground();
+    window.addEventListener('resize', this.resize);
+    this.resize();
+    this.timer = document.querySelector('.timer');
+    this.arrow = document.querySelector('.arrow');
+  }
+  resize() {
+    let w = document.querySelector('.section').offsetWidth;
+    let h = w / 9 * 16;
+    document.querySelectorAll('.section').forEach(ele => {
+      ele.style.height = h + 'px';
+      // ele.style.marginTop = (window.innerHeight - h) / 2 + 'px';
+    });
+    document.querySelectorAll('[data-pos]').forEach(ele => {
+      ele.style.marginTop = h * parseInt(ele.getAttribute('data-pos')) / 100 + 'px';
+    });
+    document.querySelector('.game-area').style.height = h - 100 + 'px';
+  }
+
+  show(section, value = null) {
     // Google Analytics Tracking
-    if (section != 'landing') {
-      section_title = section_title ? section_title : section;
-      gaTrack(section_title);
-    }
+    gaEvent(section, 'section-view', section, value);
     // Show and hide corresponding section
     document.querySelectorAll(".section").forEach(ele => {
       if (ele.classList.contains("section-" + section)) {
@@ -25,71 +89,30 @@ class ShakeAGift {
   }
 
   startGame() {
-    document.querySelector(".countdown").classList.remove("hidden");
-    document.querySelector(".section-game .shake-count").innerHTML = 0;
-    document.querySelector("svg.circle circle").style.strokeDashoffset = 1;
     this.startTime = new Date().getTime();
-    this.currentTime = -1;
-    this.shakeCount = 0;
     this.show("game");
+    window.addEventListener('devicemotion', this._motionUpdated);
+    this.aTransform = new ArrowTransform(document.querySelector('.arrow'), document.querySelector('.game-area'));
     this._updateGame();
   }
-
-  endGame() {
-    this.utils.playSound('timeup');
-    window.removeEventListener("devicemotion", this._monitorShake);
-    document.querySelectorAll(".shake-count").forEach(ele => (ele.innerHTML = this.shakeCount));
-    if (this.shakeCount >= CONFIG.PRIZE_UNLOCK) {
-      this.show('result-pass', 'result ' + this.shakeCount);
-    } else {
-      this.show('result-fail', 'result ' + this.shakeCount);
-    }
-  }
-
   _updateGame() {
-    // reference self via window.game instance
-    let t = (new Date().getTime() - game.startTime);
-    // Show Ready Go
-    let seconds = Math.floor(t / 1000);
-    if (seconds >= 2) {
-      // update the circle
-      document.querySelector("svg.circle circle").style.strokeDashoffset = (t - 2000) / CONFIG.GAME_DURATION / 2;
-    }
-    //Game end
-    if (seconds >= CONFIG.GAME_DURATION + 2) {
-      game.endGame();
-      return;
-    }
-    requestAnimationFrame(game._updateGame);
-    if (seconds != game.currentTime) {
-      game.utils.playSound('tik');
-      let ele = document.querySelector(".timer");
-      if (seconds == 0) {
-        ele.innerHTML = "よーい、ドン！";
-        ele.classList.add("timer-small");
-      } else if (seconds == 1) {
-        ele.innerHTML = "GO";
-      } else if (seconds == 2) {
-        //TODO: swapping the background here
-        ele.classList.remove("timer-small");
-        game.prevMotion = undefined;
-        game.shakeTime=new Date().getTime();
-        window.addEventListener("devicemotion", game._monitorShake);
-        ele.innerHTML = CONFIG.GAME_DURATION + 2 - seconds;
-      } else {
-        ele.innerHTML = CONFIG.GAME_DURATION + 2 - seconds;
-      }
-      ele.style.animationName = "";
-      void ele.offsetWidth;
-      ele.style.animationName = "zoomin";
-      game.currentTime = seconds;
-    }
+    window.requestAnimationFrame(t => this._updateGame());
+    this.duration = (new Date().getTime() - this.startTime) / 1000;
+    this.timer.innerHTML = `${this.duration.toFixed(1)}s`;
+    this.arrow.style.transform = this.aTransform.update();
   }
+  endGame() {
+    window.removeEventListener("devicemotion", this._motionUpdated);
+    document.querySelectorAll(".time").forEach(ele => (ele.innerHTML = this.shakeCount));
+    this.show('success');
+  }
+
   /**
    * Share result as a tweet
    */
   share() {
-    let message = this.shakeCount >= CONFIG[''] ? CONFIG.SUCCESS_TWEET : CONFIG.FAILURE_TWEET;
+    gaEvent('share', 'btn-click');
+    let message = "Yes berhasil! Jeli kan kaya Clinton & Kate🎯🏹  Coba dong pada ikutan juga sembari nunggu streaming #HawkeyeID di #DisneyPlusHotstarID";
     message = message.replace('[[SHAKE_COUNT]]', this.shakeCount) + '\n' + document.location.href;
     document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
   }
@@ -116,30 +139,9 @@ class ShakeAGift {
     }
   }
 
-  _monitorShake(e) {
-    let currMotion = {
-      x: e.accelerationIncludingGravity.x,
-      y: e.accelerationIncludingGravity.y,
-      z: e.accelerationIncludingGravity.z,
-    };
-    if (!game.prevMotion) {
-      game.prevMotion = { x: currMotion.x, y: currMotion.y, z: currMotion.z };
-      game.totalMotion = { x: 0, y: 0, z: 0 };
-      return;
-    }
-    game.totalMotion.x += Math.abs(currMotion.x - game.prevMotion.x);
-    game.totalMotion.y += Math.abs(currMotion.y - game.prevMotion.y);
-    game.totalMotion.z += Math.abs(currMotion.z - game.prevMotion.z);
-    game.prevMotion = { x: currMotion.x, y: currMotion.y, z: currMotion.z };
-    let t = new Date().getTime();
-    if (t - game.shakeTime >= CONFIG.SHAKE_INTERVAL) {
-      game.shakeTime = t;
-      if (game.totalMotion.x + game.totalMotion.y + game.totalMotion.z > CONFIG.SHAKE_THRESHOLD * 3) {
-        game.shakeCount++;
-        document.querySelector(".section-game .shake-count").innerHTML = game.shakeCount;
-      }
-      game.totalMotion = { x: 0, y: 0, z: 0 };
-    }
+  _motionUpdated(e) {
+    game.aTransform.ax = -e.accelerationIncludingGravity.x;
+    game.aTransform.ay = e.accelerationIncludingGravity.y - 4;
   }
 }
 /**
@@ -212,3 +214,5 @@ class Utils {
 window.game = new ShakeAGift();
 // game.startGame();
 game.show("landing");
+// game.show("success");
+// game.startGame();

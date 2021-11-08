@@ -69,6 +69,6 @@ async function populate() {
 		}
 	}
 }
-populate();
+// populate();
 // getCoupon(3);
 // exports.handler();

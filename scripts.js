@@ -10,7 +10,8 @@ async function genHTML() {
 	let config = JSON.parse(fs.readFileSync("config.json"));
 	let html = fs.readFileSync(path.join('src', 'index.html')).toString('utf-8');
 	let css = await minify(path.join('src', 'main.css'));
-	let js = await minify(path.join('src', 'main.js'));
+	// let js = await minify(path.join('src', 'main.js'));
+	let js = fs.readFileSync(path.join('src', 'main.js')).toString('utf-8');
 	let tnc = fs.readFileSync(path.join('src', 'tnc.md')).toString('utf-8');
 
 	config['JAVASCRIPT'] = `<script>\nconst CONFIG=${JSON.stringify(config)};\n${js}</script>`;
