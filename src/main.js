@@ -1,12 +1,35 @@
-class Blocks {
-  constructor(container) {
+class Obstacle {
+  constructor(container, size, row, col) {
+    this.speed = 0.5;
+    this.container = container;
+    this.size = size;
+    this.row = row;
+    this.col = col;
     this.img = new Image();
     this.img.src = Math.random() < 0.5 ? 'img/snowflake.png' : 'img/light.png';
-    this.img.classList.append('block');
+    this.img.classList.add('obstacle');
+    this.img.setAttribute('width', size);
+    this.container.appendChild(this.img);
+    this.x = size * (col + 0.5);
+    this.y = size * (row + 0.5);
+    this.rotation = Math.random() * Math.PI;
+    this.rspeed = Math.random() - 0.5;
+    this.update();
   }
+
+  update() {
+    this.y += this.speed;
+    this.rotation += this.rspeed * 4;
+    this.img.style.transform = `translate(${this.x - this.size / 2}px, ${this.y - this.size / 2}px) rotate(${this.rotation}deg)`;
+    if (this.y > this.container.offsetHeight) {
+      this.container.removeChild(this.img);
+      return true;
+    }
+    return false;
+  }
+
 }
 class ArrowTransform {
-
   constructor(ele, container) {
     this.ele = ele;
     this.container = container;
@@ -35,7 +58,17 @@ class ArrowTransform {
     return v;
   }
 
-  update() {
+  _collision(ob) {
+    let r = ob.size / 2;
+    let dx = ob.x - r - this.x;
+    let dy = ob.y - this.y;
+    if (dx * dx + dy * dy < r * r) {
+      let ang = Math.atan2(dy, dx);
+      this.x = ob.x - r - r * Math.cos(ang);
+      this.y = ob.y - r * Math.sin(ang);
+    }
+  }
+  update(obstacles) {
     const MAX_SPEED = 5;
     const ACC_SCALING = 0.1;
     this.sx = this._clamp(this.sx + this.ax * ACC_SCALING, -MAX_SPEED, MAX_SPEED);
@@ -46,8 +79,13 @@ class ArrowTransform {
 
     this.x = this._clamp(this.x + this.sx, this.xmin, this.xmax);
     this.y = this._clamp(this.y + this.sy, this.ymin, this.ymax);
+
     this.sx *= 0.95;
     this.sy *= 0.95;
+
+    for (let ob of obstacles) {
+      this._collision(ob);
+    }
 
     return `translate(${this.x}px,${this.y}px) rotate(${Math.atan2(this.sy, this.sx) + Math.PI / 2}rad`;
   }
@@ -61,6 +99,7 @@ class ShakeAGift {
     this.resize();
     this.timer = document.querySelector('.timer');
     this.arrow = document.querySelector('.arrow');
+    this.container = document.querySelector('.game-area');
   }
   resize() {
     let w = document.querySelector('.section').offsetWidth;
@@ -92,14 +131,26 @@ class ShakeAGift {
     this.startTime = new Date().getTime();
     this.show("game");
     window.addEventListener('devicemotion', this._motionUpdated);
-    this.aTransform = new ArrowTransform(document.querySelector('.arrow'), document.querySelector('.game-area'));
+    this.aTransform = new ArrowTransform(this.arrow, this.container);
+    this.obstacles = [];
     this._updateGame();
+
+    for (let i = 0; i < 5; i++) {
+      this.obstacles.push(new Obstacle(this.container, this.container.offsetWidth / 5, i + 2, i % 5));
+    }
   }
   _updateGame() {
     window.requestAnimationFrame(t => this._updateGame());
     this.duration = (new Date().getTime() - this.startTime) / 1000;
     this.timer.innerHTML = `${this.duration.toFixed(1)}s`;
-    this.arrow.style.transform = this.aTransform.update();
+    for (let i = this.obstacles.length - 1; i >= 0; i--) {
+      let ob = this.obstacles[i];
+      if (ob.update()) {
+        this.obstacles.splice(i, 1);
+        this.obstacles.push(new Obstacle(this.container, this.container.offsetWidth / 5, 2, Math.round(Math.random() * 5)));
+      }
+    }
+    this.arrow.style.transform = this.aTransform.update(this.obstacles);
   }
   endGame() {
     window.removeEventListener("devicemotion", this._motionUpdated);
@@ -213,6 +264,6 @@ class Utils {
 }
 window.game = new ShakeAGift();
 // game.startGame();
-game.show("landing");
+// game.show("landing");
 // game.show("success");
-// game.startGame();
+game.show("instruction");
