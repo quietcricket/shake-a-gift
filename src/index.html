@@ -9,7 +9,7 @@
   <meta name="twitter:site" content="[[TWITTER_HANDLE]]" />
   <meta name="twitter:creator" content="[[TWITTER_HANDLE]]" />
   <meta property="twitter:title" content="[[PAGE_TITLE]]" />
-  <meta property="twitter:image" content="[[HOST]][[S3_FOLDER]]/img/social.jpg" />
+  <meta property="twitter:image" content="[[HOST]]/img/social.jpg" />
   [[CSS]]
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=[[GTAG]]"></script>
@@ -33,7 +33,7 @@
       <img src="img/btn-circle-bg.png" width="150" class="btn-bg" style="margin-top: -92px;" />
     </div>
   </div>
-  <div class="section section-instruction" bg="img/bg-2.jpg">
+  <div class="section section-instruction hidden" bg="img/bg-2.jpg">
     <div class="inner" data-pos="40">
       <h2>Ambil panahmu dan lepaskan ke<br /> sasaran secepat mungkin.<br />Sudah siap?</h2>
       <div style="margin-top:10px">
@@ -43,22 +43,23 @@
       </div>
     </div>
   </div>
-  <div class="section section-game" bg="img/bg-3.jpg">
+  <div class="section section-game hidden" bg="img/bg-3.jpg">
     <div bg="img/arrow.png"></div>
     <div bg="img/target.png"></div>
     <div bg="img/snowflake.png"></div>
     <div bg="img/light.png"></div>
-    <div bg="img/confetti.png"></div>
+    <div bg="img/confetti.gif"></div>
     <div class="game-area">
       <img src="img/target.png" width="100" class="target" bg="img/snowflake.png" />
       <img src="img/arrow.png" width="80" class="arrow" />
+      <img src="img/confetti.gif" class="confetti" style="transform: translate(0,-100px);display:none" />
     </div>
     <div class="timer"></div>
   </div>
-  <div class="section section-success" bg="img/bg-4.jpg">
+  <div class="section section-success hidden" bg="img/bg-4.jpg">
     <div class="inner" data-pos="30">
       <h2>
-        Keren! Kamu berhasil dengan waktu (duration) detik.
+        Keren! Kamu berhasil dengan waktu <span class="timer-small"></span> detik.
       </h2>
       <p>Tweet hasilmu buat kasih liat kejelian mata kamu</p>
       <div style="margin: 15px 0">

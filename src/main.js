@@ -12,8 +12,15 @@ class Obstacle {
     this.container.appendChild(this.img);
     this.x = size * (col + 0.5);
     this.y = size * (row + 0.5);
-    this.rotation = Math.random() * Math.PI;
-    this.rspeed = Math.random() - 0.5;
+    if (Math.random() < 0.5) {
+      this.img.src = 'img/snowflake.png';
+      this.rotation = Math.random() * Math.PI;
+      this.rspeed = Math.random() - 0.5;
+    } else {
+      this.img.src = 'img/light.png';
+      this.rotation = 0
+      this.rspeed = 0
+    }
     this.update();
   }
 
@@ -21,11 +28,6 @@ class Obstacle {
     this.y += this.speed;
     this.rotation += this.rspeed * 4;
     this.img.style.transform = `translate(${this.x - this.size / 2}px, ${this.y - this.size / 2}px) rotate(${this.rotation}deg)`;
-    if (this.y > this.container.offsetHeight) {
-      this.container.removeChild(this.img);
-      return true;
-    }
-    return false;
   }
 
 }
@@ -59,7 +61,7 @@ class ArrowTransform {
   }
 
   _collision(ob) {
-    let r = ob.size / 2;
+    let r = ob.size / 1.5;
     let dx = ob.x - r - this.x;
     let dy = ob.y - this.y;
     if (dx * dx + dy * dy < r * r) {
@@ -92,9 +94,10 @@ class ArrowTransform {
 
 
 }
+
 class ShakeAGift {
   constructor() {
-    new Utils().preloadBackground();
+    this.utils = new Utils();
     window.addEventListener('resize', this.resize);
     this.resize();
     this.timer = document.querySelector('.timer');
@@ -111,7 +114,7 @@ class ShakeAGift {
     document.querySelectorAll('[data-pos]').forEach(ele => {
       ele.style.marginTop = h * parseInt(ele.getAttribute('data-pos')) / 100 + 'px';
     });
-    document.querySelector('.game-area').style.height = h - 100 + 'px';
+    document.querySelector('.game-area').style.height = h - 80 + 'px';
   }
 
   show(section, value = null) {
@@ -133,29 +136,67 @@ class ShakeAGift {
     window.addEventListener('devicemotion', this._motionUpdated);
     this.aTransform = new ArrowTransform(this.arrow, this.container);
     this.obstacles = [];
+    for (let i = 4; i > -1; i -= 2) {
+      this._gen_obstacles(i + 2);
+    }
+    this.counter = 0;
     this._updateGame();
+  }
 
-    for (let i = 0; i < 5; i++) {
-      this.obstacles.push(new Obstacle(this.container, this.container.offsetWidth / 5, i + 2, i % 5));
+  _gen_obstacles(row) {
+    let arr = [0, 1, 2, 3, 4];
+    for (let i = 0; i < arr.length; i++) {
+      let p = Math.floor(Math.random() * arr.length);
+      let temp = arr[i];
+      arr[i] = arr[p];
+      arr[p] = temp;
+    }
+    for (let i = 0; i < 4; i++) {
+      let ob = new Obstacle(this.container, this.container.offsetWidth / arr.length, row, arr[i]);
+      this.obstacles.push(ob);
     }
   }
   _updateGame() {
-    window.requestAnimationFrame(t => this._updateGame());
     this.duration = (new Date().getTime() - this.startTime) / 1000;
     this.timer.innerHTML = `${this.duration.toFixed(1)}s`;
     for (let i = this.obstacles.length - 1; i >= 0; i--) {
-      let ob = this.obstacles[i];
-      if (ob.update()) {
-        this.obstacles.splice(i, 1);
-        this.obstacles.push(new Obstacle(this.container, this.container.offsetWidth / 5, 2, Math.round(Math.random() * 5)));
+      this.obstacles[i].update();
+    }
+    let ob = this.obstacles[0];
+    if (this.counter++ > ob.size / ob.speed * 2) {
+      for (let i = 0; i < 4; i++) {
+        this.container.removeChild(this.obstacles[i].img);
       }
+      this.obstacles.splice(0, 4);
+      this._gen_obstacles(2);
+      this.counter = 0;
     }
     this.arrow.style.transform = this.aTransform.update(this.obstacles);
+    let tx = this.container.offsetWidth / 2 - this.arrow.offsetWidth / 2;
+    let ty = 70;
+    let dx = this.aTransform.x - tx;     //hard coded
+    let dy = this.aTransform.y - ty;
+    if (dx * dx + dy * dy < 400) {
+      this.aTransform.x = tx;
+      this.aTransform.y = ty;
+      this.arrow.style.transform = this.aTransform.update([]);
+      this.endGame();
+    }
+    if (!this.gameEnded) {
+      window.requestAnimationFrame(t => this._updateGame());
+    }
   }
   endGame() {
+    this.gameEnded = true;
     window.removeEventListener("devicemotion", this._motionUpdated);
-    document.querySelectorAll(".time").forEach(ele => (ele.innerHTML = this.shakeCount));
-    this.show('success');
+    document.querySelector('.confetti').style.display = 'inline-block';
+    document.querySelector('.timer-small').innerHTML = this.duration.toFixed(1) + 's';
+    setTimeout(() => {
+      this.obstacles.forEach(ob => this.container.removeChild(ob.img));
+      document.querySelector('.confetti').style.display = 'none';
+      this.gameEnded = false;
+      this.show('success');
+    }, 2000);
   }
 
   /**
@@ -164,8 +205,8 @@ class ShakeAGift {
   share() {
     gaEvent('share', 'btn-click');
     let message = "Yes berhasil! Jeli kan kaya Clinton & Kate🎯🏹  Coba dong pada ikutan juga sembari nunggu streaming #HawkeyeID di #DisneyPlusHotstarID";
-    message = message.replace('[[SHAKE_COUNT]]', this.shakeCount) + '\n' + document.location.href;
-    document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(messages[n]);
+    message = `${this.duration.toFixed(1)}s!\n\n${message}\n\n${document.location.href}`;
+    document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(message);
   }
   /**
    * On iOS motion sensor requires permission from the user
@@ -191,8 +232,13 @@ class ShakeAGift {
   }
 
   _motionUpdated(e) {
-    game.aTransform.ax = -e.accelerationIncludingGravity.x;
-    game.aTransform.ay = e.accelerationIncludingGravity.y - 4;
+    if (navigator.userAgent.match(/iPhone|iPod|iPad/)) {
+      game.aTransform.ax = e.accelerationIncludingGravity.x;
+      game.aTransform.ay = -e.accelerationIncludingGravity.y - 4;
+    } else {
+      game.aTransform.ax = -e.accelerationIncludingGravity.x;
+      game.aTransform.ay = e.accelerationIncludingGravity.y - 4;
+    }
   }
 }
 /**
@@ -229,7 +275,7 @@ class Utils {
 
   preloadBackground() {
     this.preloadQueue = [];
-    document.querySelectorAll(".section[bg]").forEach(ele => this.preloadQueue.push(ele.getAttribute('bg')))
+    document.querySelectorAll("[bg]").forEach(ele => this.preloadQueue.push(ele.getAttribute('bg')))
     this._preload();
   }
 
@@ -264,6 +310,6 @@ class Utils {
 }
 window.game = new ShakeAGift();
 // game.startGame();
-// game.show("landing");
+game.show("landing");
 // game.show("success");
-game.show("instruction");
+// game.show("instruction");

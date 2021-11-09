@@ -10,13 +10,13 @@ async function genHTML() {
 	let config = JSON.parse(fs.readFileSync("config.json"));
 	let html = fs.readFileSync(path.join('src', 'index.html')).toString('utf-8');
 	let css = await minify(path.join('src', 'main.css'));
-	// let js = await minify(path.join('src', 'main.js'));
-	let js = fs.readFileSync(path.join('src', 'main.js')).toString('utf-8');
-	let tnc = fs.readFileSync(path.join('src', 'tnc.md')).toString('utf-8');
+	let js = await minify(path.join('src', 'main.js'));
+	// let js = fs.readFileSync(path.join('src', 'main.js')).toString('utf-8');
+	// let tnc = fs.readFileSync(path.join('src', 'tnc.md')).toString('utf-8');
 
 	config['JAVASCRIPT'] = `<script>\nconst CONFIG=${JSON.stringify(config)};\n${js}</script>`;
 	config['CSS'] = `<style>${css}</style>`;
-	config['TNC'] = (new showdown.Converter()).makeHtml(tnc);
+	// config['TNC'] = (new showdown.Converter()).makeHtml(tnc);
 
 	for (let key in config) {
 		html = html.replaceAll(`[[${key}]]`, config[key]);
@@ -54,10 +54,11 @@ async function deploy() {
 	for (let f of fs.readdirSync(DEPLOY_FOLDER)) {
 		if (f.endsWith('html')) fs.rmSync(path.join(DEPLOY_FOLDER, f));
 	};
-	let filename = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5) + ".html";
+	let filename = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3) + ".html";
 	let html = await genHTML()
 	fs.writeFileSync(path.join(DEPLOY_FOLDER, filename), html);
 	require('sync-directory')(path.resolve('src', 'img'), path.resolve(DEPLOY_FOLDER, 'img'));
+	
 }
 
 async function genAnimation() {

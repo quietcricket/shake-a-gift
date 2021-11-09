@@ -17,10 +17,6 @@
     text-shadow: none;
 }
 
-html {
-    background-image: url(img/bg-3.jpg);
-}
-
 /***********************************
 * Utitlity classes
 ***********************************/
@@ -49,8 +45,9 @@ html {
 body {
     max-width: 420px;
     margin: 0 auto;
-    background-color: black;
+    background-color: white;
     background-size: cover;
+    
 }
 
 h1 {
@@ -183,7 +180,7 @@ img.emoji {
 }
 
 .timer-small {
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 .timeup {
@@ -244,4 +241,7 @@ small {
     /* border:solid 1px black; */
     /* border-radius: 100%;; */
     transform-origin: center center;
+}
+.timer{
+    margin-top: 10px;
 }
