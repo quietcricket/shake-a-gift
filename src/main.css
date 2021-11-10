@@ -1,3 +1,11 @@
+
+@import url("https://fast.fonts.net/lt/1.css?apiType=css&c=e8c51ca8-8d01-4e6a-ac45-e6ab81930753&fontids=6241524");
+@font-face{
+    font-family:"Avenir";
+    src:url("img/avenir.woff2") format("woff2"),url("img/avenir.woff") format("woff");
+}
+
+
 :root {
     --btn-color: #7d3d8f;
 }
@@ -5,6 +13,7 @@
 * {
     box-sizing: border-box;
     color: #2f2a8b;
+    font-family: Avenir, Helvetica, sans-serif;
 }
 
 ::-moz-selection {
@@ -63,7 +72,7 @@ h2 {
 
 h3 {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 h1,
@@ -180,7 +189,7 @@ img.emoji {
 }
 
 .timer-small {
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 .timeup {

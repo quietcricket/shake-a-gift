@@ -99,17 +99,20 @@ class ShakeAGift {
   constructor() {
     this.utils = new Utils();
     window.addEventListener('resize', this.resize);
-    this.resize();
     this.timer = document.querySelector('.timer');
     this.arrow = document.querySelector('.arrow');
     this.container = document.querySelector('.game-area');
+    this.duration = 0;
   }
   resize() {
-    let w = document.querySelector('.section').offsetWidth;
+    let w = document.body.offsetWidth;
     let h = w / 9 * 16;
+    if (h > window.innerHeight) {
+      h = window.innerHeight;
+      document.body.style.maxWidth = h / 16 * 9 + 'px';
+    }
     document.querySelectorAll('.section').forEach(ele => {
       ele.style.height = h + 'px';
-      // ele.style.marginTop = (window.innerHeight - h) / 2 + 'px';
     });
     document.querySelectorAll('[data-pos]').forEach(ele => {
       ele.style.marginTop = h * parseInt(ele.getAttribute('data-pos')) / 100 + 'px';
@@ -118,6 +121,7 @@ class ShakeAGift {
   }
 
   show(section, value = null) {
+    this.resize();
     // Google Analytics Tracking
     gaEvent(section, 'section-view', section, value);
     // Show and hide corresponding section
@@ -128,6 +132,7 @@ class ShakeAGift {
         ele.classList.add("hidden");
       }
     });
+
   }
 
   startGame() {
@@ -136,7 +141,7 @@ class ShakeAGift {
     window.addEventListener('devicemotion', this._motionUpdated);
     this.aTransform = new ArrowTransform(this.arrow, this.container);
     this.obstacles = [];
-    for (let i = 4; i > -1; i -= 2) {
+    for (let i = 8; i > -1; i -= 2) {
       this._gen_obstacles(i + 2);
     }
     this.counter = 0;
@@ -144,14 +149,18 @@ class ShakeAGift {
   }
 
   _gen_obstacles(row) {
-    let arr = [0, 1, 2, 3, 4];
+    this.cols = 8;
+    let arr = [];
+    for (let i = 0; i < this.cols; i++)  arr.push(i);
+
     for (let i = 0; i < arr.length; i++) {
       let p = Math.floor(Math.random() * arr.length);
       let temp = arr[i];
       arr[i] = arr[p];
       arr[p] = temp;
     }
-    for (let i = 0; i < 4; i++) {
+
+    for (let i = 0; i < arr.length - 1; i++) {
       let ob = new Obstacle(this.container, this.container.offsetWidth / arr.length, row, arr[i]);
       this.obstacles.push(ob);
     }
@@ -164,10 +173,10 @@ class ShakeAGift {
     }
     let ob = this.obstacles[0];
     if (this.counter++ > ob.size / ob.speed * 2) {
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < this.cols - 1; i++) {
         this.container.removeChild(this.obstacles[i].img);
       }
-      this.obstacles.splice(0, 4);
+      this.obstacles.splice(0, this.cols - 1);
       this._gen_obstacles(2);
       this.counter = 0;
     }

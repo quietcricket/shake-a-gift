@@ -19,8 +19,6 @@
     gtag('js', new Date());
     gtag('config', '[[GTAG]]', { 'cookie_expires': 0, 'send_page_view': false });
     function gaEvent(name, category, label = null, value = null) { gtag('event', name, { 'category': category, 'label': label, 'value': value }); };
-
-
   </script>
   <!-- End Google Tag Manager -->
 </head>
@@ -34,10 +32,10 @@
     </div>
   </div>
   <div class="section section-instruction hidden" bg="img/bg-2.jpg">
-    <div class="inner" data-pos="40">
-      <h2>Ambil panahmu dan lepaskan ke<br /> sasaran secepat mungkin.<br />Sudah siap?</h2>
+    <div class="inner" data-pos="35">
+      <h3>Gerakkan ponselmu untuk mengendalikan anak panah<br />Hindari rintangan dan capai sasaran secepat mungkin</h3>
       <div style="margin-top:10px">
-        <img src="img/phone-shake.png" width="70" alt="shake" style="margin:10px 0;transform: translate(-10px,0);opacity: 0.7;" />
+        <img src="img/phone-shake.png" width="60" alt="shake" style="margin:10px 0;transform: translate(-10px,0);opacity: 0.7;" />
         <a class="btn btn-start" href="javascript:game.startGame();">Mulai</a>
         <img src="img/btn-circle-bg.png" class="btn-bg" width="150" style="margin-top: -92px" />
       </div>
@@ -58,10 +56,8 @@
   </div>
   <div class="section section-success hidden" bg="img/bg-4.jpg">
     <div class="inner" data-pos="30">
-      <h2>
-        Keren! Kamu berhasil dengan waktu <span class="timer-small"></span> detik.
-      </h2>
-      <p>Tweet hasilmu buat kasih liat kejelian mata kamu</p>
+      <h2> Keren! Kamu berhasil dengan waktu <span class="timer-small"></span> detik. </h2>
+      <p style="margin: 0;">Tweet hasilmu buat kasih liat kejelian mata kamu</p>
       <div style="margin: 15px 0">
         <a class="btn" href="javascript:game.share();">Tweet hasilmu</a>
         <a class="btn btn-outline" href="javascript:game.show('instruction', 'replay');">Coba lagi</a>
