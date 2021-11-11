@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+
+<head>
+  <title>[[PAGE_TITLE]]</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+  <meta charset="utf-8" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="[[TWITTER_HANDLE]]" />
+  <meta name="twitter:creator" content="[[TWITTER_HANDLE]]" />
+  <meta property="twitter:title" content="[[PAGE_TITLE]]" />
+  <meta property="twitter:image" content="[[HOST]]/img/social.jpg" />
+  [[CSS]]
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=[[GTAG]]"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', '[[GTAG]]', { 'cookie_expires': 0, 'send_page_view': false });
+    function gaEvent(name, category, label = null, value = null) { gtag('event', name, { 'category': category, 'label': label, 'value': value }); };
+  </script>
+  <!-- End Google Tag Manager -->
+</head>
+
+<body>
+  <div class="section section-landing" bg="img/bg-1.jpg">
+    <div class="inner" data-pos="55">
+      <h3>Siap melepaskan panah ke sasaran untuk melihat apakah mata kamu setajam Clint dan Kate?</h3>
+      <a class="btn btn-tnc" href="javascript:game.requestPermission()">Siap! </a>
+      <img src="img/btn-circle-bg.png" width="150" class="btn-bg" style="margin-top: -92px;" />
+    </div>
+  </div>
+  <div class="section section-instruction hidden" bg="img/bg-2.jpg">
+    <div class="inner" data-pos="38">
+      <h3>Yuk, ikuti langkah ini</h3>
+      <p>Step 1: Klik mulai<br />
+        Step 2: Gerakkan ponselmu ke<br/>atas-bawah dan kanan-kiri<br />
+        Step 3: Hindari rintangan<br />
+        Step 4: Capai sasaran secepat mungkin</p>
+      <div style="margin-top:10px">
+        <a class="btn btn-start" href="javascript:game.startGame();">Mulai</a>
+        <img src="img/btn-circle-bg.png" class="btn-bg" width="150" style="margin-top: -92px" />
+      </div>
+    </div>
+  </div>
+  <div class="section section-game hidden" bg="img/bg-3.jpg">
+    <div bg="img/arrow.png"></div>
+    <div bg="img/target.png"></div>
+    <div bg="img/snowflake.png"></div>
+    <div bg="img/light.png"></div>
+    <div bg="img/confetti.gif"></div>
+    <div class="game-area">
+      <img src="img/target.png" width="100" class="target" bg="img/snowflake.png" />
+      <img src="img/arrow.png" width="80" class="arrow" />
+      <img src="img/confetti.gif" class="confetti" style="transform: translate(0,-100px);display:none" />
+    </div>
+    <div class="timer"></div>
+  </div>
+  <div class="section section-success hidden" bg="img/bg-5.jpg">
+    <div class="inner" data-pos="25">
+      <h2> Keren! Kamu berhasil dengan waktu <span class="timer-small"></span> detik. </h2>
+      <p style="margin: 0;">Tweet hasilmu buat kasih liat kejelian mata kamu</p>
+      <div style="margin: 15px 0">
+        <a class="btn" href="javascript:game.share();">Tweet hasilmu</a>
+        <a class="btn btn-outline" href="javascript:game.show('instruction', 'replay');">Coba lagi</a>
+      </div>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/_MUXSNqVCzE?controls=0" title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+  [[JAVASCRIPT]]
+</body>
+
+</html>

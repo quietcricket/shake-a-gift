@@ -35,8 +35,8 @@ class ArrowTransform {
   constructor(ele, container) {
     this.ele = ele;
     this.container = container;
-    this.xmin = -ele.offsetHeight / 2;
-    this.xmax = container.offsetWidth - ele.offsetHeight / 2;
+    this.xmin = -ele.offsetHeight / 2 + 14;
+    this.xmax = container.offsetWidth - ele.offsetHeight / 2 - 5;
     this.ymin = 0;
     this.ymax = container.offsetHeight;
 
@@ -76,9 +76,6 @@ class ArrowTransform {
     this.sx = this._clamp(this.sx + this.ax * ACC_SCALING, -MAX_SPEED, MAX_SPEED);
     this.sy = this._clamp(this.sy + this.ay * ACC_SCALING, -MAX_SPEED, MAX_SPEED);
 
-    // if (this.x == this.xmin && this.sx < 0 || this.x == this.xmax && this.sx > 0) this.sx *= -1;
-    // if (this.y == this.ymin && this.sy < 0 || this.y == this.ymax && this.sy > 0) this.sy *= -1;
-
     this.x = this._clamp(this.x + this.sx, this.xmin, this.xmax);
     this.y = this._clamp(this.y + this.sy, this.ymin, this.ymax);
 
@@ -98,11 +95,12 @@ class ArrowTransform {
 class ShakeAGift {
   constructor() {
     this.utils = new Utils();
-    window.addEventListener('resize', this.resize);
+    // window.addEventListener('resize', this.resize);
     this.timer = document.querySelector('.timer');
     this.arrow = document.querySelector('.arrow');
     this.container = document.querySelector('.game-area');
     this.duration = 0;
+    this.resize();
   }
   resize() {
     let w = document.body.offsetWidth;
@@ -121,7 +119,7 @@ class ShakeAGift {
   }
 
   show(section, value = null) {
-    this.resize();
+    // this.resize();
     // Google Analytics Tracking
     gaEvent(section, 'section-view', section, value);
     // Show and hide corresponding section
@@ -141,7 +139,7 @@ class ShakeAGift {
     window.addEventListener('devicemotion', this._motionUpdated);
     this.aTransform = new ArrowTransform(this.arrow, this.container);
     this.obstacles = [];
-    for (let i = 8; i > -1; i -= 2) {
+    for (let i = 8; i > -1; i -= 2.5) {
       this._gen_obstacles(i + 2);
     }
     this.counter = 0;
@@ -172,7 +170,7 @@ class ShakeAGift {
       this.obstacles[i].update();
     }
     let ob = this.obstacles[0];
-    if (this.counter++ > ob.size / ob.speed * 2) {
+    if (this.counter++ > ob.size / ob.speed * 2.5) {
       for (let i = 0; i < this.cols - 1; i++) {
         this.container.removeChild(this.obstacles[i].img);
       }
@@ -213,7 +211,7 @@ class ShakeAGift {
    */
   share() {
     gaEvent('share', 'btn-click');
-    let message = "Yes berhasil! Jeli kan kaya Clinton & Kate🎯🏹  Coba dong pada ikutan juga sembari nunggu streaming #HawkeyeID di #DisneyPlusHotstarID";
+    let message = CONFIG['SUCCESS_TWEET'];
     message = `${this.duration.toFixed(1)}s!\n\n${message}\n\n${document.location.href}`;
     document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(message);
   }

@@ -6,9 +6,9 @@ const showdown = require('showdown');
 const { count } = require('console');
 const DEPLOY_FOLDER = "deploy"
 
-async function genHTML() {
-	let config = JSON.parse(fs.readFileSync("config.json"));
-	let html = fs.readFileSync(path.join('src', 'index.html')).toString('utf-8');
+async function genHTML(country) {
+	let config = JSON.parse(fs.readFileSync(`config_${country}.json`));
+	let html = fs.readFileSync(path.join('src', `${country}.html`)).toString('utf-8');
 	let css = await minify(path.join('src', 'main.css'));
 	let js = await minify(path.join('src', 'main.js'));
 	// let js = fs.readFileSync(path.join('src', 'main.js')).toString('utf-8');
@@ -17,7 +17,7 @@ async function genHTML() {
 	config['JAVASCRIPT'] = `<script>\nconst CONFIG=${JSON.stringify(config)};\n${js}</script>`;
 	config['CSS'] = `<style>${css}</style>`;
 	// config['TNC'] = (new showdown.Converter()).makeHtml(tnc);
-
+	// config['JAVASCRIPT'] = config['JAVASCRIPT'].replaceAll('[[SUCCESS_TWEET]]', config.SUCCESS_TWEET);
 	for (let key in config) {
 		html = html.replaceAll(`[[${key}]]`, config[key]);
 	}
@@ -30,12 +30,12 @@ function localDev() {
 		port: 8080,
 		host: process.env.IP,
 		root: "src",
-		file: "index.html",
+		file: "*.html",
 		wait: 1000,
 		logLevel: 2,
 		middleware: [async function (req, res, next) {
-			if (req.originalUrl == '/') {
-				let html = await genHTML();
+			if (req.originalUrl == '/id' || req.originalUrl == '/my') {
+				let html = await genHTML(req.originalUrl.substr(1));
 				res.setHeader('Content-Type', 'text/html; charset=UTF-8');
 				res.write(html);
 				res.end();
@@ -47,18 +47,18 @@ function localDev() {
 	liveServer.start(params);
 }
 
-async function deploy() {
+async function deploy(country) {
 	if (!fs.existsSync(DEPLOY_FOLDER)) {
 		fs.mkdirSync(DEPLOY_FOLDER);
 	}
 	for (let f of fs.readdirSync(DEPLOY_FOLDER)) {
 		if (f.endsWith('html')) fs.rmSync(path.join(DEPLOY_FOLDER, f));
 	};
-	let filename = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3) + ".html";
-	let html = await genHTML()
+	let filename = country + '-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3) + ".html";
+	let html = await genHTML(country)
 	fs.writeFileSync(path.join(DEPLOY_FOLDER, filename), html);
 	require('sync-directory')(path.resolve('src', 'img'), path.resolve(DEPLOY_FOLDER, 'img'));
-	
+
 }
 
 async function genAnimation() {
@@ -106,8 +106,9 @@ switch (process.argv[2]) {
 	case 'dev':
 		localDev();
 		break;
-	case 'export':
-		deploy();
+	case 'deploy':
+		deploy('my');
+		deploy('id');
 		break;
 	case 'gif':
 		genAnimation();
