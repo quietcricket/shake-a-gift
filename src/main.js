@@ -116,6 +116,10 @@ class ShakeAGift {
       ele.style.marginTop = h * parseInt(ele.getAttribute('data-pos')) / 100 + 'px';
     });
     document.querySelector('.game-area').style.height = h - 80 + 'px';
+    if (w <= 320) {
+      document.querySelector('iframe').setAttribute('width', w - 120);
+      document.querySelector('iframe').setAttribute('height', (w - 120) / 16 * 9);
+    }
   }
 
   show(section, value = null) {
@@ -202,7 +206,7 @@ class ShakeAGift {
       this.obstacles.forEach(ob => this.container.removeChild(ob.img));
       document.querySelector('.confetti').style.display = 'none';
       this.gameEnded = false;
-      this.show('success');
+      this.show('success', this.duration.toFixed(1));
     }, 2000);
   }
 
@@ -317,6 +321,7 @@ class Utils {
 }
 window.game = new ShakeAGift();
 // game.startGame();
+// game.endGame();
 game.show("landing");
 // game.show("success");
 // game.show("instruction");
