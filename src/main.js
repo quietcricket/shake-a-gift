@@ -125,7 +125,7 @@ class ShakeAGift {
   show(section, value = null) {
     // this.resize();
     // Google Analytics Tracking
-    gaEvent(section, 'section-view', section, value);
+    // gaEvent(section, 'section-view', section, value);
     // Show and hide corresponding section
     document.querySelectorAll(".section").forEach(ele => {
       if (ele.classList.contains("section-" + section)) {
@@ -214,7 +214,7 @@ class ShakeAGift {
    * Share result as a tweet
    */
   share() {
-    gaEvent('share', 'btn-click');
+    // gaEvent('share', 'btn-click');
     let message = CONFIG['SUCCESS_TWEET'];
     message = `${this.duration.toFixed(1)}s!\n\n${message}\n\n${document.location.href}`;
     document.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(message);
